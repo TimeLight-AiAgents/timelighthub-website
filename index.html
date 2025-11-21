@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeLight Hub | The AI Hub for Your Service Empire</title>
+    <style>
+        /* RESET & BASE STYLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden; background: #0f0f0f; }
+        
+        /* SPLIT CONTAINER */
+        .container { display: flex; height: 100vh; width: 100%; position: relative; }
+        
+        /* SHARED PANEL STYLES */
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: flex 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            padding: 20px;
+        }
+        
+        /* OVERLAY FOR DARKENING BG IMAGES */
+        .panel::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1;
+        }
+        
+        /* CONTENT STYLES */
+        .content { position: relative; z-index: 2; max-width: 400px; }
+        h2 { font-size: 2.5rem; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase; }
+        p { font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6; color: #ddd; }
+        
+        /* BUTTONS */
+        .btn {
+            text-decoration: none; color: white; padding: 15px 30px;
+            border: 2px solid white; border-radius: 30px;
+            font-weight: bold; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:hover { background: white; color: #111; }
+
+        /* LEFT SIDE: REPAIR (Technical Blue) */
+        .left { 
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); 
+        }
+        .left h2 { color: #00d2ff; text-shadow: 0 0 20px rgba(0, 210, 255, 0.5); }
+        
+        /* RIGHT SIDE: TRAVEL (Visionary Purple) */
+        .right { 
+            background: linear-gradient(135deg, #2b0537, #4a1458, #8d309b); 
+        }
+        .right h2 { color: #e056fd; text-shadow: 0 0 20px rgba(224, 86, 253, 0.5); }
+
+        /* CENTER LOGO AREA */
+        .center-logo {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: rgba(0,0,0,0.85);
+            padding: 40px;
+            border-radius: 50%;
+            border: 1px solid #444;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            width: 300px; height: 300px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+        
+        .brand-name { font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: 1px; margin-bottom: 10px; }
+        .brand-slogan { font-size: 0.9rem; color: #aaa; font-style: italic; max-width: 200px; }
+        .brand-highlight { color: #00d2ff; } /* Cyan accent */
+
+        /* HOVER EFFECTS (Desktop Only) */
+        @media(min-width: 768px) {
+            .panel:hover { flex: 2; }
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media(max-width: 768px) {
+            .container { flex-direction: column; }
+            .center-logo { 
+                width: 100%; height: auto; 
+                position: relative; top: 0; left: 0; 
+                transform: none; border-radius: 0; 
+                border: none; border-bottom: 1px solid #333;
+                padding: 30px 20px;
+            }
+            .panel::before { background: rgba(0,0,0,0.7); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="center-logo">
+        <div class="brand-name">TIMELIGHT<span class="brand-highlight">HUB</span></div>
+        <div class="brand-slogan">"The AI Hub for Your Service Empire"</div>
+    </div>
+
+    <div class="container">
+        
+        <div class="panel left">
+            <div class="content">
+                <h2>Restore</h2>
+                <p>Advanced management software for electronics repair professionals. Control your workshop with precision.</p>
+                <a href="http://repair.timelighthub.com" class="btn">Manage Repair</a>
+            </div>
+        </div>
+
+        <div class="panel right">
+            <div class="content">
+                <h2>Explore</h2>
+                <p>Visionary AI travel planning. Designing your journey through the real world with deep intelligence.</p>
+                <a href="http://travel.timelighthub.com" class="btn">Start Journey</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
