@@ -27,7 +27,7 @@
             padding: 20px;
         }
         
-        /* OVERLAY FOR DARKENING BG IMAGES */
+        /* OVERLAY */
         .panel::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: 1;
@@ -44,58 +44,56 @@
             border: 2px solid white; border-radius: 30px;
             font-weight: bold; transition: all 0.3s ease;
             text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; display: inline-block;
         }
         .btn:hover { background: white; color: #111; }
 
-        /* LEFT SIDE: REPAIR (Technical Blue) */
-        .left { 
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); 
-        }
+        /* LEFT SIDE: REPAIR */
+        .left { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
         .left h2 { color: #00d2ff; text-shadow: 0 0 20px rgba(0, 210, 255, 0.5); }
         
-        /* RIGHT SIDE: TRAVEL (Visionary Purple) */
-        .right { 
-            background: linear-gradient(135deg, #2b0537, #4a1458, #8d309b); 
-        }
+        /* RIGHT SIDE: TRAVEL */
+        .right { background: linear-gradient(135deg, #2b0537, #4a1458, #8d309b); }
         .right h2 { color: #e056fd; text-shadow: 0 0 20px rgba(224, 86, 253, 0.5); }
 
-        /* CENTER LOGO AREA */
+        /* CENTER LOGO */
         .center-logo {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            background: rgba(0,0,0,0.85);
-            padding: 40px;
-            border-radius: 50%;
-            border: 1px solid #444;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            width: 300px; height: 300px;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 10; background: rgba(0,0,0,0.85); padding: 40px;
+            border-radius: 50%; border: 1px solid #444; text-align: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); width: 300px; height: 300px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        
         .brand-name { font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: 1px; margin-bottom: 10px; }
-        .brand-slogan { font-size: 0.9rem; color: #aaa; font-style: italic; max-width: 200px; }
-        .brand-highlight { color: #00d2ff; } /* Cyan accent */
+        .brand-slogan { font-size: 1.1rem; color: #fff; font-style: italic; max-width: 240px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        .brand-highlight { color: #00d2ff; }
 
-        /* HOVER EFFECTS (Desktop Only) */
-        @media(min-width: 768px) {
-            .panel:hover { flex: 2; }
+        /* COMING SOON MODAL */
+        .modal {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
         }
+        .modal-content {
+            background: #1a1a1a; border: 1px solid #333; padding: 40px; border-radius: 10px;
+            text-align: center; color: white; max-width: 500px; box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+            animation: fadeIn 0.3s;
+        }
+        .modal h3 { font-size: 1.5rem; margin-bottom: 15px; color: #00d2ff; text-transform: uppercase; }
+        .modal p { color: #ccc; margin-bottom: 25px; }
+        .close-btn {
+            background: transparent; border: 1px solid #555; color: white; padding: 10px 20px;
+            border-radius: 5px; cursor: pointer; transition: 0.2s;
+        }
+        .close-btn:hover { background: white; color: black; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        /* MOBILE RESPONSIVENESS */
+        /* RESPONSIVE */
+        @media(min-width: 768px) { .panel:hover { flex: 2; } }
         @media(max-width: 768px) {
             .container { flex-direction: column; }
-            .center-logo { 
-                width: 100%; height: auto; 
-                position: relative; top: 0; left: 0; 
-                transform: none; border-radius: 0; 
-                border: none; border-bottom: 1px solid #333;
-                padding: 30px 20px;
-            }
-            .panel::before { background: rgba(0,0,0,0.7); }
+            .center-logo { width: 100%; height: auto; position: relative; transform: none; top: 0; left: 0; border-radius: 0; border: none; border-bottom: 1px solid #333; padding: 30px 20px; }
         }
     </style>
 </head>
@@ -107,12 +105,11 @@
     </div>
 
     <div class="container">
-        
         <div class="panel left">
             <div class="content">
                 <h2>Restore</h2>
                 <p>Advanced management software for electronics repair professionals. Control your workshop with precision.</p>
-                <a href="http://repair.timelighthub.com" class="btn">Manage Repair</a>
+                <a href="#" class="btn" onclick="openModal('Repair Manager 2020')">Manage Repair</a>
             </div>
         </div>
 
@@ -120,11 +117,34 @@
             <div class="content">
                 <h2>Explore</h2>
                 <p>Visionary AI travel planning. Designing your journey through the real world with deep intelligence.</p>
-                <a href="http://travel.timelighthub.com" class="btn">Start Journey</a>
+                <a href="#" class="btn" onclick="openModal('AI Travel Agent')">Start Journey</a>
             </div>
         </div>
-
     </div>
+
+    <div id="comingSoonModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Module Loading...</h3>
+            <p>The Empire is currently under construction. This service will be available to beta testers shortly.</p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(serviceName) {
+            document.getElementById('modalTitle').innerText = serviceName + " Coming Soon";
+            document.getElementById('comingSoonModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('comingSoonModal').style.display = 'none';
+        }
+        // Close if clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('comingSoonModal')) {
+                closeModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
