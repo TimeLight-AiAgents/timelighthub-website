@@ -3,535 +3,1279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TimeLight Hub | The AI Hub for Your Service Empire</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Cairo:wght@400;600;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    
+    <title>TimeLightHub | The AI Hub for Your Service Empire</title>
+    <meta name="description" content="TimeLightHub — The Smart Engine for Your Business Empire. AI-powered platforms for Travel, E-Commerce, Repair, Medical, Legal, Real Estate & Consulting.">
+
+    <!-- Favicons & Mobile Icons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-title" content="TimeLightHub">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Cairo:wght@400;600;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- UNIVERSE VARIABLES --- */
+        /* ===== CSS VARIABLES ===== */
         :root {
-            --neon-cyan: #00f3ff;
-            --neon-purple: #bc13fe;
-            --neon-gold: #ffd700;
-            --bg-dark: #050505;
-            --card-bg: rgba(20, 20, 20, 0.7);
-            --text-main: #ffffff;
+            --cyan: #00f3ff;
+            --purple: #bc13fe;
+            --gold: #ffd700;
+            --green: #00e676;
+            --orange: #ff9100;
+            --bg: #050505;
+            --bg-card: rgba(20, 20, 20, 0.7);
+            --bg-section: rgba(10, 10, 10, 0.5);
+            --text: #ffffff;
+            --text-muted: #aaaaaa;
+            --border: rgba(255,255,255,0.08);
+            --header-bg: rgba(5, 5, 5, 0.9);
+        }
+        [data-theme="light"] {
+            --bg: #f5f7fa;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-section: rgba(240, 242, 245, 0.8);
+            --text: #1a1a2e;
+            --text-muted: #555555;
+            --border: rgba(0,0,0,0.1);
+            --header-bg: rgba(255, 255, 255, 0.95);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body { 
-            font-family: 'Roboto', sans-serif; 
-            background-color: var(--bg-dark); 
-            color: var(--text-main); 
-            min-height: 100vh; 
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
             overflow-x: hidden;
-            transition: all 0.3s ease;
+            transition: background-color 0.4s, color 0.4s;
         }
-
-        /* RTL Support for Arabic */
         body.rtl { direction: rtl; font-family: 'Cairo', sans-serif; }
-        body.rtl .card { text-align: right; }
-        body.rtl .icon-box { float: left; }
-        body.rtl .brand-logo { letter-spacing: 0; }
+        a { text-decoration: none; color: inherit; }
 
-        /* --- ANIMATED MATRIX BACKGROUND --- */
-        .matrix-bg {
+        /* ===== ANIMATED BACKGROUND ===== */
+        .bg-grid {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: 
+            background:
                 linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            perspective: 1000px;
-            transform: scale(1.1);
-            animation: moveGrid 20s linear infinite;
+            background-size: 60px 60px;
+            animation: gridMove 25s linear infinite;
         }
-        @keyframes moveGrid { 0% { transform: translateY(0) scale(1.1); } 100% { transform: translateY(50px) scale(1.1); } }
-
-        .matrix-bg::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, #050505 90%);
+        [data-theme="light"] .bg-grid {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
+        @keyframes gridMove { 0% { transform: translateY(0); } 100% { transform: translateY(60px); } }
 
-        /* --- HEADER & LANG SWITCHER --- */
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* ===== HEADER ===== */
         header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 30px 50px; position: relative; z-index: 10;
+            padding: 12px 40px;
+            background: var(--header-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.4s;
         }
-
-        .brand-logo {
-            font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; letter-spacing: 2px;
-            text-transform: uppercase; background: linear-gradient(90deg, #fff, #888);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-logo { height: 45px; width: auto; }
+        .header-brand {
+            font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 800;
+            letter-spacing: 1px; text-transform: uppercase;
         }
-        .brand-highlight { color: var(--neon-cyan); -webkit-text-fill-color: var(--neon-cyan); }
+        .header-brand .hl { color: var(--cyan); }
+        .header-nav { display: flex; align-items: center; gap: 20px; }
+        .header-nav a {
+            font-size: 0.85rem; font-weight: 500; color: var(--text-muted);
+            transition: color 0.3s; cursor: pointer;
+        }
+        .header-nav a:hover { color: var(--cyan); }
+        .header-right { display: flex; align-items: center; gap: 15px; }
 
-        .lang-container { position: relative; }
-        .lang-btn {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            color: white; padding: 10px 20px; border-radius: 30px; cursor: pointer;
-            display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; font-size: 0.9rem;
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 50px; height: 26px; border-radius: 13px; cursor: pointer;
+            background: #333; position: relative; border: none; transition: 0.3s;
+        }
+        [data-theme="light"] .theme-toggle { background: #ddd; }
+        .theme-toggle::after {
+            content: ''; position: absolute; top: 3px; left: 3px;
+            width: 20px; height: 20px; border-radius: 50%; background: var(--cyan);
             transition: 0.3s;
         }
-        .lang-btn:hover { background: rgba(0, 243, 255, 0.1); border-color: var(--neon-cyan); }
-        
+        [data-theme="light"] .theme-toggle::after { left: 27px; background: var(--gold); }
+        .theme-icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 12px; }
+        .theme-icon.sun { right: 6px; }
+        .theme-icon.moon { left: 6px; }
+
+        /* Language Selector */
+        .lang-wrap { position: relative; }
+        .lang-btn {
+            background: rgba(255,255,255,0.08); border: 1px solid var(--border);
+            color: var(--text); padding: 8px 16px; border-radius: 25px; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: 0.3s;
+        }
+        .lang-btn:hover { border-color: var(--cyan); }
         .lang-menu {
-            position: absolute; top: 120%; right: 0; background: #111; border: 1px solid #333;
-            border-radius: 10px; overflow: hidden; display: none; min-width: 150px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 100;
+            position: absolute; top: 115%; right: 0; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+            display: none; min-width: 140px; backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 200;
         }
         body.rtl .lang-menu { right: auto; left: 0; }
+        .lang-menu.open { display: block; animation: fadeSlide 0.2s ease; }
+        .lang-opt { padding: 10px 16px; cursor: pointer; color: var(--text-muted); transition: 0.2s; font-size: 0.85rem; }
+        .lang-opt:hover { background: rgba(0,243,255,0.1); color: var(--cyan); }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .lang-option {
-            padding: 12px 20px; cursor: pointer; color: #ccc; transition: 0.2s; display: flex; align-items: center; gap: 10px;
+        /* Mobile menu */
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+        .mobile-nav {
+            display: none; position: fixed; top: 70px; left: 0; right: 0;
+            background: var(--header-bg); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 20px;
+            flex-direction: column; gap: 15px; text-align: center; z-index: 99;
         }
-        .lang-option:hover { background: #222; color: var(--neon-cyan); }
-        .show-lang { display: block; animation: fadeIn 0.2s; }
+        .mobile-nav.open { display: flex; animation: fadeSlide 0.3s ease; }
+        .mobile-nav a { font-size: 1rem; color: var(--text-muted); padding: 8px; }
+        .mobile-nav a:hover { color: var(--cyan); }
 
-        /* --- HERO TEXT --- */
-        .hero-section { text-align: center; padding: 40px 20px; margin-bottom: 40px; }
-        .slogan { 
-            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #aaa; 
-            letter-spacing: 2px; text-transform: uppercase; margin-top: 10px;
-            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
-        }
-
-        /* --- GRID SYSTEM --- */
-        .empire-grid {
-            max-width: 1400px; margin: 0 auto; padding: 20px;
-            display: grid; gap: 30px;
-        }
-        .prime-sector { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .future-sector { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-
-        /* --- CARDS --- */
-        .card {
-            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px; padding: 40px 30px; position: relative; overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-        }
-        .card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
-            opacity: 0; transform: scale(0.5); transition: 0.5s;
-        }
-        .card:hover::before { opacity: 1; transform: scale(1); }
-        .card:hover { transform: translateY(-5px); z-index: 5; }
-
-        /* Theme Colors */
-        .repair-glow:hover { border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 243, 255, 0.15); }
-        .travel-glow:hover { border-color: var(--neon-purple); box-shadow: 0 0 40px rgba(188, 19, 254, 0.15); }
-        .future-glow:hover { border-color: var(--neon-gold); box-shadow: 0 0 30px rgba(255, 215, 0, 0.1); }
-
-        .icon-box { font-size: 3rem; margin-bottom: 20px; }
-        .card h2 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 10px; letter-spacing: 1px; }
-        .card p { color: #bbb; font-size: 1rem; line-height: 1.6; margin-bottom: 25px; font-weight: 300; }
-
-        .txt-cyan { color: var(--neon-cyan); }
-        .txt-purple { color: var(--neon-purple); }
-        .txt-gold { color: var(--neon-gold); transition: 0.3s; }
-        .card:hover .txt-gold { color: #fff; text-shadow: 0 0 10px var(--neon-gold); }
-
-        /* Buttons */
-        .btn {
-            padding: 10px 30px; border-radius: 50px; text-transform: uppercase;
-            font-weight: 700; letter-spacing: 1px; font-size: 0.9rem; cursor: pointer;
-            background: transparent; transition: 0.3s; display: inline-block;
-        }
-        .btn-repair { border: 1px solid var(--neon-cyan); color: var(--neon-cyan); }
-        .btn-repair:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px var(--neon-cyan); }
-        
-        .btn-travel { border: 1px solid var(--neon-purple); color: var(--neon-purple); }
-        .btn-travel:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 20px var(--neon-purple); }
-
-        .lock-badge {
-            font-size: 0.8rem; color: #666; border: 1px solid #444; padding: 5px 15px; border-radius: 20px;
-            display: inline-block; text-transform: uppercase;
+        @media(max-width:900px) {
+            .header-nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            header { padding: 10px 20px; }
         }
 
-        /* --- MODAL --- */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 120px 20px 60px;
         }
-        .modal-content {
-            background: #111; border: 1px solid #333; padding: 40px; border-radius: 20px;
-            text-align: center; max-width: 500px; animation: zoomIn 0.3s ease; position: relative;
+        .hero-logo { width: 140px; height: 140px; margin-bottom: 20px; animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 4vw, 3.2rem);
+            font-weight: 900; letter-spacing: 2px; margin-bottom: 12px;
         }
-        .modal-content::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+        .hero h1 .hl { color: var(--cyan); }
+        .hero .tagline {
+            font-family: 'Orbitron', sans-serif; font-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
         }
-        .close-btn {
-            margin-top: 20px; padding: 10px 30px; border: 1px solid #555; background: transparent;
-            color: white; border-radius: 30px; cursor: pointer; transition: 0.3s;
+        .hero .subtitle {
+            font-size: clamp(1rem, 2vw, 1.4rem); color: var(--text-muted);
+            max-width: 700px; margin: 0 auto 30px; line-height: 1.6;
         }
-        .close-btn:hover { background: white; color: black; }
+        .hero-stats {
+            display: flex; gap: 40px; margin-bottom: 35px; flex-wrap: wrap; justify-content: center;
+        }
+        .hero-stat { text-align: center; }
+        .hero-stat .num {
+            font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 700; color: var(--cyan);
+        }
+        .hero-stat .label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .hero-ctas { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary {
+            padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
+            letter-spacing: 0.5px; cursor: pointer; transition: 0.3s; border: none;
+            background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #000;
+            text-transform: uppercase;
+        }
+        .btn-primary:hover { box-shadow: 0 0 30px rgba(0,243,255,0.4); transform: translateY(-2px); }
+        .btn-outline {
+            padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
+            letter-spacing: 0.5px; cursor: pointer; transition: 0.3s;
+            background: transparent; border: 2px solid var(--purple); color: var(--purple);
+            text-transform: uppercase;
+        }
+        .btn-outline:hover { background: var(--purple); color: #fff; box-shadow: 0 0 20px rgba(188,19,254,0.3); }
 
-        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
-        @media(max-width: 900px) { 
-            .prime-sector { grid-template-columns: 1fr; } 
-            header { flex-direction: column; gap: 20px; }
+        /* ===== SECTION BASE ===== */
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title {
+            font-family: 'Orbitron', sans-serif; font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 800; text-align: center; margin-bottom: 10px; letter-spacing: 1px;
+        }
+        .section-subtitle { text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto 50px; line-height: 1.6; }
+
+        /* ===== VISION ===== */
+        .vision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .vision-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 30px; text-align: center; backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .vision-card:hover { transform: translateY(-5px); border-color: var(--cyan); }
+        .vision-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .vision-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-bottom: 8px; }
+        .vision-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* ===== PLATFORMS ===== */
+        .platforms-grid { display: grid; gap: 30px; }
+        .platform-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 40px; position: relative; overflow: hidden;
+            display: grid; grid-template-columns: auto 1fr auto; gap: 30px; align-items: start;
+            backdrop-filter: blur(10px); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+        .platform-card:hover { transform: translateY(-3px); }
+        .platform-card.live:hover { border-color: var(--green); box-shadow: 0 0 40px rgba(0,230,118,0.1); }
+        .platform-card.coming:hover { border-color: var(--orange); box-shadow: 0 0 40px rgba(255,145,0,0.1); }
+        .platform-card.locked:hover { border-color: var(--gold); box-shadow: 0 0 30px rgba(255,215,0,0.05); }
+
+        .platform-icon { font-size: 3rem; width: 70px; text-align: center; }
+        .platform-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+        .platform-body h2 { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; letter-spacing: 1px; }
+        .status-badge {
+            padding: 4px 14px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .badge-live { background: rgba(0,230,118,0.15); color: var(--green); border: 1px solid var(--green); }
+        .badge-coming { background: rgba(255,145,0,0.15); color: var(--orange); border: 1px solid var(--orange); }
+        .badge-locked { background: rgba(255,215,0,0.1); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+
+        .platform-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
+        .platform-features { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; margin-bottom: 20px; }
+        .platform-features li { font-size: 0.82rem; color: var(--text-muted); padding-left: 18px; position: relative; }
+        .platform-features li::before { content: '\25B8'; position: absolute; left: 0; color: var(--cyan); font-weight: bold; }
+        body.rtl .platform-features li { padding-left: 0; padding-right: 18px; }
+        body.rtl .platform-features li::before { left: auto; right: 0; }
+        .platform-card.locked .platform-features li::before { color: var(--gold); }
+
+        .platform-action { align-self: center; }
+        .btn-visit {
+            padding: 12px 28px; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
+            cursor: pointer; transition: 0.3s; border: 2px solid var(--green); color: var(--green);
+            background: transparent; text-transform: uppercase; white-space: nowrap; display: inline-block;
+        }
+        .btn-visit:hover { background: var(--green); color: #000; box-shadow: 0 0 20px rgba(0,230,118,0.3); }
+        .btn-soon {
+            padding: 12px 28px; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
+            cursor: default; border: 2px solid #555; color: #777; background: transparent;
+            text-transform: uppercase; white-space: nowrap;
+        }
+        .btn-locked {
+            padding: 10px 20px; border-radius: 50px; font-size: 0.8rem; cursor: default;
+            border: 1px solid #444; color: #666; background: transparent;
+            text-transform: uppercase; white-space: nowrap;
         }
 
-        /* --- FOOTER --- */
+        @media(max-width:768px) {
+            .platform-card { grid-template-columns: 1fr; text-align: center; }
+            .platform-icon { width: 100%; }
+            .platform-features { grid-template-columns: 1fr; }
+            .platform-action { justify-self: center; }
+        }
+
+        /* ===== FEATURES ===== */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+        .feature-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 30px; text-align: center; backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--purple); }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 15px; color: var(--purple); }
+        .feature-card h3 { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; margin-bottom: 8px; }
+        .feature-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* ===== ROADMAP ===== */
+        .roadmap { position: relative; max-width: 700px; margin: 0 auto; }
+        .roadmap::before {
+            content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(180deg, var(--green), var(--orange), var(--gold), #444);
+        }
+        body.rtl .roadmap::before { left: auto; right: 20px; }
+        .roadmap-item { display: flex; gap: 25px; margin-bottom: 35px; position: relative; }
+        body.rtl .roadmap-item { flex-direction: row-reverse; }
+        .roadmap-dot {
+            width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+            margin-top: 4px; position: relative; z-index: 1;
+        }
+        .dot-live { background: var(--green); box-shadow: 0 0 12px var(--green); }
+        .dot-coming { background: var(--orange); box-shadow: 0 0 10px var(--orange); }
+        .dot-locked { background: #555; }
+        .roadmap-content h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-bottom: 4px; }
+        .roadmap-content .rm-date { font-size: 0.8rem; color: var(--cyan); margin-bottom: 4px; }
+        .roadmap-content p { font-size: 0.82rem; color: var(--text-muted); }
+
+        /* ===== NEWSLETTER ===== */
+        .subscribe-section {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 50px 40px; text-align: center; max-width: 700px; margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+        .subscribe-section h2 { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; margin-bottom: 10px; }
+        .subscribe-section p { color: var(--text-muted); margin-bottom: 25px; font-size: 0.9rem; }
+        .subscribe-form { display: flex; gap: 10px; max-width: 450px; margin: 0 auto; }
+        .subscribe-form input {
+            flex: 1; padding: 14px 20px; border-radius: 50px; border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05); color: var(--text); font-size: 0.9rem;
+            outline: none; transition: 0.3s;
+        }
+        [data-theme="light"] .subscribe-form input { background: #fff; }
+        .subscribe-form input:focus { border-color: var(--cyan); }
+        .subscribe-form button {
+            padding: 14px 28px; border-radius: 50px; border: none; font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            color: #000; cursor: pointer; transition: 0.3s; font-size: 0.85rem; white-space: nowrap;
+        }
+        .subscribe-form button:hover { box-shadow: 0 0 20px rgba(0,243,255,0.3); }
+        @media(max-width:500px) { .subscribe-form { flex-direction: column; } }
+
+        /* ===== CONTACT ===== */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
+        @media(max-width:768px) { .contact-grid { grid-template-columns: 1fr; } }
+        .contact-info { display: flex; flex-direction: column; gap: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 15px; }
+        .contact-item i { font-size: 1.5rem; color: var(--cyan); width: 30px; }
+        .contact-item span { color: var(--text-muted); font-size: 0.9rem; }
+        .contact-item a { color: var(--cyan); }
+        .social-links { display: flex; gap: 15px; margin-top: 10px; }
+        .social-links a {
+            width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); font-size: 1.1rem; transition: 0.3s;
+        }
+        .social-links a:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-3px); }
+        .contact-form { display: flex; flex-direction: column; gap: 12px; }
+        .contact-form input, .contact-form textarea {
+            padding: 14px 18px; border-radius: 12px; border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05); color: var(--text); font-size: 0.9rem;
+            font-family: 'Inter', sans-serif; outline: none; transition: 0.3s; resize: vertical;
+        }
+        [data-theme="light"] .contact-form input, [data-theme="light"] .contact-form textarea { background: #fff; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--cyan); }
+        .contact-form button {
+            padding: 14px; border-radius: 50px; border: none; font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            color: #000; cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+        }
+        .contact-form button:hover { box-shadow: 0 0 20px rgba(0,243,255,0.3); }
+
+        /* ===== FOOTER ===== */
         .site-footer {
-            margin-top: 60px; padding: 30px 20px; border-top: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
+            border-top: 1px solid var(--border); padding: 30px 20px; text-align: center; margin-top: 40px;
         }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
-        .footer-links a { color: #888; font-size: 0.85rem; text-decoration: none; transition: 0.3s; }
-        .footer-links a:hover { color: var(--neon-cyan); }
-        .footer-copy { color: #555; font-size: 0.8rem; }
+        .footer-links a { color: var(--text-muted); font-size: 0.8rem; transition: 0.3s; }
+        .footer-links a:hover { color: var(--cyan); }
+        .footer-copy { color: #666; font-size: 0.75rem; }
 
-        /* --- COOKIE BANNER --- */
+        /* ===== COOKIE BANNER ===== */
         .cookie-banner {
             display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2000;
-            background: #111; border-top: 1px solid rgba(0, 243, 255, 0.2);
-            padding: 20px; box-shadow: 0 -5px 30px rgba(0,0,0,0.5);
+            background: var(--header-bg); border-top: 1px solid rgba(0,243,255,0.15);
+            padding: 18px 25px; backdrop-filter: blur(20px); box-shadow: 0 -5px 30px rgba(0,0,0,0.3);
         }
-        .cookie-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 15px; }
-        .cookie-text { flex: 1; color: #ccc; font-size: 0.9rem; min-width: 250px; }
-        .cookie-text a { color: var(--neon-cyan); text-decoration: none; }
-        .cookie-text a:hover { text-decoration: underline; }
-        .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
-        .cookie-btn { padding: 8px 20px; border-radius: 30px; font-size: 0.85rem; cursor: pointer; font-weight: 600; border: none; transition: 0.3s; }
-        .cookie-accept { background: var(--neon-cyan); color: #000; }
-        .cookie-accept:hover { box-shadow: 0 0 15px var(--neon-cyan); }
-        .cookie-essential { background: transparent; border: 1px solid #555; color: #ccc; }
-        .cookie-essential:hover { border-color: #999; color: #fff; }
+        .cookie-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .cookie-text { flex: 1; color: var(--text-muted); font-size: 0.85rem; min-width: 250px; }
+        .cookie-text a { color: var(--cyan); }
+        .cookie-btns { display: flex; gap: 10px; }
+        .ck-btn { padding: 8px 20px; border-radius: 25px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; }
+        .ck-accept { background: var(--cyan); color: #000; }
+        .ck-accept:hover { box-shadow: 0 0 15px var(--cyan); }
+        .ck-essential { background: transparent; border: 1px solid #555; color: var(--text-muted); }
+        .ck-essential:hover { border-color: #999; color: var(--text); }
+
+        /* ===== UTILS ===== */
+        .txt-cyan { color: var(--cyan); }
+        .txt-purple { color: var(--purple); }
+        .txt-gold { color: var(--gold); }
+        .txt-green { color: var(--green); }
+        .txt-orange { color: var(--orange); }
     </style>
 </head>
 <body id="body">
 
-    <div class="matrix-bg"></div>
+<div class="bg-grid"></div>
 
-    <header>
-        <div class="brand-logo">TIMELIGHT<span class="brand-highlight">HUB</span></div>
-        
-        <div class="lang-container">
-            <button class="lang-btn" onclick="toggleLangMenu()">
-                <i class="fa-solid fa-globe"></i> <span id="currentLang">English</span> <i class="fa-solid fa-caret-down"></i>
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="header-left">
+        <a href="#"><img src="assets/logo-icon.png" alt="TimeLightHub" class="header-logo"></a>
+        <span class="header-brand">TIMELIGHT<span class="hl">HUB</span></span>
+    </div>
+    <nav class="header-nav">
+        <a href="#vision" id="nav-vision">Vision</a>
+        <a href="#platforms" id="nav-platforms">Platforms</a>
+        <a href="#features" id="nav-features">Features</a>
+        <a href="#roadmap" id="nav-roadmap">Roadmap</a>
+        <a href="#contact" id="nav-contact">Contact</a>
+    </nav>
+    <div class="header-right">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+            <span class="theme-icon moon"><i class="fa-solid fa-moon"></i></span>
+            <span class="theme-icon sun"><i class="fa-solid fa-sun"></i></span>
+        </button>
+        <div class="lang-wrap">
+            <button class="lang-btn" onclick="toggleLang()">
+                <i class="fa-solid fa-globe"></i> <span id="curLang">EN</span> <i class="fa-solid fa-caret-down"></i>
             </button>
             <div class="lang-menu" id="langMenu">
-                <div class="lang-option" onclick="setLanguage('en')">🇺🇸 English</div>
-                <div class="lang-option" onclick="setLanguage('ar')">🇱🇧 العربية</div>
-                <div class="lang-option" onclick="setLanguage('fr')">🇫🇷 Français</div>
-                <div class="lang-option" onclick="setLanguage('es')">🇪🇸 Español</div>
-                <div class="lang-option" onclick="setLanguage('de')">🇩🇪 Deutsch</div>
+                <div class="lang-opt" onclick="setLang('en')">&#x1F1FA;&#x1F1F8; English</div>
+                <div class="lang-opt" onclick="setLang('ar')">&#x1F1F1;&#x1F1E7; &#x0627;&#x0644;&#x0639;&#x0631;&#x0628;&#x064A;&#x0629;</div>
+                <div class="lang-opt" onclick="setLang('fr')">&#x1F1EB;&#x1F1F7; Fran&#x00E7;ais</div>
+                <div class="lang-opt" onclick="setLang('es')">&#x1F1EA;&#x1F1F8; Espa&#x00F1;ol</div>
+                <div class="lang-opt" onclick="setLang('de')">&#x1F1E9;&#x1F1EA; Deutsch</div>
             </div>
         </div>
-    </header>
-
-    <div class="hero-section">
-        <div class="slogan" id="t-slogan">The AI Hub for Your Service Empire</div>
+        <button class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
     </div>
+</header>
 
-    <div class="empire-grid">
-        
-        <div class="prime-sector">
-            <div class="card repair-glow" onclick="openModal('repair')">
-                <div class="icon-box txt-cyan"><i class="fa-solid fa-microchip"></i></div>
-                <h2 class="txt-cyan" id="t-repair-title">Maintenance</h2>
-                <p id="t-repair-desc">AI-Driven Diagnostics & Management. Connecting Technicians with Clients seamlessly.</p>
-                <div class="btn btn-repair" id="t-repair-btn">Manage Workshop</div>
-            </div>
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+    <a href="#vision" onclick="closeMobileNav()" id="mnav-vision">Vision</a>
+    <a href="#platforms" onclick="closeMobileNav()" id="mnav-platforms">Platforms</a>
+    <a href="#features" onclick="closeMobileNav()" id="mnav-features">Features</a>
+    <a href="#roadmap" onclick="closeMobileNav()" id="mnav-roadmap">Roadmap</a>
+    <a href="#contact" onclick="closeMobileNav()" id="mnav-contact">Contact</a>
+</div>
 
-            <div class="card travel-glow" onclick="openModal('travel')">
-                <div class="icon-box txt-purple"><i class="fa-solid fa-rocket"></i></div>
-                <h2 class="txt-purple" id="t-travel-title">Explore</h2>
-                <p id="t-travel-desc">AI Journey Planning. Empowering Agents & delighting Travelers with smart itineraries.</p>
-                <div class="btn btn-travel" id="t-travel-btn">Start Journey</div>
-            </div>
-        </div>
-
-        <div class="future-sector">
-            <div class="card future-glow" onclick="openModal('medical')">
-                <div class="icon-box txt-gold"><i class="fa-solid fa-user-doctor"></i></div>
-                <h2 id="t-medical-title">Medical</h2>
-                <p id="t-medical-desc">AI Clinical Management. Bridging Doctors & Patients.</p>
-                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
-            </div>
-            <div class="card future-glow" onclick="openModal('legal')">
-                <div class="icon-box txt-gold"><i class="fa-solid fa-scale-balanced"></i></div>
-                <h2 id="t-legal-title">Legal</h2>
-                <p id="t-legal-desc">AI Case Intelligence. Uniting Lawyers & Clients.</p>
-                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
-            </div>
-            <div class="card future-glow" onclick="openModal('estate')">
-                <div class="icon-box txt-gold"><i class="fa-solid fa-city"></i></div>
-                <h2 id="t-estate-title">Real Estate</h2>
-                <p id="t-estate-desc">AI Property Ecosystem. Tools for Agents & Buyers.</p>
-                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
-            </div>
-            <div class="card future-glow" onclick="openModal('consulting')">
-                <div class="icon-box txt-gold"><i class="fa-solid fa-briefcase"></i></div>
-                <h2 id="t-consulting-title">Consulting</h2>
-                <p id="t-consulting-desc">AI Strategic Growth. Data for Consultants & Businesses.</p>
-                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
-            </div>
-        </div>
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+    <img src="assets/logo-icon.png" alt="TimeLightHub Logo" class="hero-logo">
+    <h1 id="t-hero-title">TIMELIGHT<span class="hl">HUB</span></h1>
+    <p class="tagline" id="t-hero-tagline">The Smart Engine for Your Business Empire</p>
+    <p class="subtitle" id="t-hero-sub">One unified AI hub powering multiple industries &mdash; from travel to e-commerce, repair to consulting. Built for agents, loved by clients.</p>
+    <div class="hero-stats">
+        <div class="hero-stat"><div class="num">7+</div><div class="label" id="t-stat1">AI Platforms</div></div>
+        <div class="hero-stat"><div class="num">5</div><div class="label" id="t-stat2">Languages</div></div>
+        <div class="hero-stat"><div class="num">150+</div><div class="label" id="t-stat3">Countries</div></div>
+        <div class="hero-stat"><div class="num">24/7</div><div class="label" id="t-stat4">AI Agents</div></div>
     </div>
+    <div class="hero-ctas">
+        <a href="https://travel.timelighthub.com" target="_blank" rel="noopener noreferrer" class="btn-primary" id="t-cta-travel"><i class="fa-solid fa-rocket"></i>&nbsp; Visit Travel Platform</a>
+        <a href="#platforms" class="btn-outline" id="t-cta-explore"><i class="fa-solid fa-compass"></i>&nbsp; Explore All Platforms</a>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-links">
-            <a href="https://travel.timelighthub.com/terms" target="_blank" rel="noopener noreferrer" id="t-footer-terms">Terms of Service</a>
-            <a href="https://travel.timelighthub.com/privacy" target="_blank" rel="noopener noreferrer" id="t-footer-privacy">Privacy Policy</a>
-            <a href="https://travel.timelighthub.com/refund-policy" target="_blank" rel="noopener noreferrer" id="t-footer-refund">Refund Policy</a>
-            <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-footer-cookie">Cookie Policy</a>
-            <a href="https://travel.timelighthub.com/acceptable-use" target="_blank" rel="noopener noreferrer" id="t-footer-aup">Acceptable Use</a>
+<!-- ===== VISION ===== -->
+<section id="vision">
+    <h2 class="section-title reveal" id="t-vision-title">Our <span class="txt-cyan">Vision</span></h2>
+    <p class="section-subtitle reveal" id="t-vision-sub">One Hub, Multiple Empires. We build AI-powered platforms that connect professionals with clients across every major industry.</p>
+    <div class="vision-grid">
+        <div class="vision-card reveal">
+            <div class="vision-icon">&#x1F916;</div>
+            <h3 id="t-v1-title">AI-First Approach</h3>
+            <p id="t-v1-desc">Every platform is powered by intelligent AI agents that automate tasks, generate insights, and enhance decision-making for professionals and end users.</p>
         </div>
-        <p class="footer-copy">&copy; <span id="footerYear">2025</span> TimeLightHub Pty Ltd (ABN 80 674 812 852). <span id="t-footer-rights">All rights reserved.</span></p>
-    </footer>
-
-    <!-- Cookie Consent Banner -->
-    <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-inner">
-            <div class="cookie-text">
-                <span id="t-cookie-msg">We use essential cookies for platform functionality and optional analytics cookies to improve our services.</span>
-                <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-cookie-link">Cookie Policy</a>
-            </div>
-            <div class="cookie-btns">
-                <button class="cookie-btn cookie-essential" onclick="saveCookieConsent('essential')" id="t-cookie-essential">Essential Only</button>
-                <button class="cookie-btn cookie-accept" onclick="saveCookieConsent('all')" id="t-cookie-accept">Accept All</button>
-            </div>
+        <div class="vision-card reveal">
+            <div class="vision-icon">&#x1F310;</div>
+            <h3 id="t-v2-title">Multi-Platform Ecosystem</h3>
+            <p id="t-v2-desc">From travel to healthcare, legal to real estate &mdash; each industry gets its own dedicated platform with shared infrastructure, login, and AI capabilities.</p>
+        </div>
+        <div class="vision-card reveal">
+            <div class="vision-icon">&#x1F517;</div>
+            <h3 id="t-v3-title">Connected Experience</h3>
+            <p id="t-v3-desc">Agents, admins, and end users get role-based portals with seamless navigation, multi-language support, and secure payments across all platforms.</p>
+        </div>
+        <div class="vision-card reveal">
+            <div class="vision-icon">&#x1F680;</div>
+            <h3 id="t-v4-title">Scale Without Limits</h3>
+            <p id="t-v4-desc">Built on modern cloud architecture, each platform supports global scale &mdash; from independent freelancers to enterprise agencies with thousands of clients.</p>
         </div>
     </div>
+</section>
 
-    <div id="statusModal" class="modal">
-        <div class="modal-content">
-            <h2 id="modalTitle" style="color:white; margin-bottom:10px;">Service Locked</h2>
-            <p id="modalDate" style="color:#00f3ff; font-weight:bold; margin-bottom:20px;">Coming Soon</p>
-            <p id="modalText" style="color:#aaa;">This sector of the Empire is currently under development.</p>
-            <button class="close-btn" onclick="closeModal()" id="t-close-btn">Acknowledge</button>
+<!-- ===== PLATFORMS ===== -->
+<section id="platforms">
+    <h2 class="section-title reveal" id="t-plat-title">Our <span class="txt-purple">Platforms</span></h2>
+    <p class="section-subtitle reveal" id="t-plat-sub">Explore the growing TimeLightHub ecosystem. Each platform is purpose-built with AI at its core.</p>
+
+    <div class="platforms-grid">
+        <!-- TRAVEL - LIVE -->
+        <div class="platform-card live reveal">
+            <div class="platform-icon txt-purple"><i class="fa-solid fa-rocket"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 class="txt-purple" id="t-p-travel-title">AI Travel Platform</h2>
+                    <span class="status-badge badge-live" id="t-badge-live">&#x25CF; Live</span>
+                </div>
+                <p class="platform-desc" id="t-p-travel-desc">Complete AI-powered travel management system. Empowering travel agents with smart itinerary planning, AI chatbot assistance, and seamless booking management &mdash; while delighting travelers with personalized experiences.</p>
+                <ul class="platform-features">
+                    <li id="t-p-travel-f1">AI journey planning &amp; smart itineraries</li>
+                    <li id="t-p-travel-f2">Agent, Admin &amp; Traveler portals</li>
+                    <li id="t-p-travel-f3">Global eSIM connectivity</li>
+                    <li id="t-p-travel-f4">AI chatbot travel assistant</li>
+                    <li id="t-p-travel-f5">Stripe &amp; Crypto payments</li>
+                    <li id="t-p-travel-f6">Multi-currency &amp; multi-language</li>
+                </ul>
+            </div>
+            <div class="platform-action">
+                <a href="https://travel.timelighthub.com" target="_blank" rel="noopener noreferrer" class="btn-visit" id="t-btn-visit-travel">Visit Platform &#x2192;</a>
+            </div>
+        </div>
+
+        <!-- E-STORE - COMING SOON -->
+        <div class="platform-card coming reveal">
+            <div class="platform-icon txt-orange"><i class="fa-solid fa-store"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 class="txt-orange" id="t-p-estore-title">AI E-Store</h2>
+                    <span class="status-badge badge-coming" id="t-badge-coming">&#x25D4; Coming Soon</span>
+                </div>
+                <p class="platform-desc" id="t-p-estore-desc">AI-powered e-commerce platform for smart product recommendations, automated inventory management, and seamless multi-vendor marketplace experiences with global shipping integration.</p>
+                <ul class="platform-features">
+                    <li id="t-p-estore-f1">AI product recommendations</li>
+                    <li id="t-p-estore-f2">Multi-vendor marketplace</li>
+                    <li id="t-p-estore-f3">Smart inventory management</li>
+                    <li id="t-p-estore-f4">Secure checkout (Stripe + Crypto)</li>
+                    <li id="t-p-estore-f5">Global shipping integration</li>
+                    <li id="t-p-estore-f6">Vendor analytics dashboard</li>
+                </ul>
+            </div>
+            <div class="platform-action">
+                <span class="btn-soon" id="t-btn-soon-estore">Coming Soon</span>
+            </div>
+        </div>
+
+        <!-- MAINTENANCE - COMING SOON -->
+        <div class="platform-card coming reveal">
+            <div class="platform-icon txt-cyan"><i class="fa-solid fa-microchip"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 class="txt-cyan" id="t-p-repair-title">AI Maintenance</h2>
+                    <span class="status-badge badge-coming" id="t-badge-coming2">&#x25D4; Coming Soon</span>
+                </div>
+                <p class="platform-desc" id="t-p-repair-desc">AI-driven diagnostics and workshop management. Connecting technicians with clients through intelligent ticket routing, parts inventory, and predictive maintenance scheduling.</p>
+                <ul class="platform-features">
+                    <li id="t-p-repair-f1">AI-driven diagnostics</li>
+                    <li id="t-p-repair-f2">Technician-client matching</li>
+                    <li id="t-p-repair-f3">Workshop management</li>
+                    <li id="t-p-repair-f4">Parts inventory tracking</li>
+                    <li id="t-p-repair-f5">Predictive maintenance AI</li>
+                    <li id="t-p-repair-f6">Service history &amp; analytics</li>
+                </ul>
+            </div>
+            <div class="platform-action">
+                <span class="btn-soon" id="t-btn-soon-repair">Coming Soon</span>
+            </div>
+        </div>
+
+        <!-- MEDICAL - LOCKED -->
+        <div class="platform-card locked reveal">
+            <div class="platform-icon txt-gold"><i class="fa-solid fa-user-doctor"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 id="t-p-medical-title">AI Medical</h2>
+                    <span class="status-badge badge-locked" id="t-badge-locked1"><i class="fa-solid fa-lock"></i> Locked</span>
+                </div>
+                <p class="platform-desc" id="t-p-medical-desc">AI clinical management platform bridging doctors and patients. Intelligent scheduling, medical record management, and AI-assisted diagnostics.</p>
+                <ul class="platform-features">
+                    <li id="t-p-medical-f1">AI-assisted diagnostics</li>
+                    <li id="t-p-medical-f2">Doctor-patient portal</li>
+                    <li id="t-p-medical-f3">Appointment scheduling</li>
+                    <li id="t-p-medical-f4">Medical record management</li>
+                </ul>
+            </div>
+            <div class="platform-action"><span class="btn-locked" id="t-btn-locked1"><i class="fa-solid fa-lock"></i> 2027</span></div>
+        </div>
+
+        <!-- LEGAL - LOCKED -->
+        <div class="platform-card locked reveal">
+            <div class="platform-icon txt-gold"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 id="t-p-legal-title">AI Legal</h2>
+                    <span class="status-badge badge-locked" id="t-badge-locked2"><i class="fa-solid fa-lock"></i> Locked</span>
+                </div>
+                <p class="platform-desc" id="t-p-legal-desc">AI case intelligence platform uniting lawyers and clients. Smart document analysis, case tracking, and AI-powered legal research tools.</p>
+                <ul class="platform-features">
+                    <li id="t-p-legal-f1">AI legal research &amp; analysis</li>
+                    <li id="t-p-legal-f2">Lawyer-client portal</li>
+                    <li id="t-p-legal-f3">Case &amp; document management</li>
+                    <li id="t-p-legal-f4">Smart contract drafting</li>
+                </ul>
+            </div>
+            <div class="platform-action"><span class="btn-locked" id="t-btn-locked2"><i class="fa-solid fa-lock"></i> 2027</span></div>
+        </div>
+
+        <!-- REAL ESTATE - LOCKED -->
+        <div class="platform-card locked reveal">
+            <div class="platform-icon txt-gold"><i class="fa-solid fa-city"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 id="t-p-estate-title">AI Real Estate</h2>
+                    <span class="status-badge badge-locked" id="t-badge-locked3"><i class="fa-solid fa-lock"></i> Locked</span>
+                </div>
+                <p class="platform-desc" id="t-p-estate-desc">AI property ecosystem with tools for agents and buyers. Smart property matching, virtual tours, market analytics, and automated valuations.</p>
+                <ul class="platform-features">
+                    <li id="t-p-estate-f1">AI property matching</li>
+                    <li id="t-p-estate-f2">Agent-buyer portal</li>
+                    <li id="t-p-estate-f3">Virtual tours &amp; 3D views</li>
+                    <li id="t-p-estate-f4">Market analytics &amp; valuations</li>
+                </ul>
+            </div>
+            <div class="platform-action"><span class="btn-locked" id="t-btn-locked3"><i class="fa-solid fa-lock"></i> 2027+</span></div>
+        </div>
+
+        <!-- CONSULTING - LOCKED -->
+        <div class="platform-card locked reveal">
+            <div class="platform-icon txt-gold"><i class="fa-solid fa-briefcase"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 id="t-p-consulting-title">AI Consulting</h2>
+                    <span class="status-badge badge-locked" id="t-badge-locked4"><i class="fa-solid fa-lock"></i> Locked</span>
+                </div>
+                <p class="platform-desc" id="t-p-consulting-desc">AI strategic growth platform providing data-driven insights for consultants and businesses. Analytics dashboards, project management, and AI strategy recommendations.</p>
+                <ul class="platform-features">
+                    <li id="t-p-consulting-f1">AI strategic insights</li>
+                    <li id="t-p-consulting-f2">Consultant-business matching</li>
+                    <li id="t-p-consulting-f3">Analytics dashboards</li>
+                    <li id="t-p-consulting-f4">Project management tools</li>
+                </ul>
+            </div>
+            <div class="platform-action"><span class="btn-locked" id="t-btn-locked4"><i class="fa-solid fa-lock"></i> 2027+</span></div>
         </div>
     </div>
+</section>
 
-    <script>
-        // 1. LANGUAGE DATABASE
-        const translations = {
-            en: {
-                name: "English",
-                slogan: "The AI Hub for Your Service Empire",
-                repairTitle: "Maintenance", repairDesc: "AI-Driven Diagnostics & Management. Connecting Technicians with Clients seamlessly.", repairBtn: "Manage Workshop",
-                travelTitle: "Explore", travelDesc: "AI Journey Planning. Empowering Agents & delighting Travelers with smart itineraries.", travelBtn: "Start Journey",
-                medicalTitle: "Medical", medicalDesc: "AI Clinical Management. Bridging Doctors & Patients.",
-                legalTitle: "Legal", legalDesc: "AI Case Intelligence. Uniting Lawyers & Clients.",
-                estateTitle: "Real Estate", estateDesc: "AI Property Ecosystem. Tools for Agents & Buyers.",
-                consultingTitle: "Consulting", consultingDesc: "AI Strategic Growth. Data for Consultants & Businesses.",
-                locked: "Locked", close: "Acknowledge",
-                modalMsg: "This sector of the Empire is currently under development.",
-                launchTarget: "Launch Target: ",
-                footerTerms: "Terms of Service", footerPrivacy: "Privacy Policy",
-                footerRefund: "Refund Policy", footerCookie: "Cookie Policy",
-                footerAup: "Acceptable Use", footerRights: "All rights reserved.",
-                cookieMsg: "We use essential cookies for platform functionality and optional analytics cookies to improve our services.",
-                cookieLink: "Cookie Policy", cookieEssential: "Essential Only", cookieAccept: "Accept All"
-            },
-            ar: {
-                name: "العربية",
-                slogan: "المحور الذكي لإمبراطورية خدماتك",
-                repairTitle: "الصيانة", repairDesc: "تشخيص بالذكاء الاصطناعي وإدارة شاملة. نربط الفنيين بالعملاء بسلاسة.", repairBtn: "إدارة الصيانة",
-                travelTitle: "استكشاف", travelDesc: "تخطيط رحلات ذكي. تمكين الوكلاء وإسعاد المسافرين بمسارات مخصصة.", travelBtn: "ابدأ الرحلة",
-                medicalTitle: "طبي", medicalDesc: "إدارة عيادات ذكية. جسر التواصل بين الطبيب والمريض.",
-                legalTitle: "قانوني", legalDesc: "ذكاء قانوني وإدارة قضايا. نوحد المحامين والعملاء.",
-                estateTitle: "عقارات", estateDesc: "منظومة عقارية ذكية. أدوات للوكلاء والمشترين.",
-                consultingTitle: "استشارات", consultingDesc: "نمو استراتيجي بالذكاء الاصطناعي. بيانات للمستشارين والشركات.",
-                locked: "مغلق", close: "موافق",
-                modalMsg: "هذا القطاع من الإمبراطورية قيد التطوير حالياً.",
-                launchTarget: "هدف الإطلاق: ",
-                footerTerms: "شروط الخدمة", footerPrivacy: "سياسة الخصوصية",
-                footerRefund: "سياسة الاسترداد", footerCookie: "سياسة ملفات تعريف الارتباط",
-                footerAup: "سياسة الاستخدام المقبول", footerRights: "جميع الحقوق محفوظة.",
-                cookieMsg: "نستخدم ملفات تعريف الارتباط الأساسية لوظائف المنصة وملفات تعريف الارتباط التحليلية الاختيارية لتحسين خدماتنا.",
-                cookieLink: "سياسة ملفات تعريف الارتباط", cookieEssential: "الأساسية فقط", cookieAccept: "قبول الكل"
-            },
-            fr: {
-                name: "Français",
-                slogan: "Le Hub IA pour votre Empire de Services",
-                repairTitle: "Maintenance", repairDesc: "Diagnostics IA et gestion. Connecter Techniciens et Clients.", repairBtn: "Gérer l'Atelier",
-                travelTitle: "Explorer", travelDesc: "Planification IA. Autonomiser les agents et ravir les voyageurs.", travelBtn: "Commencer",
-                medicalTitle: "Médical", medicalDesc: "Gestion Clinique IA. Relier Médecins et Patients.",
-                legalTitle: "Juridique", legalDesc: "Intelligence Juridique IA. Unir Avocats et Clients.",
-                estateTitle: "Immobilier", estateDesc: "Écosystème Immobilier IA. Outils pour Agents et Acheteurs.",
-                consultingTitle: "Conseil", consultingDesc: "Croissance Stratégique IA. Données pour Consultants.",
-                locked: "Verrouillé", close: "Fermer",
-                modalMsg: "Ce secteur de l'Empire est en cours de développement.",
-                launchTarget: "Lancement prévu : ",
-                footerTerms: "Conditions d'utilisation", footerPrivacy: "Politique de confidentialité",
-                footerRefund: "Politique de remboursement", footerCookie: "Politique de cookies",
-                footerAup: "Utilisation acceptable", footerRights: "Tous droits réservés.",
-                cookieMsg: "Nous utilisons des cookies essentiels pour le fonctionnement de la plateforme et des cookies analytiques optionnels pour améliorer nos services.",
-                cookieLink: "Politique de cookies", cookieEssential: "Essentiels uniquement", cookieAccept: "Tout accepter"
-            },
-            es: {
-                name: "Español",
-                slogan: "El Centro de IA para su Imperio de Servicios",
-                repairTitle: "Mantenimiento", repairDesc: "Diagnóstico por IA y Gestión. Conectando Técnicos y Clientes.", repairBtn: "Gestión de Taller",
-                travelTitle: "Explorar", travelDesc: "Planificación IA. Empoderando Agentes y deleitando Viajeros.", travelBtn: "Iniciar Viaje",
-                medicalTitle: "Médico", medicalDesc: "Gestión Clínica IA. Uniendo Médicos y Pacientes.",
-                legalTitle: "Legal", legalDesc: "Inteligencia Legal IA. Uniendo Abogados y Clientes.",
-                estateTitle: "Inmobiliaria", estateDesc: "Ecosistema Inmobiliario IA. Herramientas para Agentes.",
-                consultingTitle: "Consultoría", consultingDesc: "Crecimiento Estratégico IA. Datos para Consultores.",
-                locked: "Bloqueado", close: "Cerrar",
-                modalMsg: "Este sector del Imperio está en desarrollo.",
-                launchTarget: "Lanzamiento: ",
-                footerTerms: "Términos de servicio", footerPrivacy: "Política de privacidad",
-                footerRefund: "Política de reembolso", footerCookie: "Política de cookies",
-                footerAup: "Uso aceptable", footerRights: "Todos los derechos reservados.",
-                cookieMsg: "Utilizamos cookies esenciales para la funcionalidad de la plataforma y cookies analíticas opcionales para mejorar nuestros servicios.",
-                cookieLink: "Política de cookies", cookieEssential: "Solo esenciales", cookieAccept: "Aceptar todo"
-            },
-            de: {
-                name: "Deutsch",
-                slogan: "Der KI-Hub für Ihr Service-Imperium",
-                repairTitle: "Wartung", repairDesc: "KI-Diagnose & Management. Verbindung von Technikern & Kunden.", repairBtn: "Werkstatt Verwalten",
-                travelTitle: "Erkunden", travelDesc: "KI-Reiseplanung. Stärkung von Agenten & Reisenden.", travelBtn: "Starten",
-                medicalTitle: "Medizinisch", medicalDesc: "KI-Klinikmanagement. Brücke zwischen Ärzten & Patienten.",
-                legalTitle: "Rechtlich", legalDesc: "KI-Rechtsintelligenz. Vereinigung von Anwälten & Mandanten.",
-                estateTitle: "Immobilien", estateDesc: "KI-Immobilien-Ökosystem. Tools für Makler & Käufer.",
-                consultingTitle: "Beratung", consultingDesc: "Strategisches KI-Wachstum. Daten für Berater.",
-                locked: "Gesperrt", close: "Schließen",
-                modalMsg: "Dieser Sektor des Imperiums befindet sich in Entwicklung.",
-                launchTarget: "Startziel: ",
-                footerTerms: "Nutzungsbedingungen", footerPrivacy: "Datenschutzrichtlinie",
-                footerRefund: "Erstattungsrichtlinie", footerCookie: "Cookie-Richtlinie",
-                footerAup: "Nutzungsrichtlinien", footerRights: "Alle Rechte vorbehalten.",
-                cookieMsg: "Wir verwenden wesentliche Cookies für die Plattformfunktionalität und optionale Analyse-Cookies zur Verbesserung unserer Dienste.",
-                cookieLink: "Cookie-Richtlinie", cookieEssential: "Nur wesentliche", cookieAccept: "Alle akzeptieren"
+<!-- ===== FEATURES ===== -->
+<section id="features">
+    <h2 class="section-title reveal" id="t-feat-title">Why <span class="txt-cyan">TimeLightHub</span>?</h2>
+    <p class="section-subtitle reveal" id="t-feat-sub">Every platform in our ecosystem shares these core capabilities.</p>
+    <div class="features-grid">
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+            <h3 id="t-f1-title">AI-Powered</h3>
+            <p id="t-f1-desc">Intelligent agents that automate bookings, diagnostics, recommendations, and decision-making across all platforms.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-language"></i></div>
+            <h3 id="t-f2-title">Multi-Language</h3>
+            <p id="t-f2-desc">Full support for English, Arabic (RTL), French, German, and Spanish &mdash; with more languages coming soon.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3 id="t-f3-title">Secure &amp; Compliant</h3>
+            <p id="t-f3-desc">Stripe + Crypto payments, encrypted data, GDPR/PECR/AU Privacy Act compliant across all jurisdictions.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <h3 id="t-f4-title">Multi-Role Portals</h3>
+            <p id="t-f4-desc">Dedicated experiences for agents, admins, super-admins, and end users &mdash; each with tailored AI tools.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ROADMAP ===== -->
+<section id="roadmap">
+    <h2 class="section-title reveal" id="t-road-title">Platform <span class="txt-gold">Roadmap</span></h2>
+    <p class="section-subtitle reveal" id="t-road-sub">Our journey to building the world's most comprehensive AI service hub.</p>
+    <div class="roadmap">
+        <div class="roadmap-item reveal-left">
+            <div class="roadmap-dot dot-live"></div>
+            <div class="roadmap-content">
+                <h3 class="txt-purple" id="t-rm1-title">AI Travel Platform</h3>
+                <div class="rm-date" id="t-rm1-date">&#x25CF; Live Now &mdash; travel.timelighthub.com</div>
+                <p id="t-rm1-desc">Full launch with agent portals, AI chatbot, eSIM, bookings, and multi-currency payments.</p>
+            </div>
+        </div>
+        <div class="roadmap-item reveal-left">
+            <div class="roadmap-dot dot-coming"></div>
+            <div class="roadmap-content">
+                <h3 class="txt-orange" id="t-rm2-title">AI E-Store</h3>
+                <div class="rm-date" id="t-rm2-date">&#x25D4; Coming &mdash; Q3 2026</div>
+                <p id="t-rm2-desc">Multi-vendor e-commerce with AI product recommendations and global shipping.</p>
+            </div>
+        </div>
+        <div class="roadmap-item reveal-left">
+            <div class="roadmap-dot dot-coming"></div>
+            <div class="roadmap-content">
+                <h3 class="txt-cyan" id="t-rm3-title">AI Maintenance</h3>
+                <div class="rm-date" id="t-rm3-date">&#x25D4; Coming &mdash; Q4 2026</div>
+                <p id="t-rm3-desc">Workshop management, AI diagnostics, and technician-client networking.</p>
+            </div>
+        </div>
+        <div class="roadmap-item reveal-left">
+            <div class="roadmap-dot dot-locked"></div>
+            <div class="roadmap-content">
+                <h3 id="t-rm4-title">Medical &#xB7; Legal &#xB7; Real Estate &#xB7; Consulting</h3>
+                <div class="rm-date" id="t-rm4-date">&#x1F512; 2027+</div>
+                <p id="t-rm4-desc">Next wave of AI platforms expanding the TimeLightHub empire into healthcare, law, property, and business consulting.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SUBSCRIBE ===== -->
+<section id="subscribe">
+    <div class="subscribe-section reveal">
+        <h2 id="t-sub-title">Stay in the <span class="txt-cyan">Loop</span></h2>
+        <p id="t-sub-desc">Subscribe to get notified when new platforms launch, plus exclusive updates and early access.</p>
+        <form class="subscribe-form" onsubmit="handleSubscribe(event)">
+            <input type="email" id="subEmail" placeholder="Enter your email" required>
+            <button type="submit" id="t-sub-btn">Subscribe</button>
+        </form>
+        <p id="subMsg" style="margin-top:12px; font-size:0.8rem; color:var(--green); display:none;"></p>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+    <h2 class="section-title reveal" id="t-contact-title">Get in <span class="txt-cyan">Touch</span></h2>
+    <p class="section-subtitle reveal" id="t-contact-sub">Have a question, partnership idea, or want to become an agent? Reach out to us.</p>
+    <div class="contact-grid reveal">
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span><a href="mailto:support@timelighthub.com">support@timelighthub.com</a></span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-globe"></i>
+                <span><a href="https://timelighthub.com">timelighthub.com</a></span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span id="t-contact-global">Global &mdash; Australia &#xB7; UK &#xB7; UAE &#xB7; Europe</span>
+            </div>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <form class="contact-form" onsubmit="handleContact(event)">
+            <input type="text" id="cName" required>
+            <input type="email" id="cEmail" required>
+            <textarea id="cMsg" rows="4" required></textarea>
+            <button type="submit" id="t-contact-btn">Send Message</button>
+        </form>
+    </div>
+    <p id="contactMsg" style="margin-top:8px; font-size:0.8rem; color:var(--green); display:none; text-align:center;"></p>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+    <div class="footer-links">
+        <a href="https://travel.timelighthub.com/terms" target="_blank" rel="noopener noreferrer" id="t-ft-terms">Terms of Service</a>
+        <a href="https://travel.timelighthub.com/privacy" target="_blank" rel="noopener noreferrer" id="t-ft-privacy">Privacy Policy</a>
+        <a href="https://travel.timelighthub.com/refund-policy" target="_blank" rel="noopener noreferrer" id="t-ft-refund">Refund Policy</a>
+        <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-ft-cookie">Cookie Policy</a>
+        <a href="https://travel.timelighthub.com/acceptable-use" target="_blank" rel="noopener noreferrer" id="t-ft-aup">Acceptable Use</a>
+    </div>
+    <p class="footer-copy">&copy; <span id="ftYear"></span> TimeLightHub Pty Ltd (ABN 80 674 812 852). <span id="t-ft-rights">All rights reserved.</span></p>
+</footer>
+
+<!-- ===== COOKIE BANNER ===== -->
+<div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-inner">
+        <div class="cookie-text">
+            <span id="t-ck-msg">We use essential cookies for platform functionality and optional analytics cookies to improve our services.</span>
+            <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-ck-link"> Cookie Policy</a>
+        </div>
+        <div class="cookie-btns">
+            <button class="ck-btn ck-essential" onclick="saveCookies('essential')" id="t-ck-ess">Essential Only</button>
+            <button class="ck-btn ck-accept" onclick="saveCookies('all')" id="t-ck-acc">Accept All</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ========================================================
+// TRANSLATIONS
+// ========================================================
+var T = {
+en: {
+    langLabel: "EN",
+    nav: { vision:"Vision", platforms:"Platforms", features:"Features", roadmap:"Roadmap", contact:"Contact" },
+    hero: { tagline:"The Smart Engine for Your Business Empire", sub:"One unified AI hub powering multiple industries \u2014 from travel to e-commerce, repair to consulting. Built for agents, loved by clients." },
+    stats: { s1:"AI Platforms", s2:"Languages", s3:"Countries", s4:"AI Agents" },
+    cta: { travel:"Visit Travel Platform", explore:"Explore All Platforms" },
+    vision: { title:"Our <span class=\"txt-cyan\">Vision</span>", sub:"One Hub, Multiple Empires. We build AI-powered platforms that connect professionals with clients across every major industry." },
+    v: [
+        { t:"AI-First Approach", d:"Every platform is powered by intelligent AI agents that automate tasks, generate insights, and enhance decision-making for professionals and end users." },
+        { t:"Multi-Platform Ecosystem", d:"From travel to healthcare, legal to real estate \u2014 each industry gets its own dedicated platform with shared infrastructure, login, and AI capabilities." },
+        { t:"Connected Experience", d:"Agents, admins, and end users get role-based portals with seamless navigation, multi-language support, and secure payments across all platforms." },
+        { t:"Scale Without Limits", d:"Built on modern cloud architecture, each platform supports global scale \u2014 from independent freelancers to enterprise agencies with thousands of clients." }
+    ],
+    plat: { title:"Our <span class=\"txt-purple\">Platforms</span>", sub:"Explore the growing TimeLightHub ecosystem. Each platform is purpose-built with AI at its core." },
+    badges: { live:"\u25CF Live", coming:"\u25D4 Coming Soon", locked:"Locked" },
+    travel: { title:"AI Travel Platform", desc:"Complete AI-powered travel management system. Empowering travel agents with smart itinerary planning, AI chatbot assistance, and seamless booking management \u2014 while delighting travelers with personalized experiences.", f:["AI journey planning & smart itineraries","Agent, Admin & Traveler portals","Global eSIM connectivity","AI chatbot travel assistant","Stripe & Crypto payments","Multi-currency & multi-language"], btn:"Visit Platform \u2192" },
+    estore: { title:"AI E-Store", desc:"AI-powered e-commerce platform for smart product recommendations, automated inventory management, and seamless multi-vendor marketplace experiences with global shipping integration.", f:["AI product recommendations","Multi-vendor marketplace","Smart inventory management","Secure checkout (Stripe + Crypto)","Global shipping integration","Vendor analytics dashboard"], btn:"Coming Soon" },
+    repair: { title:"AI Maintenance", desc:"AI-driven diagnostics and workshop management. Connecting technicians with clients through intelligent ticket routing, parts inventory, and predictive maintenance scheduling.", f:["AI-driven diagnostics","Technician-client matching","Workshop management","Parts inventory tracking","Predictive maintenance AI","Service history & analytics"], btn:"Coming Soon" },
+    medical: { title:"AI Medical", desc:"AI clinical management platform bridging doctors and patients. Intelligent scheduling, medical record management, and AI-assisted diagnostics.", f:["AI-assisted diagnostics","Doctor-patient portal","Appointment scheduling","Medical record management"] },
+    legal: { title:"AI Legal", desc:"AI case intelligence platform uniting lawyers and clients. Smart document analysis, case tracking, and AI-powered legal research tools.", f:["AI legal research & analysis","Lawyer-client portal","Case & document management","Smart contract drafting"] },
+    estate: { title:"AI Real Estate", desc:"AI property ecosystem with tools for agents and buyers. Smart property matching, virtual tours, market analytics, and automated valuations.", f:["AI property matching","Agent-buyer portal","Virtual tours & 3D views","Market analytics & valuations"] },
+    consulting: { title:"AI Consulting", desc:"AI strategic growth platform providing data-driven insights for consultants and businesses. Analytics dashboards, project management, and AI strategy recommendations.", f:["AI strategic insights","Consultant-business matching","Analytics dashboards","Project management tools"] },
+    feat: { title:"Why <span class=\"txt-cyan\">TimeLightHub</span>?", sub:"Every platform in our ecosystem shares these core capabilities." },
+    features: [
+        { t:"AI-Powered", d:"Intelligent agents that automate bookings, diagnostics, recommendations, and decision-making across all platforms." },
+        { t:"Multi-Language", d:"Full support for English, Arabic (RTL), French, German, and Spanish \u2014 with more languages coming soon." },
+        { t:"Secure & Compliant", d:"Stripe + Crypto payments, encrypted data, GDPR/PECR/AU Privacy Act compliant across all jurisdictions." },
+        { t:"Multi-Role Portals", d:"Dedicated experiences for agents, admins, super-admins, and end users \u2014 each with tailored AI tools." }
+    ],
+    road: { title:"Platform <span class=\"txt-gold\">Roadmap</span>", sub:"Our journey to building the world\u2019s most comprehensive AI service hub." },
+    rm: [
+        { t:"AI Travel Platform", date:"\u25CF Live Now \u2014 travel.timelighthub.com", d:"Full launch with agent portals, AI chatbot, eSIM, bookings, and multi-currency payments." },
+        { t:"AI E-Store", date:"\u25D4 Coming \u2014 Q3 2026", d:"Multi-vendor e-commerce with AI product recommendations and global shipping." },
+        { t:"AI Maintenance", date:"\u25D4 Coming \u2014 Q4 2026", d:"Workshop management, AI diagnostics, and technician-client networking." },
+        { t:"Medical \u00B7 Legal \u00B7 Real Estate \u00B7 Consulting", date:"🔒 2027+", d:"Next wave of AI platforms expanding the TimeLightHub empire into healthcare, law, property, and business consulting." }
+    ],
+    subscribe: { title:"Stay in the <span class=\"txt-cyan\">Loop</span>", desc:"Subscribe to get notified when new platforms launch, plus exclusive updates and early access.", btn:"Subscribe", placeholder:"Enter your email", success:"Thank you for subscribing!" },
+    contact: { title:"Get in <span class=\"txt-cyan\">Touch</span>", sub:"Have a question, partnership idea, or want to become an agent? Reach out to us.", global:"Global \u2014 Australia \u00B7 UK \u00B7 UAE \u00B7 Europe", btn:"Send Message", name:"Your Name", email:"Your Email", msg:"Your Message", success:"Message sent! We\u2019ll get back to you soon." },
+    footer: { terms:"Terms of Service", privacy:"Privacy Policy", refund:"Refund Policy", cookie:"Cookie Policy", aup:"Acceptable Use", rights:"All rights reserved." },
+    cookie: { msg:"We use essential cookies for platform functionality and optional analytics cookies to improve our services.", link:" Cookie Policy", essential:"Essential Only", accept:"Accept All" }
+},
+ar: {
+    langLabel: "AR",
+    nav: { vision:"الرؤية", platforms:"المنصات", features:"المميزات", roadmap:"خارطة الطريق", contact:"اتصل بنا" },
+    hero: { tagline:"المحرك الذكي لإمبراطورية أعمالك", sub:"مركز ذكاء اصطناعي موحد يدعم صناعات متعددة \u2014 من السفر إلى التجارة الإلكترونية، ومن الصيانة إلى الاستشارات." },
+    stats: { s1:"منصات ذكاء اصطناعي", s2:"لغات", s3:"دول", s4:"وكلاء ذكاء اصطناعي" },
+    cta: { travel:"زيارة منصة السفر", explore:"استكشاف جميع المنصات" },
+    vision: { title:"<span class=\"txt-cyan\">رؤيتنا</span>", sub:"مركز واحد، إمبراطوريات متعددة. نبني منصات مدعومة بالذكاء الاصطناعي تربط المحترفين بالعملاء في كل صناعة رئيسية." },
+    v: [
+        { t:"نهج الذكاء الاصطناعي أولاً", d:"كل منصة مدعومة بوكلاء ذكاء اصطناعي يؤتمتون المهام ويولدون رؤى ويعززون اتخاذ القرارات." },
+        { t:"نظام منصات متعدد", d:"من السفر إلى الرعاية الصحية، القانون إلى العقارات \u2014 كل صناعة تحصل على منصة مخصصة ببنية تحتية مشتركة." },
+        { t:"تجربة متصلة", d:"يحصل الوكلاء والمديرون والمستخدمون على بوابات حسب الأدوار مع تنقل سلس ودعم متعدد اللغات ومدفوعات آمنة." },
+        { t:"توسع بلا حدود", d:"مبني على بنية سحابية حديثة، كل منصة تدعم النطاق العالمي \u2014 من المستقلين إلى الوكالات الكبيرة." }
+    ],
+    plat: { title:"<span class=\"txt-purple\">منصاتنا</span>", sub:"استكشف نظام TimeLightHub المتنامي. كل منصة مبنية خصيصاً بالذكاء الاصطناعي في جوهرها." },
+    badges: { live:"\u25CF مباشر", coming:"\u25D4 قريباً", locked:"مغلق" },
+    travel: { title:"منصة السفر الذكية", desc:"نظام إدارة سفر كامل بالذكاء الاصطناعي. تمكين وكلاء السفر بتخطيط الرحلات الذكي ومساعد الدردشة وإدارة الحجوزات.", f:["تخطيط رحلات ذكي بالذكاء الاصطناعي","بوابات الوكيل والمدير والمسافر","اتصال eSIM عالمي","مساعد سفر ذكي","مدفوعات Stripe والعملات الرقمية","متعدد العملات واللغات"], btn:"زيارة المنصة \u2192" },
+    estore: { title:"المتجر الإلكتروني الذكي", desc:"منصة تجارة إلكترونية بالذكاء الاصطناعي للتوصيات الذكية وإدارة المخزون الآلية وتجارب سوق متعدد البائعين مع الشحن العالمي.", f:["توصيات منتجات ذكية","سوق متعدد البائعين","إدارة مخزون ذكية","دفع آمن (Stripe + Crypto)","تكامل شحن عالمي","لوحة تحليلات البائع"], btn:"قريباً" },
+    repair: { title:"الصيانة الذكية", desc:"تشخيص وإدارة ورش بالذكاء الاصطناعي. ربط الفنيين بالعملاء من خلال توجيه ذكي وتتبع القطع والصيانة التنبؤية.", f:["تشخيص بالذكاء الاصطناعي","مطابقة فني-عميل","إدارة الورش","تتبع قطع الغيار","صيانة تنبؤية","سجل الخدمة والتحليلات"], btn:"قريباً" },
+    medical: { title:"الطبي الذكي", desc:"منصة إدارة عيادات ذكية تجسر التواصل بين الأطباء والمرضى.", f:["تشخيص بمساعدة الذكاء الاصطناعي","بوابة طبيب-مريض","جدولة المواعيد","إدارة السجلات الطبية"] },
+    legal: { title:"القانوني الذكي", desc:"منصة ذكاء قانوني توحد المحامين والعملاء.", f:["بحث قانوني بالذكاء الاصطناعي","بوابة محامي-عميل","إدارة القضايا والمستندات","صياغة عقود ذكية"] },
+    estate: { title:"العقارات الذكية", desc:"منظومة عقارية ذكية مع أدوات للوكلاء والمشترين.", f:["مطابقة عقارات ذكية","بوابة وكيل-مشتري","جولات افتراضية وعرض ثلاثي الأبعاد","تحليلات السوق والتقييمات"] },
+    consulting: { title:"الاستشارات الذكية", desc:"منصة نمو استراتيجي بالذكاء الاصطناعي.", f:["رؤى استراتيجية ذكية","مطابقة مستشار-شركة","لوحات تحليلات","أدوات إدارة المشاريع"] },
+    feat: { title:"لماذا <span class=\"txt-cyan\">TimeLightHub</span>؟", sub:"كل منصة في نظامنا تشترك في هذه القدرات الأساسية." },
+    features: [
+        { t:"مدعوم بالذكاء الاصطناعي", d:"وكلاء أذكياء يؤتمتون الحجوزات والتشخيص والتوصيات واتخاذ القرارات." },
+        { t:"متعدد اللغات", d:"دعم كامل للعربية والإنجليزية والفرنسية والألمانية والإسبانية \u2014 مع المزيد قريباً." },
+        { t:"آمن ومتوافق", d:"مدفوعات Stripe والعملات الرقمية، بيانات مشفرة، متوافق مع GDPR وقوانين الخصوصية." },
+        { t:"بوابات متعددة الأدوار", d:"تجارب مخصصة للوكلاء والمديرين والمستخدمين النهائيين \u2014 كل منهم بأدوات ذكاء اصطناعي مخصصة." }
+    ],
+    road: { title:"خارطة <span class=\"txt-gold\">الطريق</span>", sub:"رحلتنا لبناء أشمل مركز خدمات ذكاء اصطناعي في العالم." },
+    rm: [
+        { t:"منصة السفر الذكية", date:"\u25CF مباشر الآن \u2014 travel.timelighthub.com", d:"إطلاق كامل مع بوابات الوكلاء ودردشة ذكية وeSIM وحجوزات ومدفوعات متعددة العملات." },
+        { t:"المتجر الإلكتروني الذكي", date:"\u25D4 قريباً \u2014 الربع الثالث 2026", d:"تجارة إلكترونية متعددة البائعين مع توصيات ذكية وشحن عالمي." },
+        { t:"الصيانة الذكية", date:"\u25D4 قريباً \u2014 الربع الرابع 2026", d:"إدارة ورش وتشخيص ذكي وربط فنيين بعملاء." },
+        { t:"طبي \u00B7 قانوني \u00B7 عقارات \u00B7 استشارات", date:"🔒 2027+", d:"الموجة التالية من المنصات الذكية لتوسيع إمبراطورية TimeLightHub." }
+    ],
+    subscribe: { title:"ابقَ على <span class=\"txt-cyan\">اطلاع</span>", desc:"اشترك للحصول على إشعارات عند إطلاق منصات جديدة، بالإضافة إلى تحديثات حصرية.", btn:"اشتراك", placeholder:"أدخل بريدك الإلكتروني", success:"شكراً لاشتراكك!" },
+    contact: { title:"تواصل <span class=\"txt-cyan\">معنا</span>", sub:"لديك سؤال أو فكرة شراكة أو تريد أن تصبح وكيلاً؟ تواصل معنا.", global:"عالمي \u2014 أستراليا \u00B7 المملكة المتحدة \u00B7 الإمارات \u00B7 أوروبا", btn:"إرسال الرسالة", name:"اسمك", email:"بريدك الإلكتروني", msg:"رسالتك", success:"تم الإرسال! سنرد عليك قريباً." },
+    footer: { terms:"شروط الخدمة", privacy:"سياسة الخصوصية", refund:"سياسة الاسترداد", cookie:"سياسة ملفات تعريف الارتباط", aup:"الاستخدام المقبول", rights:"جميع الحقوق محفوظة." },
+    cookie: { msg:"نستخدم ملفات تعريف الارتباط الأساسية لوظائف المنصة وملفات تعريف الارتباط التحليلية الاختيارية لتحسين خدماتنا.", link:" سياسة ملفات تعريف الارتباط", essential:"الأساسية فقط", accept:"قبول الكل" }
+},
+fr: {
+    langLabel: "FR",
+    nav: { vision:"Vision", platforms:"Plateformes", features:"Fonctionnalit\u00E9s", roadmap:"Feuille de route", contact:"Contact" },
+    hero: { tagline:"Le Moteur Intelligent pour Votre Empire Commercial", sub:"Un hub IA unifi\u00E9 alimentant plusieurs industries \u2014 du voyage au e-commerce, de la r\u00E9paration au conseil." },
+    stats: { s1:"Plateformes IA", s2:"Langues", s3:"Pays", s4:"Agents IA" },
+    cta: { travel:"Visiter la Plateforme Voyage", explore:"Explorer Toutes les Plateformes" },
+    vision: { title:"Notre <span class=\"txt-cyan\">Vision</span>", sub:"Un Hub, Plusieurs Empires. Nous construisons des plateformes aliment\u00E9es par l'IA qui connectent les professionnels aux clients." },
+    v: [
+        { t:"L'IA d'Abord", d:"Chaque plateforme est aliment\u00E9e par des agents IA qui automatisent les t\u00E2ches et am\u00E9liorent la prise de d\u00E9cision." },
+        { t:"\u00C9cosyst\u00E8me Multi-Plateforme", d:"Du voyage \u00E0 la sant\u00E9, du juridique \u00E0 l'immobilier \u2014 chaque industrie obtient sa plateforme d\u00E9di\u00E9e." },
+        { t:"Exp\u00E9rience Connect\u00E9e", d:"Agents, admins et utilisateurs obtiennent des portails bas\u00E9s sur les r\u00F4les avec paiements s\u00E9curis\u00E9s." },
+        { t:"\u00C9volutivit\u00E9 Sans Limites", d:"Construit sur une architecture cloud moderne, chaque plateforme supporte l'\u00E9chelle mondiale." }
+    ],
+    plat: { title:"Nos <span class=\"txt-purple\">Plateformes</span>", sub:"Explorez l'\u00E9cosyst\u00E8me croissant de TimeLightHub." },
+    badges: { live:"\u25CF En Ligne", coming:"\u25D4 Bient\u00F4t", locked:"Verrouill\u00E9" },
+    travel: { title:"Plateforme Voyage IA", desc:"Syst\u00E8me de gestion de voyage complet aliment\u00E9 par l'IA.", f:["Planification IA d'itin\u00E9raires","Portails Agent, Admin & Voyageur","Connectivit\u00E9 eSIM mondiale","Assistant voyage IA","Paiements Stripe & Crypto","Multi-devises & multi-langues"], btn:"Visiter la Plateforme \u2192" },
+    estore: { title:"E-Store IA", desc:"Plateforme e-commerce IA pour recommandations intelligentes et marketplace multi-vendeurs.", f:["Recommandations produits IA","Marketplace multi-vendeurs","Gestion d'inventaire intelligente","Paiement s\u00E9curis\u00E9 (Stripe + Crypto)","Int\u00E9gration exp\u00E9dition mondiale","Tableau de bord vendeur"], btn:"Bient\u00F4t" },
+    repair: { title:"Maintenance IA", desc:"Diagnostics IA et gestion d'atelier.", f:["Diagnostics IA","Matching technicien-client","Gestion d'atelier","Suivi des pi\u00E8ces","Maintenance pr\u00E9dictive","Historique & analytics"], btn:"Bient\u00F4t" },
+    medical: { title:"M\u00E9dical IA", desc:"Plateforme de gestion clinique IA.", f:["Diagnostics assist\u00E9s par IA","Portail m\u00E9decin-patient","Planification de rendez-vous","Gestion des dossiers m\u00E9dicaux"] },
+    legal: { title:"Juridique IA", desc:"Plateforme d'intelligence juridique IA.", f:["Recherche juridique IA","Portail avocat-client","Gestion de cas & documents","R\u00E9daction de contrats intelligente"] },
+    estate: { title:"Immobilier IA", desc:"\u00C9cosyst\u00E8me immobilier IA.", f:["Matching de propri\u00E9t\u00E9s IA","Portail agent-acheteur","Visites virtuelles & 3D","Analytics march\u00E9 & \u00E9valuations"] },
+    consulting: { title:"Conseil IA", desc:"Plateforme de croissance strat\u00E9gique IA.", f:["Insights strat\u00E9giques IA","Matching consultant-entreprise","Tableaux de bord analytics","Outils de gestion de projet"] },
+    feat: { title:"Pourquoi <span class=\"txt-cyan\">TimeLightHub</span> ?", sub:"Chaque plateforme partage ces capacit\u00E9s fondamentales." },
+    features: [
+        { t:"Aliment\u00E9 par l'IA", d:"Agents intelligents automatisant r\u00E9servations, diagnostics et recommandations." },
+        { t:"Multi-Langues", d:"Support complet pour l'anglais, l'arabe (RTL), le fran\u00E7ais, l'allemand et l'espagnol." },
+        { t:"S\u00E9curis\u00E9 & Conforme", d:"Paiements Stripe + Crypto, donn\u00E9es chiffr\u00E9es, conforme GDPR/PECR." },
+        { t:"Portails Multi-R\u00F4les", d:"Exp\u00E9riences d\u00E9di\u00E9es pour agents, admins et utilisateurs finaux." }
+    ],
+    road: { title:"Feuille de <span class=\"txt-gold\">Route</span>", sub:"Notre parcours pour construire le hub IA le plus complet au monde." },
+    rm: [
+        { t:"Plateforme Voyage IA", date:"\u25CF En Ligne \u2014 travel.timelighthub.com", d:"Lancement complet avec portails agents, chatbot IA, eSIM et paiements multi-devises." },
+        { t:"E-Store IA", date:"\u25D4 Bient\u00F4t \u2014 T3 2026", d:"E-commerce multi-vendeurs avec recommandations IA." },
+        { t:"Maintenance IA", date:"\u25D4 Bient\u00F4t \u2014 T4 2026", d:"Gestion d'atelier, diagnostics IA et r\u00E9seau techniciens-clients." },
+        { t:"M\u00E9dical \u00B7 Juridique \u00B7 Immobilier \u00B7 Conseil", date:"🔒 2027+", d:"Prochaine vague de plateformes IA." }
+    ],
+    subscribe: { title:"Restez <span class=\"txt-cyan\">Inform\u00E9</span>", desc:"Abonnez-vous pour \u00EAtre notifi\u00E9 du lancement de nouvelles plateformes.", btn:"S'abonner", placeholder:"Votre email", success:"Merci pour votre inscription !" },
+    contact: { title:"<span class=\"txt-cyan\">Contactez</span>-nous", sub:"Une question ou id\u00E9e de partenariat ? Contactez-nous.", global:"Mondial \u2014 Australie \u00B7 Royaume-Uni \u00B7 EAU \u00B7 Europe", btn:"Envoyer le Message", name:"Votre Nom", email:"Votre Email", msg:"Votre Message", success:"Message envoy\u00E9 ! Nous vous r\u00E9pondrons bient\u00F4t." },
+    footer: { terms:"Conditions d'utilisation", privacy:"Politique de confidentialit\u00E9", refund:"Politique de remboursement", cookie:"Politique de cookies", aup:"Utilisation acceptable", rights:"Tous droits r\u00E9serv\u00E9s." },
+    cookie: { msg:"Nous utilisons des cookies essentiels et des cookies analytiques optionnels.", link:" Politique de cookies", essential:"Essentiels uniquement", accept:"Tout accepter" }
+},
+es: {
+    langLabel: "ES",
+    nav: { vision:"Visi\u00F3n", platforms:"Plataformas", features:"Caracter\u00EDsticas", roadmap:"Hoja de ruta", contact:"Contacto" },
+    hero: { tagline:"El Motor Inteligente para Su Imperio Empresarial", sub:"Un centro IA unificado que impulsa m\u00FAltiples industrias \u2014 desde viajes hasta e-commerce, reparaci\u00F3n y consultor\u00EDa." },
+    stats: { s1:"Plataformas IA", s2:"Idiomas", s3:"Pa\u00EDses", s4:"Agentes IA" },
+    cta: { travel:"Visitar Plataforma de Viajes", explore:"Explorar Todas las Plataformas" },
+    vision: { title:"Nuestra <span class=\"txt-cyan\">Visi\u00F3n</span>", sub:"Un Hub, M\u00FAltiples Imperios. Construimos plataformas con IA que conectan profesionales con clientes." },
+    v: [
+        { t:"IA Primero", d:"Cada plataforma est\u00E1 impulsada por agentes IA que automatizan tareas y mejoran la toma de decisiones." },
+        { t:"Ecosistema Multi-Plataforma", d:"De viajes a salud, legal a inmobiliaria \u2014 cada industria obtiene su plataforma dedicada." },
+        { t:"Experiencia Conectada", d:"Agentes, admins y usuarios obtienen portales basados en roles con pagos seguros." },
+        { t:"Escala Sin L\u00EDmites", d:"Construido en arquitectura cloud moderna, cada plataforma soporta escala global." }
+    ],
+    plat: { title:"Nuestras <span class=\"txt-purple\">Plataformas</span>", sub:"Explore el creciente ecosistema de TimeLightHub." },
+    badges: { live:"\u25CF En Vivo", coming:"\u25D4 Pr\u00F3ximamente", locked:"Bloqueado" },
+    travel: { title:"Plataforma de Viajes IA", desc:"Sistema completo de gesti\u00F3n de viajes con IA.", f:["Planificaci\u00F3n IA de itinerarios","Portales Agente, Admin y Viajero","Conectividad eSIM global","Asistente de viaje IA","Pagos Stripe y Crypto","Multi-moneda y multi-idioma"], btn:"Visitar Plataforma \u2192" },
+    estore: { title:"E-Store IA", desc:"Plataforma de e-commerce con IA.", f:["Recomendaciones de productos IA","Marketplace multi-vendedor","Gesti\u00F3n inteligente de inventario","Pago seguro (Stripe + Crypto)","Integraci\u00F3n de env\u00EDo global","Panel de an\u00E1lisis del vendedor"], btn:"Pr\u00F3ximamente" },
+    repair: { title:"Mantenimiento IA", desc:"Diagn\u00F3sticos IA y gesti\u00F3n de talleres.", f:["Diagn\u00F3sticos IA","Matching t\u00E9cnico-cliente","Gesti\u00F3n de taller","Seguimiento de piezas","Mantenimiento predictivo","Historial y an\u00E1lisis"], btn:"Pr\u00F3ximamente" },
+    medical: { title:"M\u00E9dico IA", desc:"Plataforma de gesti\u00F3n cl\u00EDnica IA.", f:["Diagn\u00F3sticos asistidos por IA","Portal m\u00E9dico-paciente","Programaci\u00F3n de citas","Gesti\u00F3n de registros m\u00E9dicos"] },
+    legal: { title:"Legal IA", desc:"Plataforma de inteligencia legal IA.", f:["Investigaci\u00F3n legal IA","Portal abogado-cliente","Gesti\u00F3n de casos y documentos","Redacci\u00F3n inteligente de contratos"] },
+    estate: { title:"Inmobiliaria IA", desc:"Ecosistema inmobiliario IA.", f:["Matching de propiedades IA","Portal agente-comprador","Tours virtuales y 3D","An\u00E1lisis de mercado y valuaciones"] },
+    consulting: { title:"Consultor\u00EDa IA", desc:"Plataforma de crecimiento estrat\u00E9gico IA.", f:["Insights estrat\u00E9gicos IA","Matching consultor-empresa","Paneles de an\u00E1lisis","Herramientas de gesti\u00F3n de proyectos"] },
+    feat: { title:"\u00BFPor qu\u00E9 <span class=\"txt-cyan\">TimeLightHub</span>?", sub:"Cada plataforma comparte estas capacidades fundamentales." },
+    features: [
+        { t:"Impulsado por IA", d:"Agentes inteligentes que automatizan reservas, diagn\u00F3sticos y recomendaciones." },
+        { t:"Multi-Idioma", d:"Soporte completo para ingl\u00E9s, \u00E1rabe (RTL), franc\u00E9s, alem\u00E1n y espa\u00F1ol." },
+        { t:"Seguro y Cumpliente", d:"Pagos Stripe + Crypto, datos cifrados, cumplimiento GDPR/PECR." },
+        { t:"Portales Multi-Rol", d:"Experiencias dedicadas para agentes, admins y usuarios finales." }
+    ],
+    road: { title:"Hoja de <span class=\"txt-gold\">Ruta</span>", sub:"Nuestro camino para construir el hub IA m\u00E1s completo del mundo." },
+    rm: [
+        { t:"Plataforma de Viajes IA", date:"\u25CF En Vivo \u2014 travel.timelighthub.com", d:"Lanzamiento completo con portales, chatbot IA, eSIM y pagos multi-moneda." },
+        { t:"E-Store IA", date:"\u25D4 Pr\u00F3ximamente \u2014 Q3 2026", d:"E-commerce multi-vendedor con recomendaciones IA." },
+        { t:"Mantenimiento IA", date:"\u25D4 Pr\u00F3ximamente \u2014 Q4 2026", d:"Gesti\u00F3n de talleres y diagn\u00F3sticos IA." },
+        { t:"M\u00E9dico \u00B7 Legal \u00B7 Inmobiliaria \u00B7 Consultor\u00EDa", date:"🔒 2027+", d:"Pr\u00F3xima ola de plataformas IA." }
+    ],
+    subscribe: { title:"Mant\u00E9ngase <span class=\"txt-cyan\">Informado</span>", desc:"Suscr\u00EDbase para recibir notificaciones de nuevas plataformas.", btn:"Suscribirse", placeholder:"Su email", success:"\u00A1Gracias por suscribirse!" },
+    contact: { title:"<span class=\"txt-cyan\">Cont\u00E1ctenos</span>", sub:"\u00BFTiene una pregunta o idea de alianza? Cont\u00E1ctenos.", global:"Global \u2014 Australia \u00B7 Reino Unido \u00B7 EAU \u00B7 Europa", btn:"Enviar Mensaje", name:"Su Nombre", email:"Su Email", msg:"Su Mensaje", success:"\u00A1Mensaje enviado! Le responderemos pronto." },
+    footer: { terms:"T\u00E9rminos de servicio", privacy:"Pol\u00EDtica de privacidad", refund:"Pol\u00EDtica de reembolso", cookie:"Pol\u00EDtica de cookies", aup:"Uso aceptable", rights:"Todos los derechos reservados." },
+    cookie: { msg:"Utilizamos cookies esenciales y cookies anal\u00EDticas opcionales.", link:" Pol\u00EDtica de cookies", essential:"Solo esenciales", accept:"Aceptar todo" }
+},
+de: {
+    langLabel: "DE",
+    nav: { vision:"Vision", platforms:"Plattformen", features:"Funktionen", roadmap:"Roadmap", contact:"Kontakt" },
+    hero: { tagline:"Die Smarte Engine f\u00FCr Ihr Business-Imperium", sub:"Ein einheitlicher KI-Hub f\u00FCr mehrere Branchen \u2014 von Reisen \u00FCber E-Commerce bis Beratung." },
+    stats: { s1:"KI-Plattformen", s2:"Sprachen", s3:"L\u00E4nder", s4:"KI-Agenten" },
+    cta: { travel:"Reiseplattform Besuchen", explore:"Alle Plattformen Erkunden" },
+    vision: { title:"Unsere <span class=\"txt-cyan\">Vision</span>", sub:"Ein Hub, Mehrere Imperien. Wir bauen KI-Plattformen, die Fachleute mit Kunden verbinden." },
+    v: [
+        { t:"KI-First Ansatz", d:"Jede Plattform wird von intelligenten KI-Agenten angetrieben." },
+        { t:"Multi-Plattform-\u00D6kosystem", d:"Von Reisen bis Gesundheit \u2014 jede Branche erh\u00E4lt ihre eigene Plattform." },
+        { t:"Verbundene Erfahrung", d:"Agenten, Admins und Nutzer erhalten rollenbasierte Portale mit sicheren Zahlungen." },
+        { t:"Skalierung Ohne Grenzen", d:"Auf moderner Cloud-Architektur gebaut, unterst\u00FCtzt jede Plattform globale Skalierung." }
+    ],
+    plat: { title:"Unsere <span class=\"txt-purple\">Plattformen</span>", sub:"Erkunden Sie das wachsende TimeLightHub-\u00D6kosystem." },
+    badges: { live:"\u25CF Live", coming:"\u25D4 Demn\u00E4chst", locked:"Gesperrt" },
+    travel: { title:"KI-Reiseplattform", desc:"Komplettes KI-Reisemanagement.", f:["KI-Reiseplanung & Itinerare","Agent-, Admin- & Reisende-Portale","Globale eSIM-Konnektivit\u00E4t","KI-Reiseassistent","Stripe- & Crypto-Zahlungen","Multi-W\u00E4hrung & Multi-Sprache"], btn:"Plattform Besuchen \u2192" },
+    estore: { title:"KI-E-Store", desc:"KI-E-Commerce f\u00FCr intelligente Produktempfehlungen.", f:["KI-Produktempfehlungen","Multi-Vendor-Marktplatz","Intelligente Lagerverwaltung","Sicherer Checkout (Stripe + Crypto)","Globale Versandintegration","Vendor-Analytics-Dashboard"], btn:"Demn\u00E4chst" },
+    repair: { title:"KI-Wartung", desc:"KI-Diagnostik und Werkstattmanagement.", f:["KI-Diagnostik","Techniker-Kunden-Matching","Werkstattmanagement","Teile-Tracking","Pr\u00E4diktive Wartung","Service-Historie & Analytics"], btn:"Demn\u00E4chst" },
+    medical: { title:"KI-Medizin", desc:"KI-Klinikmanagement.", f:["KI-unterst\u00FCtzte Diagnostik","Arzt-Patienten-Portal","Terminplanung","Krankenaktenverwaltung"] },
+    legal: { title:"KI-Recht", desc:"KI-Rechtsintelligenz-Plattform.", f:["KI-Rechtsrecherche","Anwalt-Mandanten-Portal","Fall- & Dokumentenmanagement","Intelligente Vertragserstellung"] },
+    estate: { title:"KI-Immobilien", desc:"KI-Immobilien-\u00D6kosystem.", f:["KI-Immobilien-Matching","Makler-K\u00E4ufer-Portal","Virtuelle Touren & 3D","Marktanalysen & Bewertungen"] },
+    consulting: { title:"KI-Beratung", desc:"KI-Strategiewachstum.", f:["KI-Strategische Insights","Berater-Unternehmen-Matching","Analytics-Dashboards","Projektmanagement-Tools"] },
+    feat: { title:"Warum <span class=\"txt-cyan\">TimeLightHub</span>?", sub:"Jede Plattform teilt diese Kernf\u00E4higkeiten." },
+    features: [
+        { t:"KI-Angetrieben", d:"Intelligente Agenten automatisieren Buchungen, Diagnostik und Empfehlungen." },
+        { t:"Multi-Sprache", d:"Volle Unterst\u00FCtzung f\u00FCr Englisch, Arabisch (RTL), Franz\u00F6sisch, Deutsch und Spanisch." },
+        { t:"Sicher & Konform", d:"Stripe + Crypto-Zahlungen, verschl\u00FCsselte Daten, GDPR/PECR-konform." },
+        { t:"Multi-Rollen-Portale", d:"Dedizierte Erfahrungen f\u00FCr Agenten, Admins und Endnutzer." }
+    ],
+    road: { title:"Plattform-<span class=\"txt-gold\">Roadmap</span>", sub:"Unser Weg zum umfassendsten KI-Service-Hub der Welt." },
+    rm: [
+        { t:"KI-Reiseplattform", date:"\u25CF Live \u2014 travel.timelighthub.com", d:"Vollstart mit Agentenportalen, KI-Chatbot, eSIM und Multi-W\u00E4hrungszahlungen." },
+        { t:"KI-E-Store", date:"\u25D4 Demn\u00E4chst \u2014 Q3 2026", d:"Multi-Vendor-E-Commerce mit KI-Empfehlungen." },
+        { t:"KI-Wartung", date:"\u25D4 Demn\u00E4chst \u2014 Q4 2026", d:"Werkstattmanagement und KI-Diagnostik." },
+        { t:"Medizin \u00B7 Recht \u00B7 Immobilien \u00B7 Beratung", date:"🔒 2027+", d:"N\u00E4chste Welle von KI-Plattformen." }
+    ],
+    subscribe: { title:"Bleiben Sie <span class=\"txt-cyan\">Informiert</span>", desc:"Abonnieren Sie, um \u00FCber neue Plattformen informiert zu werden.", btn:"Abonnieren", placeholder:"Ihre E-Mail", success:"Danke f\u00FCr Ihr Abonnement!" },
+    contact: { title:"<span class=\"txt-cyan\">Kontaktieren</span> Sie Uns", sub:"Haben Sie eine Frage oder Partnerschaftsidee? Kontaktieren Sie uns.", global:"Global \u2014 Australien \u00B7 UK \u00B7 VAE \u00B7 Europa", btn:"Nachricht Senden", name:"Ihr Name", email:"Ihre E-Mail", msg:"Ihre Nachricht", success:"Nachricht gesendet! Wir melden uns bald." },
+    footer: { terms:"Nutzungsbedingungen", privacy:"Datenschutzrichtlinie", refund:"Erstattungsrichtlinie", cookie:"Cookie-Richtlinie", aup:"Nutzungsrichtlinien", rights:"Alle Rechte vorbehalten." },
+    cookie: { msg:"Wir verwenden wesentliche Cookies und optionale Analyse-Cookies.", link:" Cookie-Richtlinie", essential:"Nur wesentliche", accept:"Alle akzeptieren" }
+}
+};
+
+/* ========== HELPERS ========== */
+function $(id){ return document.getElementById(id); }
+function setHTML(id, v){ var el=$(id); if(el) el.innerHTML=v; }
+function setText(id, v){ var el=$(id); if(el) el.textContent=v; }
+
+/* ========== THEME ========== */
+function toggleTheme(){
+    var b=document.documentElement;
+    var cur=b.getAttribute('data-theme')||'dark';
+    var next=cur==='dark'?'light':'dark';
+    b.setAttribute('data-theme',next);
+    localStorage.setItem('tlh-theme',next);
+}
+(function initTheme(){
+    var saved=localStorage.getItem('tlh-theme');
+    if(saved) document.documentElement.setAttribute('data-theme',saved);
+})();
+
+/* ========== LANGUAGE ========== */
+var curLangCode='en';
+function toggleLang(){
+    var m=$('langMenu');
+    m.classList.toggle('show');
+}
+function setLang(l){
+    curLangCode=l;
+    var t=T[l]; if(!t) return;
+    $('langMenu').classList.remove('show');
+    setText('curLang', t.langLabel);
+
+    /* RTL */
+    if(l==='ar'){
+        document.documentElement.setAttribute('dir','rtl');
+        document.body.style.fontFamily="'Cairo','Inter',sans-serif";
+    } else {
+        document.documentElement.removeAttribute('dir');
+        document.body.style.fontFamily="'Inter','Cairo',sans-serif";
+    }
+
+    /* NAV */
+    setText('nav-vision',t.nav.vision);
+    setText('nav-platforms',t.nav.platforms);
+    setText('nav-features',t.nav.features);
+    setText('nav-roadmap',t.nav.roadmap);
+    setText('nav-contact',t.nav.contact);
+    setText('mnav-vision',t.nav.vision);
+    setText('mnav-platforms',t.nav.platforms);
+    setText('mnav-features',t.nav.features);
+    setText('mnav-roadmap',t.nav.roadmap);
+    setText('mnav-contact',t.nav.contact);
+
+    /* HERO */
+    setText('t-hero-tagline',t.hero.tagline);
+    setText('t-hero-sub',t.hero.sub);
+    setText('t-stat1',t.stats.s1);
+    setText('t-stat2',t.stats.s2);
+    setText('t-stat3',t.stats.s3);
+    setText('t-stat4',t.stats.s4);
+    setHTML('t-cta-travel','<i class="fa-solid fa-rocket"></i>&nbsp; '+t.cta.travel);
+    setHTML('t-cta-explore','<i class="fa-solid fa-compass"></i>&nbsp; '+t.cta.explore);
+
+    /* VISION */
+    setHTML('t-vision-title',t.vision.title);
+    setText('t-vision-sub',t.vision.sub);
+    for(var i=0;i<4;i++){
+        setText('t-v'+(i+1)+'-title',t.v[i].t);
+        setText('t-v'+(i+1)+'-desc',t.v[i].d);
+    }
+
+    /* PLATFORMS */
+    setHTML('t-plat-title',t.plat.title);
+    setText('t-plat-sub',t.plat.sub);
+
+    /* badges */
+    setText('t-badge-live',t.badges.live);
+    setText('t-badge-coming',t.badges.coming);
+    setText('t-badge-coming2',t.badges.coming);
+    setText('t-badge-locked1',t.badges.locked);
+    setText('t-badge-locked2',t.badges.locked);
+    setText('t-badge-locked3',t.badges.locked);
+    setText('t-badge-locked4',t.badges.locked);
+
+    /* travel */
+    setText('t-p-travel-title',t.travel.title);
+    setText('t-p-travel-desc',t.travel.desc);
+    for(var i=0;i<6;i++) setText('t-p-travel-f'+(i+1),t.travel.f[i]);
+    setHTML('t-btn-visit-travel',t.travel.btn);
+
+    /* estore */
+    setText('t-p-estore-title',t.estore.title);
+    setText('t-p-estore-desc',t.estore.desc);
+    for(var i=0;i<6;i++) setText('t-p-estore-f'+(i+1),t.estore.f[i]);
+    setText('t-btn-soon-estore',t.estore.btn);
+
+    /* repair */
+    setText('t-p-repair-title',t.repair.title);
+    setText('t-p-repair-desc',t.repair.desc);
+    for(var i=0;i<6;i++) setText('t-p-repair-f'+(i+1),t.repair.f[i]);
+    setText('t-btn-soon-repair',t.repair.btn);
+
+    /* medical */
+    setText('t-p-medical-title',t.medical.title);
+    setText('t-p-medical-desc',t.medical.desc);
+    for(var i=0;i<4;i++) setText('t-p-medical-f'+(i+1),t.medical.f[i]);
+    setText('t-btn-locked1',t.badges.locked);
+
+    /* legal */
+    setText('t-p-legal-title',t.legal.title);
+    setText('t-p-legal-desc',t.legal.desc);
+    for(var i=0;i<4;i++) setText('t-p-legal-f'+(i+1),t.legal.f[i]);
+    setText('t-btn-locked2',t.badges.locked);
+
+    /* estate */
+    setText('t-p-estate-title',t.estate.title);
+    setText('t-p-estate-desc',t.estate.desc);
+    for(var i=0;i<4;i++) setText('t-p-estate-f'+(i+1),t.estate.f[i]);
+    setText('t-btn-locked3',t.badges.locked);
+
+    /* consulting */
+    setText('t-p-consulting-title',t.consulting.title);
+    setText('t-p-consulting-desc',t.consulting.desc);
+    for(var i=0;i<4;i++) setText('t-p-consulting-f'+(i+1),t.consulting.f[i]);
+    setText('t-btn-locked4',t.badges.locked);
+
+    /* FEATURES */
+    setHTML('t-feat-title',t.feat.title);
+    setText('t-feat-sub',t.feat.sub);
+    for(var i=0;i<4;i++){
+        setText('t-f'+(i+1)+'-title',t.features[i].t);
+        setText('t-f'+(i+1)+'-desc',t.features[i].d);
+    }
+
+    /* ROADMAP */
+    setHTML('t-road-title',t.road.title);
+    setText('t-road-sub',t.road.sub);
+    for(var i=0;i<4;i++){
+        setText('t-rm'+(i+1)+'-title',t.rm[i].t);
+        setText('t-rm'+(i+1)+'-date',t.rm[i].date);
+        setText('t-rm'+(i+1)+'-desc',t.rm[i].d);
+    }
+
+    /* SUBSCRIBE */
+    setHTML('t-sub-title',t.subscribe.title);
+    setText('t-sub-desc',t.subscribe.desc);
+    setText('t-sub-btn',t.subscribe.btn);
+    var subInput=$('subEmail');
+    if(subInput) subInput.placeholder=t.subscribe.placeholder;
+
+    /* CONTACT */
+    setHTML('t-contact-title',t.contact.title);
+    setText('t-contact-sub',t.contact.sub);
+    setText('t-contact-global',t.contact.global);
+    setText('t-contact-btn',t.contact.btn);
+    var cn=$('cName'),ce=$('cEmail'),cm=$('cMsg');
+    if(cn) cn.placeholder=t.contact.name;
+    if(ce) ce.placeholder=t.contact.email;
+    if(cm) cm.placeholder=t.contact.msg;
+
+    /* FOOTER */
+    setText('t-ft-terms',t.footer.terms);
+    setText('t-ft-privacy',t.footer.privacy);
+    setText('t-ft-refund',t.footer.refund);
+    setText('t-ft-cookie',t.footer.cookie);
+    setText('t-ft-aup',t.footer.aup);
+    setText('t-ft-rights',t.footer.rights);
+
+    /* COOKIE BANNER */
+    setText('t-ck-msg',t.cookie.msg);
+    setText('t-ck-link',t.cookie.link);
+    setText('t-ck-ess',t.cookie.essential);
+    setText('t-ck-acc',t.cookie.accept);
+
+    localStorage.setItem('tlh-lang',l);
+}
+
+/* ========== MOBILE NAV ========== */
+function toggleMobileNav(){
+    $('mobileNav').classList.toggle('show');
+}
+function closeMobileNav(){
+    $('mobileNav').classList.remove('show');
+}
+
+/* ========== COOKIES ========== */
+function initCookies(){
+    var saved=localStorage.getItem('tlh-cookies');
+    if(saved){
+        $('cookieBanner').style.display='none';
+    } else {
+        $('cookieBanner').style.display='flex';
+    }
+}
+function saveCookies(level){
+    localStorage.setItem('tlh-cookies',level);
+    $('cookieBanner').style.display='none';
+}
+
+/* ========== FORMS ========== */
+function handleSubscribe(e){
+    e.preventDefault();
+    var em=$('subEmail').value;
+    if(!em) return;
+    var t=T[curLangCode];
+    var msg=$('subMsg');
+    msg.textContent=t.subscribe.success;
+    msg.style.display='block';
+    $('subEmail').value='';
+    setTimeout(function(){ msg.style.display='none'; },4000);
+}
+function handleContact(e){
+    e.preventDefault();
+    var t=T[curLangCode];
+    var msg=$('contactMsg');
+    msg.textContent=t.contact.success;
+    msg.style.display='block';
+    $('cName').value='';
+    $('cEmail').value='';
+    $('cMsg').value='';
+    setTimeout(function(){ msg.style.display='none'; },4000);
+}
+
+/* ========== SCROLL REVEAL ========== */
+(function initReveal(){
+    var obs=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+            if(entry.isIntersecting){
+                entry.target.classList.add('visible');
             }
-        };
+        });
+    },{ threshold:0.12 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el){
+        obs.observe(el);
+    });
+})();
 
-        let currentLangCode = 'en';
+/* ========== INIT ========== */
+(function init(){
+    /* year */
+    var y=$('ftYear');
+    if(y) y.textContent=new Date().getFullYear();
 
-        // 2. FUNCTIONS
-        function toggleLangMenu() {
-            document.getElementById('langMenu').classList.toggle('show-lang');
+    /* restore language */
+    var savedLang=localStorage.getItem('tlh-lang');
+    if(savedLang && T[savedLang]){
+        setLang(savedLang);
+    } else {
+        setLang('en');
+    }
+
+    /* cookies */
+    initCookies();
+
+    /* close lang menu on outside click */
+    document.addEventListener('click',function(e){
+        var wrap=document.querySelector('.lang-wrap');
+        if(wrap && !wrap.contains(e.target)){
+            $('langMenu').classList.remove('show');
         }
+    });
 
-        function setLanguage(lang) {
-            currentLangCode = lang;
-            const t = translations[lang];
-            
-            // Update Text
-            document.getElementById('currentLang').innerText = t.name;
-            document.getElementById('t-slogan').innerText = t.slogan;
-            
-            document.getElementById('t-repair-title').innerText = t.repairTitle;
-            document.getElementById('t-repair-desc').innerText = t.repairDesc;
-            document.getElementById('t-repair-btn').innerText = t.repairBtn;
-            
-            document.getElementById('t-travel-title').innerText = t.travelTitle;
-            document.getElementById('t-travel-desc').innerText = t.travelDesc;
-            document.getElementById('t-travel-btn').innerText = t.travelBtn;
-
-            document.getElementById('t-medical-title').innerText = t.medicalTitle;
-            document.getElementById('t-medical-desc').innerText = t.medicalDesc;
-            
-            document.getElementById('t-legal-title').innerText = t.legalTitle;
-            document.getElementById('t-legal-desc').innerText = t.legalDesc;
-
-            document.getElementById('t-estate-title').innerText = t.estateTitle;
-            document.getElementById('t-estate-desc').innerText = t.estateDesc;
-
-            document.getElementById('t-consulting-title').innerText = t.consultingTitle;
-            document.getElementById('t-consulting-desc').innerText = t.consultingDesc;
-
-            document.getElementById('t-close-btn').innerText = t.close;
-
-            // Update all "Locked" badges
-            const locks = document.getElementsByClassName('t-locked');
-            for(let i=0; i<locks.length; i++) { locks[i].innerText = t.locked; }
-
-            // Update footer
-            document.getElementById('t-footer-terms').innerText = t.footerTerms;
-            document.getElementById('t-footer-privacy').innerText = t.footerPrivacy;
-            document.getElementById('t-footer-refund').innerText = t.footerRefund;
-            document.getElementById('t-footer-cookie').innerText = t.footerCookie;
-            document.getElementById('t-footer-aup').innerText = t.footerAup;
-            document.getElementById('t-footer-rights').innerText = t.footerRights;
-
-            // Update cookie banner
-            document.getElementById('t-cookie-msg').innerText = t.cookieMsg;
-            document.getElementById('t-cookie-link').innerText = t.cookieLink;
-            document.getElementById('t-cookie-essential').innerText = t.cookieEssential;
-            document.getElementById('t-cookie-accept').innerText = t.cookieAccept;
-
-            // Handle RTL for Arabic
-            if (lang === 'ar') {
-                document.getElementById('body').classList.add('rtl');
-            } else {
-                document.getElementById('body').classList.remove('rtl');
+    /* smooth scroll polyfill for anchors */
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click',function(e){
+            var target=document.querySelector(this.getAttribute('href'));
+            if(target){
+                e.preventDefault();
+                target.scrollIntoView({ behavior:'smooth' });
             }
+        });
+    });
+})();
 
-            toggleLangMenu();
-        }
 
-        // Modal Logic
-        function openModal(type) {
-            const t = translations[currentLangCode];
-            const modal = document.getElementById('statusModal');
-            const title = document.getElementById('modalTitle');
-            const date = document.getElementById('modalDate');
-            const msg = document.getElementById('modalText');
-
-            msg.innerText = t.modalMsg;
-
-            if(type === 'repair') { title.innerText = t.repairTitle; date.innerText = t.launchTarget + "Q2 2025"; }
-            else if(type === 'travel') { title.innerText = t.travelTitle; date.innerText = "Active Beta Soon"; }
-            else if(type === 'medical') { title.innerText = t.medicalTitle; date.innerText = t.launchTarget + "Q3 2025"; }
-            else if(type === 'legal') { title.innerText = t.legalTitle; date.innerText = t.launchTarget + "Q4 2025"; }
-            else if(type === 'estate') { title.innerText = t.estateTitle; date.innerText = t.launchTarget + "2026"; }
-            else if(type === 'consulting') { title.innerText = t.consultingTitle; date.innerText = t.launchTarget + "2026"; }
-
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('statusModal').style.display = 'none';
-        }
-        window.onclick = function(e) {
-            if (!e.target.matches('.lang-btn') && !e.target.matches('.lang-btn *')) {
-                document.getElementById('langMenu').classList.remove('show-lang');
-            }
-            if (e.target == document.getElementById('statusModal')) { closeModal(); }
-        }
-
-        // Cookie Consent Logic
-        const COOKIE_KEY = 'tlh_cookie_consent';
-        const COOKIE_VERSION = '1.0';
-
-        function initCookieBanner() {
-            try {
-                const stored = JSON.parse(localStorage.getItem(COOKIE_KEY));
-                if (!stored || stored.version !== COOKIE_VERSION) {
-                    document.getElementById('cookieBanner').style.display = 'block';
-                }
-            } catch {
-                document.getElementById('cookieBanner').style.display = 'block';
-            }
-        }
-
-        function saveCookieConsent(level) {
-            const consent = {
-                level: level,
-                analytics: level === 'all',
-                version: COOKIE_VERSION,
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem(COOKIE_KEY, JSON.stringify(consent));
-            document.getElementById('cookieBanner').style.display = 'none';
-        }
-
-        // Init
-        document.getElementById('footerYear').innerText = new Date().getFullYear();
-        initCookieBanner();
-    </script>
-
+</script>
 </body>
 </html>
