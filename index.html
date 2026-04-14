@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>TimeLightHub | The AI Hub for Your Service Empire</title>
     <meta name="description" content="TimeLightHub — The Smart Engine for Your Business Empire. AI-powered platforms for Travel, E-Commerce, Repair, Medical, Legal, Real Estate & Consulting.">
 
@@ -138,7 +138,7 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 200;
         }
         body.rtl .lang-menu { right: auto; left: 0; }
-        .lang-menu.open { display: block; animation: fadeSlide 0.2s ease; }
+        .lang-menu.show { display: block; animation: fadeSlide 0.2s ease; }
         .lang-opt { padding: 10px 16px; cursor: pointer; color: var(--text-muted); transition: 0.2s; font-size: 0.85rem; }
         .lang-opt:hover { background: rgba(0,243,255,0.1); color: var(--cyan); }
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
@@ -151,7 +151,7 @@
             border-bottom: 1px solid var(--border); padding: 20px;
             flex-direction: column; gap: 15px; text-align: center; z-index: 99;
         }
-        .mobile-nav.open { display: flex; animation: fadeSlide 0.3s ease; }
+        .mobile-nav.show { display: flex; animation: fadeSlide 0.3s ease; }
         .mobile-nav a { font-size: 1rem; color: var(--text-muted); padding: 8px; }
         .mobile-nav a:hover { color: var(--cyan); }
 
@@ -399,6 +399,53 @@
         .txt-gold { color: var(--gold); }
         .txt-green { color: var(--green); }
         .txt-orange { color: var(--orange); }
+
+        /* ===== MOBILE / iOS / ANDROID ===== */
+        /* Safe area for notched phones */
+        header { padding-left: max(40px, env(safe-area-inset-left)); padding-right: max(40px, env(safe-area-inset-right)); }
+        .cookie-banner { padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+        /* Touch-friendly minimum sizes */
+        button, .lang-opt, .mobile-nav a, .btn-primary, .btn-outline, .btn-visit, .ck-btn { min-height: 44px; }
+        .lang-opt { min-height: 44px; display: flex; align-items: center; }
+        /* Prevent 300ms tap delay */
+        a, button, .lang-opt { touch-action: manipulation; }
+        /* Prevent text size adjust on rotation */
+        html { -webkit-text-size-adjust: 100%; -moz-text-size-adjust: 100%; text-size-adjust: 100%; }
+        /* Mobile-specific overrides */
+        @media(max-width:600px) {
+            header { padding: 10px max(15px, env(safe-area-inset-left)); }
+            .header-brand { font-size: 1rem; }
+            .header-logo { height: 36px; }
+            .hero { padding: 100px 15px 40px; min-height: auto; }
+            .hero-logo { width: 100px; height: 100px; }
+            .hero h1 { font-size: 1.6rem; }
+            .hero-stats { gap: 20px; }
+            .hero-stat .num { font-size: 1.5rem; }
+            section { padding: 50px 15px; }
+            .section-title { font-size: 1.2rem; }
+            .platform-card { padding: 25px 18px; }
+            .platform-body h2 { font-size: 1.1rem; }
+            .platform-features { grid-template-columns: 1fr; }
+            .contact-grid { gap: 25px; }
+            .subscribe-section { padding: 30px 20px; }
+            .subscribe-form { flex-direction: column; }
+            .footer-links { gap: 12px; }
+            .footer-links a { font-size: 0.75rem; }
+            .cookie-inner { flex-direction: column; text-align: center; }
+            .cookie-btns { width: 100%; justify-content: center; }
+            .lang-btn { padding: 6px 12px; font-size: 0.8rem; }
+            .social-links a { width: 40px; height: 40px; }
+            .roadmap::before { left: 12px; }
+            .roadmap-item { gap: 15px; }
+            .vision-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+        /* Prevent body scroll when mobile nav is open */
+        body.nav-open { overflow: hidden; }
+        /* iOS input zoom prevention */
+        @media(max-width:768px) {
+            input, textarea, select { font-size: 16px !important; }
+        }
     </style>
 </head>
 <body id="body">
@@ -1180,10 +1227,13 @@ function setLang(l){
 
 /* ========== MOBILE NAV ========== */
 function toggleMobileNav(){
-    $('mobileNav').classList.toggle('show');
+    var nav=$('mobileNav');
+    nav.classList.toggle('show');
+    document.body.classList.toggle('nav-open', nav.classList.contains('show'));
 }
 function closeMobileNav(){
     $('mobileNav').classList.remove('show');
+    document.body.classList.remove('nav-open');
 }
 
 /* ========== COOKIES ========== */
