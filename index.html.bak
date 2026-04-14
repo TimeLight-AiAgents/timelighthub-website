@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeLight Hub | The AI Hub for Your Service Empire</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Cairo:wght@400;600;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- UNIVERSE VARIABLES --- */
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-purple: #bc13fe;
+            --neon-gold: #ffd700;
+            --bg-dark: #050505;
+            --card-bg: rgba(20, 20, 20, 0.7);
+            --text-main: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* RTL Support for Arabic */
+        body.rtl { direction: rtl; font-family: 'Cairo', sans-serif; }
+        body.rtl .card { text-align: right; }
+        body.rtl .icon-box { float: left; }
+        body.rtl .brand-logo { letter-spacing: 0; }
+
+        /* --- ANIMATED MATRIX BACKGROUND --- */
+        .matrix-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            perspective: 1000px;
+            transform: scale(1.1);
+            animation: moveGrid 20s linear infinite;
+        }
+        @keyframes moveGrid { 0% { transform: translateY(0) scale(1.1); } 100% { transform: translateY(50px) scale(1.1); } }
+
+        .matrix-bg::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, #050505 90%);
+        }
+
+        /* --- HEADER & LANG SWITCHER --- */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 50px; position: relative; z-index: 10;
+        }
+
+        .brand-logo {
+            font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .brand-highlight { color: var(--neon-cyan); -webkit-text-fill-color: var(--neon-cyan); }
+
+        .lang-container { position: relative; }
+        .lang-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 10px 20px; border-radius: 30px; cursor: pointer;
+            display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .lang-btn:hover { background: rgba(0, 243, 255, 0.1); border-color: var(--neon-cyan); }
+        
+        .lang-menu {
+            position: absolute; top: 120%; right: 0; background: #111; border: 1px solid #333;
+            border-radius: 10px; overflow: hidden; display: none; min-width: 150px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 100;
+        }
+        body.rtl .lang-menu { right: auto; left: 0; }
+
+        .lang-option {
+            padding: 12px 20px; cursor: pointer; color: #ccc; transition: 0.2s; display: flex; align-items: center; gap: 10px;
+        }
+        .lang-option:hover { background: #222; color: var(--neon-cyan); }
+        .show-lang { display: block; animation: fadeIn 0.2s; }
+
+        /* --- HERO TEXT --- */
+        .hero-section { text-align: center; padding: 40px 20px; margin-bottom: 40px; }
+        .slogan { 
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #aaa; 
+            letter-spacing: 2px; text-transform: uppercase; margin-top: 10px;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        /* --- GRID SYSTEM --- */
+        .empire-grid {
+            max-width: 1400px; margin: 0 auto; padding: 20px;
+            display: grid; gap: 30px;
+        }
+        .prime-sector { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .future-sector { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+        /* --- CARDS --- */
+        .card {
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px; padding: 40px 30px; position: relative; overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        }
+        .card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            opacity: 0; transform: scale(0.5); transition: 0.5s;
+        }
+        .card:hover::before { opacity: 1; transform: scale(1); }
+        .card:hover { transform: translateY(-5px); z-index: 5; }
+
+        /* Theme Colors */
+        .repair-glow:hover { border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 243, 255, 0.15); }
+        .travel-glow:hover { border-color: var(--neon-purple); box-shadow: 0 0 40px rgba(188, 19, 254, 0.15); }
+        .future-glow:hover { border-color: var(--neon-gold); box-shadow: 0 0 30px rgba(255, 215, 0, 0.1); }
+
+        .icon-box { font-size: 3rem; margin-bottom: 20px; }
+        .card h2 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 10px; letter-spacing: 1px; }
+        .card p { color: #bbb; font-size: 1rem; line-height: 1.6; margin-bottom: 25px; font-weight: 300; }
+
+        .txt-cyan { color: var(--neon-cyan); }
+        .txt-purple { color: var(--neon-purple); }
+        .txt-gold { color: var(--neon-gold); transition: 0.3s; }
+        .card:hover .txt-gold { color: #fff; text-shadow: 0 0 10px var(--neon-gold); }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 30px; border-radius: 50px; text-transform: uppercase;
+            font-weight: 700; letter-spacing: 1px; font-size: 0.9rem; cursor: pointer;
+            background: transparent; transition: 0.3s; display: inline-block;
+        }
+        .btn-repair { border: 1px solid var(--neon-cyan); color: var(--neon-cyan); }
+        .btn-repair:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px var(--neon-cyan); }
+        
+        .btn-travel { border: 1px solid var(--neon-purple); color: var(--neon-purple); }
+        .btn-travel:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 20px var(--neon-purple); }
+
+        .lock-badge {
+            font-size: 0.8rem; color: #666; border: 1px solid #444; padding: 5px 15px; border-radius: 20px;
+            display: inline-block; text-transform: uppercase;
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: #111; border: 1px solid #333; padding: 40px; border-radius: 20px;
+            text-align: center; max-width: 500px; animation: zoomIn 0.3s ease; position: relative;
+        }
+        .modal-content::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+        }
+        .close-btn {
+            margin-top: 20px; padding: 10px 30px; border: 1px solid #555; background: transparent;
+            color: white; border-radius: 30px; cursor: pointer; transition: 0.3s;
+        }
+        .close-btn:hover { background: white; color: black; }
+
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        @media(max-width: 900px) { 
+            .prime-sector { grid-template-columns: 1fr; } 
+            header { flex-direction: column; gap: 20px; }
+        }
+
+        /* --- FOOTER --- */
+        .site-footer {
+            margin-top: 60px; padding: 30px 20px; border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
+        .footer-links a { color: #888; font-size: 0.85rem; text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--neon-cyan); }
+        .footer-copy { color: #555; font-size: 0.8rem; }
+
+        /* --- COOKIE BANNER --- */
+        .cookie-banner {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2000;
+            background: #111; border-top: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 20px; box-shadow: 0 -5px 30px rgba(0,0,0,0.5);
+        }
+        .cookie-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 15px; }
+        .cookie-text { flex: 1; color: #ccc; font-size: 0.9rem; min-width: 250px; }
+        .cookie-text a { color: var(--neon-cyan); text-decoration: none; }
+        .cookie-text a:hover { text-decoration: underline; }
+        .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
+        .cookie-btn { padding: 8px 20px; border-radius: 30px; font-size: 0.85rem; cursor: pointer; font-weight: 600; border: none; transition: 0.3s; }
+        .cookie-accept { background: var(--neon-cyan); color: #000; }
+        .cookie-accept:hover { box-shadow: 0 0 15px var(--neon-cyan); }
+        .cookie-essential { background: transparent; border: 1px solid #555; color: #ccc; }
+        .cookie-essential:hover { border-color: #999; color: #fff; }
+    </style>
+</head>
+<body id="body">
+
+    <div class="matrix-bg"></div>
+
+    <header>
+        <div class="brand-logo">TIMELIGHT<span class="brand-highlight">HUB</span></div>
+        
+        <div class="lang-container">
+            <button class="lang-btn" onclick="toggleLangMenu()">
+                <i class="fa-solid fa-globe"></i> <span id="currentLang">English</span> <i class="fa-solid fa-caret-down"></i>
+            </button>
+            <div class="lang-menu" id="langMenu">
+                <div class="lang-option" onclick="setLanguage('en')">🇺🇸 English</div>
+                <div class="lang-option" onclick="setLanguage('ar')">🇱🇧 العربية</div>
+                <div class="lang-option" onclick="setLanguage('fr')">🇫🇷 Français</div>
+                <div class="lang-option" onclick="setLanguage('es')">🇪🇸 Español</div>
+                <div class="lang-option" onclick="setLanguage('de')">🇩🇪 Deutsch</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-section">
+        <div class="slogan" id="t-slogan">The AI Hub for Your Service Empire</div>
+    </div>
+
+    <div class="empire-grid">
+        
+        <div class="prime-sector">
+            <div class="card repair-glow" onclick="openModal('repair')">
+                <div class="icon-box txt-cyan"><i class="fa-solid fa-microchip"></i></div>
+                <h2 class="txt-cyan" id="t-repair-title">Maintenance</h2>
+                <p id="t-repair-desc">AI-Driven Diagnostics & Management. Connecting Technicians with Clients seamlessly.</p>
+                <div class="btn btn-repair" id="t-repair-btn">Manage Workshop</div>
+            </div>
+
+            <div class="card travel-glow" onclick="openModal('travel')">
+                <div class="icon-box txt-purple"><i class="fa-solid fa-rocket"></i></div>
+                <h2 class="txt-purple" id="t-travel-title">Explore</h2>
+                <p id="t-travel-desc">AI Journey Planning. Empowering Agents & delighting Travelers with smart itineraries.</p>
+                <div class="btn btn-travel" id="t-travel-btn">Start Journey</div>
+            </div>
+        </div>
+
+        <div class="future-sector">
+            <div class="card future-glow" onclick="openModal('medical')">
+                <div class="icon-box txt-gold"><i class="fa-solid fa-user-doctor"></i></div>
+                <h2 id="t-medical-title">Medical</h2>
+                <p id="t-medical-desc">AI Clinical Management. Bridging Doctors & Patients.</p>
+                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
+            </div>
+            <div class="card future-glow" onclick="openModal('legal')">
+                <div class="icon-box txt-gold"><i class="fa-solid fa-scale-balanced"></i></div>
+                <h2 id="t-legal-title">Legal</h2>
+                <p id="t-legal-desc">AI Case Intelligence. Uniting Lawyers & Clients.</p>
+                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
+            </div>
+            <div class="card future-glow" onclick="openModal('estate')">
+                <div class="icon-box txt-gold"><i class="fa-solid fa-city"></i></div>
+                <h2 id="t-estate-title">Real Estate</h2>
+                <p id="t-estate-desc">AI Property Ecosystem. Tools for Agents & Buyers.</p>
+                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
+            </div>
+            <div class="card future-glow" onclick="openModal('consulting')">
+                <div class="icon-box txt-gold"><i class="fa-solid fa-briefcase"></i></div>
+                <h2 id="t-consulting-title">Consulting</h2>
+                <p id="t-consulting-desc">AI Strategic Growth. Data for Consultants & Businesses.</p>
+                <span class="lock-badge"><i class="fa-solid fa-lock"></i> <span class="t-locked">Locked</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="https://travel.timelighthub.com/terms" target="_blank" rel="noopener noreferrer" id="t-footer-terms">Terms of Service</a>
+            <a href="https://travel.timelighthub.com/privacy" target="_blank" rel="noopener noreferrer" id="t-footer-privacy">Privacy Policy</a>
+            <a href="https://travel.timelighthub.com/refund-policy" target="_blank" rel="noopener noreferrer" id="t-footer-refund">Refund Policy</a>
+            <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-footer-cookie">Cookie Policy</a>
+            <a href="https://travel.timelighthub.com/acceptable-use" target="_blank" rel="noopener noreferrer" id="t-footer-aup">Acceptable Use</a>
+        </div>
+        <p class="footer-copy">&copy; <span id="footerYear">2025</span> TimeLightHub Pty Ltd (ABN 80 674 812 852). <span id="t-footer-rights">All rights reserved.</span></p>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-inner">
+            <div class="cookie-text">
+                <span id="t-cookie-msg">We use essential cookies for platform functionality and optional analytics cookies to improve our services.</span>
+                <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-cookie-link">Cookie Policy</a>
+            </div>
+            <div class="cookie-btns">
+                <button class="cookie-btn cookie-essential" onclick="saveCookieConsent('essential')" id="t-cookie-essential">Essential Only</button>
+                <button class="cookie-btn cookie-accept" onclick="saveCookieConsent('all')" id="t-cookie-accept">Accept All</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle" style="color:white; margin-bottom:10px;">Service Locked</h2>
+            <p id="modalDate" style="color:#00f3ff; font-weight:bold; margin-bottom:20px;">Coming Soon</p>
+            <p id="modalText" style="color:#aaa;">This sector of the Empire is currently under development.</p>
+            <button class="close-btn" onclick="closeModal()" id="t-close-btn">Acknowledge</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. LANGUAGE DATABASE
+        const translations = {
+            en: {
+                name: "English",
+                slogan: "The AI Hub for Your Service Empire",
+                repairTitle: "Maintenance", repairDesc: "AI-Driven Diagnostics & Management. Connecting Technicians with Clients seamlessly.", repairBtn: "Manage Workshop",
+                travelTitle: "Explore", travelDesc: "AI Journey Planning. Empowering Agents & delighting Travelers with smart itineraries.", travelBtn: "Start Journey",
+                medicalTitle: "Medical", medicalDesc: "AI Clinical Management. Bridging Doctors & Patients.",
+                legalTitle: "Legal", legalDesc: "AI Case Intelligence. Uniting Lawyers & Clients.",
+                estateTitle: "Real Estate", estateDesc: "AI Property Ecosystem. Tools for Agents & Buyers.",
+                consultingTitle: "Consulting", consultingDesc: "AI Strategic Growth. Data for Consultants & Businesses.",
+                locked: "Locked", close: "Acknowledge",
+                modalMsg: "This sector of the Empire is currently under development.",
+                launchTarget: "Launch Target: ",
+                footerTerms: "Terms of Service", footerPrivacy: "Privacy Policy",
+                footerRefund: "Refund Policy", footerCookie: "Cookie Policy",
+                footerAup: "Acceptable Use", footerRights: "All rights reserved.",
+                cookieMsg: "We use essential cookies for platform functionality and optional analytics cookies to improve our services.",
+                cookieLink: "Cookie Policy", cookieEssential: "Essential Only", cookieAccept: "Accept All"
+            },
+            ar: {
+                name: "العربية",
+                slogan: "المحور الذكي لإمبراطورية خدماتك",
+                repairTitle: "الصيانة", repairDesc: "تشخيص بالذكاء الاصطناعي وإدارة شاملة. نربط الفنيين بالعملاء بسلاسة.", repairBtn: "إدارة الصيانة",
+                travelTitle: "استكشاف", travelDesc: "تخطيط رحلات ذكي. تمكين الوكلاء وإسعاد المسافرين بمسارات مخصصة.", travelBtn: "ابدأ الرحلة",
+                medicalTitle: "طبي", medicalDesc: "إدارة عيادات ذكية. جسر التواصل بين الطبيب والمريض.",
+                legalTitle: "قانوني", legalDesc: "ذكاء قانوني وإدارة قضايا. نوحد المحامين والعملاء.",
+                estateTitle: "عقارات", estateDesc: "منظومة عقارية ذكية. أدوات للوكلاء والمشترين.",
+                consultingTitle: "استشارات", consultingDesc: "نمو استراتيجي بالذكاء الاصطناعي. بيانات للمستشارين والشركات.",
+                locked: "مغلق", close: "موافق",
+                modalMsg: "هذا القطاع من الإمبراطورية قيد التطوير حالياً.",
+                launchTarget: "هدف الإطلاق: ",
+                footerTerms: "شروط الخدمة", footerPrivacy: "سياسة الخصوصية",
+                footerRefund: "سياسة الاسترداد", footerCookie: "سياسة ملفات تعريف الارتباط",
+                footerAup: "سياسة الاستخدام المقبول", footerRights: "جميع الحقوق محفوظة.",
+                cookieMsg: "نستخدم ملفات تعريف الارتباط الأساسية لوظائف المنصة وملفات تعريف الارتباط التحليلية الاختيارية لتحسين خدماتنا.",
+                cookieLink: "سياسة ملفات تعريف الارتباط", cookieEssential: "الأساسية فقط", cookieAccept: "قبول الكل"
+            },
+            fr: {
+                name: "Français",
+                slogan: "Le Hub IA pour votre Empire de Services",
+                repairTitle: "Maintenance", repairDesc: "Diagnostics IA et gestion. Connecter Techniciens et Clients.", repairBtn: "Gérer l'Atelier",
+                travelTitle: "Explorer", travelDesc: "Planification IA. Autonomiser les agents et ravir les voyageurs.", travelBtn: "Commencer",
+                medicalTitle: "Médical", medicalDesc: "Gestion Clinique IA. Relier Médecins et Patients.",
+                legalTitle: "Juridique", legalDesc: "Intelligence Juridique IA. Unir Avocats et Clients.",
+                estateTitle: "Immobilier", estateDesc: "Écosystème Immobilier IA. Outils pour Agents et Acheteurs.",
+                consultingTitle: "Conseil", consultingDesc: "Croissance Stratégique IA. Données pour Consultants.",
+                locked: "Verrouillé", close: "Fermer",
+                modalMsg: "Ce secteur de l'Empire est en cours de développement.",
+                launchTarget: "Lancement prévu : ",
+                footerTerms: "Conditions d'utilisation", footerPrivacy: "Politique de confidentialité",
+                footerRefund: "Politique de remboursement", footerCookie: "Politique de cookies",
+                footerAup: "Utilisation acceptable", footerRights: "Tous droits réservés.",
+                cookieMsg: "Nous utilisons des cookies essentiels pour le fonctionnement de la plateforme et des cookies analytiques optionnels pour améliorer nos services.",
+                cookieLink: "Politique de cookies", cookieEssential: "Essentiels uniquement", cookieAccept: "Tout accepter"
+            },
+            es: {
+                name: "Español",
+                slogan: "El Centro de IA para su Imperio de Servicios",
+                repairTitle: "Mantenimiento", repairDesc: "Diagnóstico por IA y Gestión. Conectando Técnicos y Clientes.", repairBtn: "Gestión de Taller",
+                travelTitle: "Explorar", travelDesc: "Planificación IA. Empoderando Agentes y deleitando Viajeros.", travelBtn: "Iniciar Viaje",
+                medicalTitle: "Médico", medicalDesc: "Gestión Clínica IA. Uniendo Médicos y Pacientes.",
+                legalTitle: "Legal", legalDesc: "Inteligencia Legal IA. Uniendo Abogados y Clientes.",
+                estateTitle: "Inmobiliaria", estateDesc: "Ecosistema Inmobiliario IA. Herramientas para Agentes.",
+                consultingTitle: "Consultoría", consultingDesc: "Crecimiento Estratégico IA. Datos para Consultores.",
+                locked: "Bloqueado", close: "Cerrar",
+                modalMsg: "Este sector del Imperio está en desarrollo.",
+                launchTarget: "Lanzamiento: ",
+                footerTerms: "Términos de servicio", footerPrivacy: "Política de privacidad",
+                footerRefund: "Política de reembolso", footerCookie: "Política de cookies",
+                footerAup: "Uso aceptable", footerRights: "Todos los derechos reservados.",
+                cookieMsg: "Utilizamos cookies esenciales para la funcionalidad de la plataforma y cookies analíticas opcionales para mejorar nuestros servicios.",
+                cookieLink: "Política de cookies", cookieEssential: "Solo esenciales", cookieAccept: "Aceptar todo"
+            },
+            de: {
+                name: "Deutsch",
+                slogan: "Der KI-Hub für Ihr Service-Imperium",
+                repairTitle: "Wartung", repairDesc: "KI-Diagnose & Management. Verbindung von Technikern & Kunden.", repairBtn: "Werkstatt Verwalten",
+                travelTitle: "Erkunden", travelDesc: "KI-Reiseplanung. Stärkung von Agenten & Reisenden.", travelBtn: "Starten",
+                medicalTitle: "Medizinisch", medicalDesc: "KI-Klinikmanagement. Brücke zwischen Ärzten & Patienten.",
+                legalTitle: "Rechtlich", legalDesc: "KI-Rechtsintelligenz. Vereinigung von Anwälten & Mandanten.",
+                estateTitle: "Immobilien", estateDesc: "KI-Immobilien-Ökosystem. Tools für Makler & Käufer.",
+                consultingTitle: "Beratung", consultingDesc: "Strategisches KI-Wachstum. Daten für Berater.",
+                locked: "Gesperrt", close: "Schließen",
+                modalMsg: "Dieser Sektor des Imperiums befindet sich in Entwicklung.",
+                launchTarget: "Startziel: ",
+                footerTerms: "Nutzungsbedingungen", footerPrivacy: "Datenschutzrichtlinie",
+                footerRefund: "Erstattungsrichtlinie", footerCookie: "Cookie-Richtlinie",
+                footerAup: "Nutzungsrichtlinien", footerRights: "Alle Rechte vorbehalten.",
+                cookieMsg: "Wir verwenden wesentliche Cookies für die Plattformfunktionalität und optionale Analyse-Cookies zur Verbesserung unserer Dienste.",
+                cookieLink: "Cookie-Richtlinie", cookieEssential: "Nur wesentliche", cookieAccept: "Alle akzeptieren"
+            }
+        };
+
+        let currentLangCode = 'en';
+
+        // 2. FUNCTIONS
+        function toggleLangMenu() {
+            document.getElementById('langMenu').classList.toggle('show-lang');
+        }
+
+        function setLanguage(lang) {
+            currentLangCode = lang;
+            const t = translations[lang];
+            
+            // Update Text
+            document.getElementById('currentLang').innerText = t.name;
+            document.getElementById('t-slogan').innerText = t.slogan;
+            
+            document.getElementById('t-repair-title').innerText = t.repairTitle;
+            document.getElementById('t-repair-desc').innerText = t.repairDesc;
+            document.getElementById('t-repair-btn').innerText = t.repairBtn;
+            
+            document.getElementById('t-travel-title').innerText = t.travelTitle;
+            document.getElementById('t-travel-desc').innerText = t.travelDesc;
+            document.getElementById('t-travel-btn').innerText = t.travelBtn;
+
+            document.getElementById('t-medical-title').innerText = t.medicalTitle;
+            document.getElementById('t-medical-desc').innerText = t.medicalDesc;
+            
+            document.getElementById('t-legal-title').innerText = t.legalTitle;
+            document.getElementById('t-legal-desc').innerText = t.legalDesc;
+
+            document.getElementById('t-estate-title').innerText = t.estateTitle;
+            document.getElementById('t-estate-desc').innerText = t.estateDesc;
+
+            document.getElementById('t-consulting-title').innerText = t.consultingTitle;
+            document.getElementById('t-consulting-desc').innerText = t.consultingDesc;
+
+            document.getElementById('t-close-btn').innerText = t.close;
+
+            // Update all "Locked" badges
+            const locks = document.getElementsByClassName('t-locked');
+            for(let i=0; i<locks.length; i++) { locks[i].innerText = t.locked; }
+
+            // Update footer
+            document.getElementById('t-footer-terms').innerText = t.footerTerms;
+            document.getElementById('t-footer-privacy').innerText = t.footerPrivacy;
+            document.getElementById('t-footer-refund').innerText = t.footerRefund;
+            document.getElementById('t-footer-cookie').innerText = t.footerCookie;
+            document.getElementById('t-footer-aup').innerText = t.footerAup;
+            document.getElementById('t-footer-rights').innerText = t.footerRights;
+
+            // Update cookie banner
+            document.getElementById('t-cookie-msg').innerText = t.cookieMsg;
+            document.getElementById('t-cookie-link').innerText = t.cookieLink;
+            document.getElementById('t-cookie-essential').innerText = t.cookieEssential;
+            document.getElementById('t-cookie-accept').innerText = t.cookieAccept;
+
+            // Handle RTL for Arabic
+            if (lang === 'ar') {
+                document.getElementById('body').classList.add('rtl');
+            } else {
+                document.getElementById('body').classList.remove('rtl');
+            }
+
+            toggleLangMenu();
+        }
+
+        // Modal Logic
+        function openModal(type) {
+            const t = translations[currentLangCode];
+            const modal = document.getElementById('statusModal');
+            const title = document.getElementById('modalTitle');
+            const date = document.getElementById('modalDate');
+            const msg = document.getElementById('modalText');
+
+            msg.innerText = t.modalMsg;
+
+            if(type === 'repair') { title.innerText = t.repairTitle; date.innerText = t.launchTarget + "Q2 2025"; }
+            else if(type === 'travel') { title.innerText = t.travelTitle; date.innerText = "Active Beta Soon"; }
+            else if(type === 'medical') { title.innerText = t.medicalTitle; date.innerText = t.launchTarget + "Q3 2025"; }
+            else if(type === 'legal') { title.innerText = t.legalTitle; date.innerText = t.launchTarget + "Q4 2025"; }
+            else if(type === 'estate') { title.innerText = t.estateTitle; date.innerText = t.launchTarget + "2026"; }
+            else if(type === 'consulting') { title.innerText = t.consultingTitle; date.innerText = t.launchTarget + "2026"; }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('statusModal').style.display = 'none';
+        }
+        window.onclick = function(e) {
+            if (!e.target.matches('.lang-btn') && !e.target.matches('.lang-btn *')) {
+                document.getElementById('langMenu').classList.remove('show-lang');
+            }
+            if (e.target == document.getElementById('statusModal')) { closeModal(); }
+        }
+
+        // Cookie Consent Logic
+        const COOKIE_KEY = 'tlh_cookie_consent';
+        const COOKIE_VERSION = '1.0';
+
+        function initCookieBanner() {
+            try {
+                const stored = JSON.parse(localStorage.getItem(COOKIE_KEY));
+                if (!stored || stored.version !== COOKIE_VERSION) {
+                    document.getElementById('cookieBanner').style.display = 'block';
+                }
+            } catch {
+                document.getElementById('cookieBanner').style.display = 'block';
+            }
+        }
+
+        function saveCookieConsent(level) {
+            const consent = {
+                level: level,
+                analytics: level === 'all',
+                version: COOKIE_VERSION,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem(COOKIE_KEY, JSON.stringify(consent));
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+
+        // Init
+        document.getElementById('footerYear').innerText = new Date().getFullYear();
+        initCookieBanner();
+    </script>
+
+</body>
+</html>
