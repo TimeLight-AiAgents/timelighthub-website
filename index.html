@@ -177,6 +177,33 @@
             .prime-sector { grid-template-columns: 1fr; } 
             header { flex-direction: column; gap: 20px; }
         }
+
+        /* --- FOOTER --- */
+        .site-footer {
+            margin-top: 60px; padding: 30px 20px; border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
+        .footer-links a { color: #888; font-size: 0.85rem; text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--neon-cyan); }
+        .footer-copy { color: #555; font-size: 0.8rem; }
+
+        /* --- COOKIE BANNER --- */
+        .cookie-banner {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2000;
+            background: #111; border-top: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 20px; box-shadow: 0 -5px 30px rgba(0,0,0,0.5);
+        }
+        .cookie-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 15px; }
+        .cookie-text { flex: 1; color: #ccc; font-size: 0.9rem; min-width: 250px; }
+        .cookie-text a { color: var(--neon-cyan); text-decoration: none; }
+        .cookie-text a:hover { text-decoration: underline; }
+        .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
+        .cookie-btn { padding: 8px 20px; border-radius: 30px; font-size: 0.85rem; cursor: pointer; font-weight: 600; border: none; transition: 0.3s; }
+        .cookie-accept { background: var(--neon-cyan); color: #000; }
+        .cookie-accept:hover { box-shadow: 0 0 15px var(--neon-cyan); }
+        .cookie-essential { background: transparent; border: 1px solid #555; color: #ccc; }
+        .cookie-essential:hover { border-color: #999; color: #fff; }
     </style>
 </head>
 <body id="body">
@@ -250,6 +277,32 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="https://travel.timelighthub.com/terms" target="_blank" rel="noopener noreferrer" id="t-footer-terms">Terms of Service</a>
+            <a href="https://travel.timelighthub.com/privacy" target="_blank" rel="noopener noreferrer" id="t-footer-privacy">Privacy Policy</a>
+            <a href="https://travel.timelighthub.com/refund-policy" target="_blank" rel="noopener noreferrer" id="t-footer-refund">Refund Policy</a>
+            <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-footer-cookie">Cookie Policy</a>
+            <a href="https://travel.timelighthub.com/acceptable-use" target="_blank" rel="noopener noreferrer" id="t-footer-aup">Acceptable Use</a>
+        </div>
+        <p class="footer-copy">&copy; <span id="footerYear">2025</span> TimeLightHub Pty Ltd (ABN 80 674 812 852). <span id="t-footer-rights">All rights reserved.</span></p>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-inner">
+            <div class="cookie-text">
+                <span id="t-cookie-msg">We use essential cookies for platform functionality and optional analytics cookies to improve our services.</span>
+                <a href="https://travel.timelighthub.com/cookie-policy" target="_blank" rel="noopener noreferrer" id="t-cookie-link">Cookie Policy</a>
+            </div>
+            <div class="cookie-btns">
+                <button class="cookie-btn cookie-essential" onclick="saveCookieConsent('essential')" id="t-cookie-essential">Essential Only</button>
+                <button class="cookie-btn cookie-accept" onclick="saveCookieConsent('all')" id="t-cookie-accept">Accept All</button>
+            </div>
+        </div>
+    </div>
+
     <div id="statusModal" class="modal">
         <div class="modal-content">
             <h2 id="modalTitle" style="color:white; margin-bottom:10px;">Service Locked</h2>
@@ -273,7 +326,12 @@
                 consultingTitle: "Consulting", consultingDesc: "AI Strategic Growth. Data for Consultants & Businesses.",
                 locked: "Locked", close: "Acknowledge",
                 modalMsg: "This sector of the Empire is currently under development.",
-                launchTarget: "Launch Target: "
+                launchTarget: "Launch Target: ",
+                footerTerms: "Terms of Service", footerPrivacy: "Privacy Policy",
+                footerRefund: "Refund Policy", footerCookie: "Cookie Policy",
+                footerAup: "Acceptable Use", footerRights: "All rights reserved.",
+                cookieMsg: "We use essential cookies for platform functionality and optional analytics cookies to improve our services.",
+                cookieLink: "Cookie Policy", cookieEssential: "Essential Only", cookieAccept: "Accept All"
             },
             ar: {
                 name: "العربية",
@@ -286,7 +344,12 @@
                 consultingTitle: "استشارات", consultingDesc: "نمو استراتيجي بالذكاء الاصطناعي. بيانات للمستشارين والشركات.",
                 locked: "مغلق", close: "موافق",
                 modalMsg: "هذا القطاع من الإمبراطورية قيد التطوير حالياً.",
-                launchTarget: "هدف الإطلاق: "
+                launchTarget: "هدف الإطلاق: ",
+                footerTerms: "شروط الخدمة", footerPrivacy: "سياسة الخصوصية",
+                footerRefund: "سياسة الاسترداد", footerCookie: "سياسة ملفات تعريف الارتباط",
+                footerAup: "سياسة الاستخدام المقبول", footerRights: "جميع الحقوق محفوظة.",
+                cookieMsg: "نستخدم ملفات تعريف الارتباط الأساسية لوظائف المنصة وملفات تعريف الارتباط التحليلية الاختيارية لتحسين خدماتنا.",
+                cookieLink: "سياسة ملفات تعريف الارتباط", cookieEssential: "الأساسية فقط", cookieAccept: "قبول الكل"
             },
             fr: {
                 name: "Français",
@@ -299,7 +362,12 @@
                 consultingTitle: "Conseil", consultingDesc: "Croissance Stratégique IA. Données pour Consultants.",
                 locked: "Verrouillé", close: "Fermer",
                 modalMsg: "Ce secteur de l'Empire est en cours de développement.",
-                launchTarget: "Lancement prévu : "
+                launchTarget: "Lancement prévu : ",
+                footerTerms: "Conditions d'utilisation", footerPrivacy: "Politique de confidentialité",
+                footerRefund: "Politique de remboursement", footerCookie: "Politique de cookies",
+                footerAup: "Utilisation acceptable", footerRights: "Tous droits réservés.",
+                cookieMsg: "Nous utilisons des cookies essentiels pour le fonctionnement de la plateforme et des cookies analytiques optionnels pour améliorer nos services.",
+                cookieLink: "Politique de cookies", cookieEssential: "Essentiels uniquement", cookieAccept: "Tout accepter"
             },
             es: {
                 name: "Español",
@@ -312,7 +380,12 @@
                 consultingTitle: "Consultoría", consultingDesc: "Crecimiento Estratégico IA. Datos para Consultores.",
                 locked: "Bloqueado", close: "Cerrar",
                 modalMsg: "Este sector del Imperio está en desarrollo.",
-                launchTarget: "Lanzamiento: "
+                launchTarget: "Lanzamiento: ",
+                footerTerms: "Términos de servicio", footerPrivacy: "Política de privacidad",
+                footerRefund: "Política de reembolso", footerCookie: "Política de cookies",
+                footerAup: "Uso aceptable", footerRights: "Todos los derechos reservados.",
+                cookieMsg: "Utilizamos cookies esenciales para la funcionalidad de la plataforma y cookies analíticas opcionales para mejorar nuestros servicios.",
+                cookieLink: "Política de cookies", cookieEssential: "Solo esenciales", cookieAccept: "Aceptar todo"
             },
             de: {
                 name: "Deutsch",
@@ -325,7 +398,12 @@
                 consultingTitle: "Beratung", consultingDesc: "Strategisches KI-Wachstum. Daten für Berater.",
                 locked: "Gesperrt", close: "Schließen",
                 modalMsg: "Dieser Sektor des Imperiums befindet sich in Entwicklung.",
-                launchTarget: "Startziel: "
+                launchTarget: "Startziel: ",
+                footerTerms: "Nutzungsbedingungen", footerPrivacy: "Datenschutzrichtlinie",
+                footerRefund: "Erstattungsrichtlinie", footerCookie: "Cookie-Richtlinie",
+                footerAup: "Nutzungsrichtlinien", footerRights: "Alle Rechte vorbehalten.",
+                cookieMsg: "Wir verwenden wesentliche Cookies für die Plattformfunktionalität und optionale Analyse-Cookies zur Verbesserung unserer Dienste.",
+                cookieLink: "Cookie-Richtlinie", cookieEssential: "Nur wesentliche", cookieAccept: "Alle akzeptieren"
             }
         };
 
@@ -370,6 +448,20 @@
             const locks = document.getElementsByClassName('t-locked');
             for(let i=0; i<locks.length; i++) { locks[i].innerText = t.locked; }
 
+            // Update footer
+            document.getElementById('t-footer-terms').innerText = t.footerTerms;
+            document.getElementById('t-footer-privacy').innerText = t.footerPrivacy;
+            document.getElementById('t-footer-refund').innerText = t.footerRefund;
+            document.getElementById('t-footer-cookie').innerText = t.footerCookie;
+            document.getElementById('t-footer-aup').innerText = t.footerAup;
+            document.getElementById('t-footer-rights').innerText = t.footerRights;
+
+            // Update cookie banner
+            document.getElementById('t-cookie-msg').innerText = t.cookieMsg;
+            document.getElementById('t-cookie-link').innerText = t.cookieLink;
+            document.getElementById('t-cookie-essential').innerText = t.cookieEssential;
+            document.getElementById('t-cookie-accept').innerText = t.cookieAccept;
+
             // Handle RTL for Arabic
             if (lang === 'ar') {
                 document.getElementById('body').classList.add('rtl');
@@ -409,6 +501,36 @@
             }
             if (e.target == document.getElementById('statusModal')) { closeModal(); }
         }
+
+        // Cookie Consent Logic
+        const COOKIE_KEY = 'tlh_cookie_consent';
+        const COOKIE_VERSION = '1.0';
+
+        function initCookieBanner() {
+            try {
+                const stored = JSON.parse(localStorage.getItem(COOKIE_KEY));
+                if (!stored || stored.version !== COOKIE_VERSION) {
+                    document.getElementById('cookieBanner').style.display = 'block';
+                }
+            } catch {
+                document.getElementById('cookieBanner').style.display = 'block';
+            }
+        }
+
+        function saveCookieConsent(level) {
+            const consent = {
+                level: level,
+                analytics: level === 'all',
+                version: COOKIE_VERSION,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem(COOKIE_KEY, JSON.stringify(consent));
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+
+        // Init
+        document.getElementById('footerYear').innerText = new Date().getFullYear();
+        initCookieBanner();
     </script>
 
 </body>
