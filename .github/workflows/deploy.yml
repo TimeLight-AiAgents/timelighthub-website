@@ -1,0 +1,46 @@
+name: Deploy hub to droplet
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hub
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.DROPLET_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='*.md' \
+            --exclude='*.bak' \
+            -e "ssh -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes" \
+            ./ root@${{ secrets.DROPLET_HOST }}:/opt/timelighthub-hub/
+
+      - name: Verify deployment
+        run: |
+          STATUS=$(curl -sk -o /dev/null -w "%{http_code}" https://timelighthub.com/ --resolve timelighthub.com:443:${{ secrets.DROPLET_HOST }})
+          echo "Hub HTTPS status: $STATUS"
+          if [ "$STATUS" != "200" ]; then exit 1; fi
