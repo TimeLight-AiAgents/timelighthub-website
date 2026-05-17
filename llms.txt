@@ -1,0 +1,26 @@
+# TimeLightHub
+
+> The AI Hub for Your Service Empire. One unified ecosystem powering multiple industry-specific AI platforms — travel, crypto payments, AI agents, e-commerce, repair, medical, legal, real estate, and consulting.
+
+TimeLightHub is a multi-platform empire model: each industry gets its own dedicated AI platform, sharing infrastructure, login, and AI capabilities across the hub.
+
+## Live platforms
+
+- **AI Travel Platform** — [travel.timelighthub.com](https://travel.timelighthub.com/) — Complete AI-powered travel management. Agent, admin, and traveler portals with smart itineraries, AI chatbot, eSIM, and Stripe/Crypto payments.
+- **Crypto Payment Gateway** — [pay.timelighthub.com](https://pay.timelighthub.com/) — Self-hosted Bitcoin and Lightning payment infrastructure. $1/month subscription, 0% platform transaction fees, fully self-custodial, built on BTCPay Server. REST API, webhooks, embeddable widget, hosted checkout. 60-day free trial.
+- **AI Agents — Agent Forge Commerce** — [afc.timelighthub.com](https://afc.timelighthub.com/) — Pay-per-use automated developer services for AI agents and automation pipelines. Security snapshots, API documentation briefs, performance audits, SEO checks. Settled via Bitcoin or Lightning. Self-service partner API keys.
+
+## Coming soon
+
+- **AI E-Store** — Multi-vendor AI-powered e-commerce.
+- **AI Maintenance** — AI-driven diagnostics and workshop management.
+
+## Locked (planned 2027+)
+
+- AI Medical, AI Legal, AI Real Estate, AI Consulting.
+
+## Contact
+
+- General: support@timelighthub.com
+- Compliance: compliance@timelighthub.com
+- Security: security@timelighthub.com

@@ -1,0 +1,32 @@
+# TimeLightHub — The AI Hub for Your Service Empire
+# https://timelighthub.com
+
+User-agent: *
+Allow: /
+
+# Welcome AI / LLM crawlers (transparency)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+Sitemap: https://timelighthub.com/sitemap.xml

@@ -3,8 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- Security headers (meta-equivalents — GitHub Pages strips custom HTTP headers) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
     <title>TimeLightHub | The AI Hub for Your Service Empire</title>
-    <meta name="description" content="TimeLightHub — The Smart Engine for Your Business Empire. AI-powered platforms for Travel, E-Commerce, Repair, Medical, Legal, Real Estate & Consulting.">
+    <meta name="description" content="TimeLightHub — AI-powered platform hub for Travel, Crypto Payments, AI Agents, E-Commerce, Repair, Medical, Legal, Real Estate & Consulting.">
+    <link rel="canonical" href="https://timelighthub.com/">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="TimeLightHub — The AI Hub for Your Service Empire">
+    <meta property="og:description" content="One unified AI hub powering multiple industries. Live platforms: Travel, Crypto Payment Gateway, and AI Agents for developers.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://timelighthub.com/">
+    <meta property="og:site_name" content="TimeLightHub">
+    <meta property="og:image" content="https://timelighthub.com/assets/og-image.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TimeLightHub — The AI Hub for Your Service Empire">
+    <meta name="twitter:description" content="One unified AI hub powering multiple industries — travel, crypto payments, AI agents, and more.">
+    <meta name="twitter:image" content="https://timelighthub.com/assets/og-image.png">
 
     <!-- Favicons & Mobile Icons -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -12,6 +35,49 @@
     <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#050505">
     <meta name="apple-mobile-web-app-title" content="TimeLightHub">
+
+    <!-- Structured data: Organization + WebSite + ItemList of platforms -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TimeLightHub",
+      "url": "https://timelighthub.com/",
+      "logo": "https://timelighthub.com/assets/apple-touch-icon.png",
+      "description": "AI-powered platform hub for Travel, Crypto Payments, AI Agents, E-Commerce, Repair, Medical, Legal, Real Estate, and Consulting.",
+      "sameAs": [
+        "https://travel.timelighthub.com/",
+        "https://pay.timelighthub.com/",
+        "https://afc.timelighthub.com/"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TimeLightHub",
+      "url": "https://timelighthub.com/"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "TimeLightHub Platforms",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "AI Travel Platform",        "url": "https://travel.timelighthub.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Crypto Payment Gateway",    "url": "https://pay.timelighthub.com/" },
+        { "@type": "ListItem", "position": 3, "name": "Agent Forge Commerce (AI)", "url": "https://afc.timelighthub.com/" },
+        { "@type": "ListItem", "position": 4, "name": "AI E-Store" },
+        { "@type": "ListItem", "position": 5, "name": "AI Maintenance" },
+        { "@type": "ListItem", "position": 6, "name": "AI Medical" },
+        { "@type": "ListItem", "position": 7, "name": "AI Legal" },
+        { "@type": "ListItem", "position": 8, "name": "AI Real Estate" },
+        { "@type": "ListItem", "position": 9, "name": "AI Consulting" }
+      ]
+    }
+    </script>
 
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -109,17 +175,18 @@
 
         /* Theme Toggle */
         .theme-toggle {
-            width: 50px; height: 26px; border-radius: 13px; cursor: pointer;
-            background: #333; position: relative; border: none; transition: 0.3s;
+            width: 52px; height: 28px; border-radius: 14px; cursor: pointer;
+            background: #2a2a2a; position: relative; border: 1px solid rgba(255,255,255,0.12);
+            transition: 0.3s; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
         }
-        [data-theme="light"] .theme-toggle { background: #ddd; }
+        [data-theme="light"] .theme-toggle { background: #ddd; border-color: rgba(0,0,0,0.1); box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
         .theme-toggle::after {
             content: ''; position: absolute; top: 3px; left: 3px;
             width: 20px; height: 20px; border-radius: 50%; background: var(--cyan);
-            transition: 0.3s;
+            transition: 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
         [data-theme="light"] .theme-toggle::after { left: 27px; background: var(--gold); }
-        .theme-icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 12px; }
+        .theme-icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; opacity: 0.6; }
         .theme-icon.sun { right: 6px; }
         .theme-icon.moon { left: 6px; }
 
@@ -569,6 +636,52 @@
             </div>
             <div class="platform-action">
                 <a href="https://travel.timelighthub.com" target="_blank" rel="noopener noreferrer" class="btn-visit" id="t-btn-visit-travel">Visit Platform &#x2192;</a>
+            </div>
+        </div>
+
+        <!-- PAYMENT GATEWAY - LIVE -->
+        <div class="platform-card live reveal">
+            <div class="platform-icon txt-green"><i class="fa-brands fa-bitcoin"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 class="txt-green" id="t-p-pay-title">Crypto Payment Gateway</h2>
+                    <span class="status-badge badge-live" id="t-badge-live-pay">&#x25CF; Live</span>
+                </div>
+                <p class="platform-desc" id="t-p-pay-desc">Self-hosted crypto payment infrastructure for developers, freelancers, and global merchants. Accept Bitcoin and Lightning with $1/month, 0% platform transaction fees, and full self-custody. Built on BTCPay Server.</p>
+                <ul class="platform-features">
+                    <li id="t-p-pay-f1">$1/month, 0% platform fees</li>
+                    <li id="t-p-pay-f2">Self-custodial &mdash; you control your wallet</li>
+                    <li id="t-p-pay-f3">Bitcoin on-chain &amp; Lightning Network</li>
+                    <li id="t-p-pay-f4">REST API, webhooks &amp; embeddable widget</li>
+                    <li id="t-p-pay-f5">Hosted checkout &amp; merchant dashboard</li>
+                    <li id="t-p-pay-f6">60-day free trial</li>
+                </ul>
+            </div>
+            <div class="platform-action">
+                <a href="https://pay.timelighthub.com" target="_blank" rel="noopener noreferrer" class="btn-visit" id="t-btn-visit-pay">Visit Platform &#x2192;</a>
+            </div>
+        </div>
+
+        <!-- AGENT FORGE COMMERCE - LIVE (AI Agents category) -->
+        <div class="platform-card live reveal">
+            <div class="platform-icon txt-cyan"><i class="fa-solid fa-robot"></i></div>
+            <div class="platform-body">
+                <div class="platform-header">
+                    <h2 class="txt-cyan" id="t-p-afc-title">AI Agents &mdash; Agent Forge Commerce</h2>
+                    <span class="status-badge badge-live" id="t-badge-live-afc">&#x25CF; Live</span>
+                </div>
+                <p class="platform-desc" id="t-p-afc-desc">Pay-per-use automated developer services for AI agents and automation pipelines. Security snapshots, API documentation, performance audits, and SEO checks &mdash; delivered in seconds, settled via Bitcoin or Lightning.</p>
+                <ul class="platform-features">
+                    <li id="t-p-afc-f1">Security snapshot scans</li>
+                    <li id="t-p-afc-f2">API documentation briefs</li>
+                    <li id="t-p-afc-f3">Performance audits</li>
+                    <li id="t-p-afc-f4">SEO checks</li>
+                    <li id="t-p-afc-f5">Self-service partner API keys</li>
+                    <li id="t-p-afc-f6">Bitcoin / Lightning settlement</li>
+                </ul>
+            </div>
+            <div class="platform-action">
+                <a href="https://afc.timelighthub.com" target="_blank" rel="noopener noreferrer" class="btn-visit" id="t-btn-visit-afc">Visit Platform &#x2192;</a>
             </div>
         </div>
 
