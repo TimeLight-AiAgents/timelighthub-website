@@ -18,7 +18,7 @@ Shared note written to all TimeLightHub repos (timelighthub-website, TimeLightPa
 
 ## What changed on 9 Sep 2026 (repo `timelighthub-website`, branch `research-site`, pushed, NOT merged)
 
-1. `research/` — new sober static page for the public research record (TimeLightHub composable photonic computer): abstract, 13-element catalog, honest status, the one first experiment, PDFs + Complete HTML, Zenodo DOI 10.5281/zenodo.22649324, ORCID 0009-0003-8565-2605, UK patent application GB2615417.9, citation. Public content only, no cost figures. Two placeholders (`#arxiv-badge`, `#arxiv-cell`) wait for the arXiv ID.
+1. `research/` — new sober static page for the public research record (TimeLightHub composable photonic computer): abstract, 13-element catalog, honest status, the one first experiment, PDFs + Complete HTML, Zenodo DOI 10.5281/zenodo.22649324, ORCID 0009-0003-8565-2605, UK patent application GB2615417.9, citation. Public content only, no cost figures. (arXiv declined the preprint on 14 Sep 2026; the page cites Zenodo only.)
 2. `index.html` — gold **Research** link in desktop + mobile nav (`nav-research`, `mnav-research`, target=_blank) and a slim fixed bar `.research-bar` above the fixed header (`--rbar-h: 32px`; header, mobile-nav and hero are offset by it). i18n `setText` does not touch the new ids.
 3. `sitemap.xml` — entry for research.timelighthub.com.
 4. `.github/workflows/deploy.yml` — **PAUSED**: `push` trigger commented out, `workflow_dispatch` kept, secrets (`DEPLOY_SSH_KEY`, `DROPLET_HOST`, `DROPLET_KNOWN_HOSTS`) and the rsync target `/opt/timelighthub-hub/` untouched. Reason: it would fail on every push to main against the dead droplet. GitHub Pages deploys via its own separate `pages-build-deployment` job and is unaffected.
@@ -32,4 +32,4 @@ Shared note written to all TimeLightHub repos (timelighthub-website, TimeLightPa
 5. GoDaddy: re-add A records for `pay` and `afc` → new IP; move the apex A records from GitHub Pages (185.199.108–111.153) back to the droplet **only after** step 2 is healthy; if the apex moves, keep the research subdomain on Render (independent).
 
 ## Contacts / identifiers used on the research page
-Samer Beyrouti · Connect@TimeLightHub.com · ORCID 0009-0003-8565-2605 · Zenodo DOI 10.5281/zenodo.22649324 · arXiv submit/8054011 (ID pending, submitted 9 Sep 2026) · UK patent application GB2615417.9 (filed 18 Jun 2026).
+Samer Beyrouti · Connect@TimeLightHub.com · ORCID 0009-0003-8565-2605 · Zenodo DOI 10.5281/zenodo.22649324 · arXiv: declined 14 Sep 2026 (do not resubmit) · UK patent application GB2615417.9 (filed 18 Jun 2026).
