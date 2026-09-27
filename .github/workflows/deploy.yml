@@ -1,8 +1,16 @@
 name: Deploy hub to droplet
 
+# PAUSED (Sep 2026): the DigitalOcean droplet (159.89.108.226) was destroyed and
+# timelighthub.com is served by GitHub Pages from this repo's main branch.
+# The push trigger is disabled so pushes to main do not run a rsync against a
+# dead host. Nothing else changed - secrets, steps and the rsync target are
+# intact. TO REVIVE: re-create the droplet (TimeLightPay gateway nginx serves
+# /opt/timelighthub-hub for the apex), update the DROPLET_HOST and
+# DROPLET_KNOWN_HOSTS secrets to the new IP / host key, then either run this
+# workflow manually (Actions -> Run workflow) or restore the push trigger:
+#   push:
+#     branches: [main]
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:

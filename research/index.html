@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TimeLightHub Research — A Composable Photonic Computer That Thinks in Light</title>
+<meta name="description" content="TimeLightHub: a composable photonic computing architecture built from thirteen integrated photonic elements, with non-volatile optical memory and an AI engine whose weights never move. Open research by Samer Beyrouti. Patent Pending GB2615417.9.">
+<meta name="author" content="Samer Beyrouti">
+<meta name="citation_title" content="TimeLightHub: A Composable Photonic Computer That Thinks in Light">
+<meta name="citation_author" content="Beyrouti, Samer">
+<meta name="citation_publication_date" content="2026/09/07">
+<meta name="citation_doi" content="10.5281/zenodo.22649324">
+<meta name="citation_pdf_url" content="https://research.timelighthub.com/assets/TimeLightHub_Complete.pdf">
+<meta property="og:title" content="TimeLightHub Research">
+<meta property="og:description" content="A composable photonic computer that thinks in light. Open architecture, patent pending, one decisive first experiment.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://research.timelighthub.com/">
+<link rel="icon" href="assets/logo-icon.png" type="image/png">
+<style>
+  :root{--navy:#16324a;--ink:#1c2630;--muted:#5a6b7a;--gold:#d4a017;--green:#1f7a4d;--red:#b03030;--link:#1f5f7a;--rule:#d9e2ea;--panel:#eef4f9;--paper:#ffffff;}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6}
+  a{color:var(--link)}
+  .wrap{max-width:820px;margin:0 auto;padding:0 28px}
+  /* top strip */
+  .strip{background:var(--navy);color:#e8eef4;font-size:13px}
+  .strip .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+  .strip a{color:#e8eef4;text-decoration:none}
+  .strip a:hover{color:var(--gold)}
+  .strip .brand{font-weight:600;letter-spacing:.5px}
+  .strip .brand span{color:var(--gold)}
+  /* title block */
+  .title{padding:44px 0 26px;border-bottom:3px solid var(--gold);margin-bottom:26px}
+  .title .kicker{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  .title h1{font-size:32px;color:var(--navy);margin:0 0 8px;line-height:1.2}
+  .title .sub{font-size:20px;color:var(--navy);margin:0 0 16px}
+  .title .meta{font-size:14px;color:var(--muted);margin:2px 0}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+  .badge{display:inline-block;font-size:13px;padding:5px 11px;border:1px solid var(--rule);border-radius:999px;color:var(--navy);text-decoration:none;background:#fff}
+  .badge:hover{border-color:var(--gold)}
+  .badge b{color:var(--gold)}
+  .badge.pending{border-color:var(--gold);background:#fffaf0}
+  .badge.wait{color:var(--muted);border-style:dashed}
+  h2{color:var(--navy);font-size:22px;margin:38px 0 12px}
+  h3{color:var(--green);font-size:17px;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .lead{font-size:17px}
+  .abstract{background:var(--panel);border-left:4px solid var(--navy);padding:16px 20px;border-radius:0 10px 10px 0;margin:0 0 18px}
+  .abstract p{margin:0}
+  ul{padding-left:22px}
+  li{margin:6px 0}
+  .fig{margin:22px 0;text-align:center}
+  .fig img{max-width:100%;height:auto;border:1px solid #eef2f6;border-radius:10px;background:#fff}
+  .fig .cap{font-size:14px;color:#3a4654;font-style:italic;margin-top:8px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;font-size:14px;color:#3a4654;margin-top:6px}
+  .legend span::before{display:inline-block;width:1.1em;font-size:16px}
+  .l1::before{content:"●";color:var(--green)}
+  .l2::before{content:"◐";color:var(--navy)}
+  .l3::before{content:"○";color:var(--gold)}
+  .experiment{border:2px solid var(--gold);border-radius:12px;padding:18px 22px;margin:18px 0;background:#fffdf7}
+  .experiment h3{margin-top:0;color:var(--navy)}
+  .experiment code{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:2px 6px;font-size:14px}
+  .docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:14px 0}
+  .doc{border:1px solid var(--rule);border-radius:10px;padding:14px 16px;background:#fff}
+  .doc a.t{font-weight:600;color:var(--navy);text-decoration:none;font-size:16px}
+  .doc a.t:hover{color:var(--link)}
+  .doc .d{font-size:14px;color:var(--muted);margin:6px 0 0}
+  table{border-collapse:collapse;width:100%;font-size:15px;margin:10px 0 18px}
+  th,td{border:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--panel);color:var(--navy)}
+  .cite{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:12px 16px;font-size:14px;overflow-x:auto;white-space:pre-wrap;font-family:Consolas,Menlo,monospace}
+  .note{font-size:14px;color:var(--muted)}
+  footer{margin-top:50px;border-top:1px solid var(--rule);padding:24px 0 40px;font-size:14px;color:var(--muted)}
+  footer p{margin:6px 0}
+  footer a{color:var(--link)}
+  @media(max-width:600px){.title h1{font-size:26px}.title .sub{font-size:17px}.wrap{padding:0 18px}}
+  @media print{.strip{display:none}body{max-width:none}.fig img{border:none}}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <a class="brand" href="https://timelighthub.com">TIMELIGHT<span>HUB</span> · Research</a>
+    <span>
+      <a href="#papers">Papers</a> &nbsp;·&nbsp;
+      <a href="#experiment">First experiment</a> &nbsp;·&nbsp;
+      <a href="#cite">Cite</a> &nbsp;·&nbsp;
+      <a href="#contact">Contact</a>
+    </span>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <div class="title">
+    <p class="kicker">Open research · photonic computing</p>
+    <h1>TimeLightHub</h1>
+    <p class="sub">A Composable Photonic Computer That Thinks in Light</p>
+    <p class="meta"><strong>Samer Beyrouti</strong> — Inventor &amp; Architect · Independent Researcher, Tripoli, Lebanon</p>
+    <p class="meta">ORCID <a href="https://orcid.org/0009-0003-8565-2605">0009-0003-8565-2605</a> · Connect@TimeLightHub.com</p>
+    <p class="meta">Patent Pending — UK application <strong>GB2615417.9</strong> (filed 18 June 2026)</p>
+    <div class="badges">
+      <a class="badge" href="https://doi.org/10.5281/zenodo.22649324">Zenodo · DOI <b>10.5281/zenodo.22649324</b></a>
+      <a class="badge" href="https://orcid.org/0009-0003-8565-2605">ORCID · 0009-0003-8565-2605</a>
+      <span class="badge pending">Patent Pending · GB2615417.9</span>
+    </div>
+  </div>
+
+  <div class="abstract">
+    <p><strong>Abstract.</strong> We present TimeLightHub, a composable photonic computing architecture that computes with light and stores data in light without electrical power. The architecture is built from thirteen integrated photonic elements — including a two-layer non-volatile optical memory node, an in-place-weight systolic matrix-multiply cell whose weights never move, a pumped ring that combines gain, regeneration and memory, and a triangular majority-voting element for self-correction — tiled on a hexagonal “honeycomb” fabric whose shared edges form a hybrid lattice of passive threshold nodes and sparse active gain nodes. The same hardware is reconfigured by the wavelength, phase and timing of light into a CPU pipeline, an AI matrix engine, a non-volatile memory bank, or a search engine. Bounded operations are retrieved by navigating to a stored answer (an optical lookup, the “OmniCube”) rather than computed. We state the architecture’s two open engineering questions — analog precision at depth and the amplifier pump budget — with first-order bounds from a physics-honest simulator, and reduce the energy claim to a single measurable quantity, the energy to read one stored weight, which a defined first experiment measures. The maturity of every element is marked explicitly.</p>
+  </div>
+
+  <h2>Why this architecture</h2>
+  <p class="lead">Computing is hitting a wall made of heat and energy. A high-end AI chip spends most of its power not on computing but on moving data and fighting heat, and its memory leaks power just to remember. TimeLightHub computes with light and remembers with light that needs no power. It is built from thirteen photonic elements that compose — like the sections of an orchestra — into a CPU, an AI engine, or a search engine, all from the same hardware, reconfigured by colour.</p>
+  <ul>
+    <li><strong>A non-volatile memory made of light</strong> — keeps data with the power off, designed as a composable element of a computer. The storage physics (diarylethene photochromism) is demonstrated science; the latch element is ours.</li>
+    <li><strong>An AI engine where the weights never move</strong> — they live where the light reads them, removing the single largest energy cost in machine-learning inference.</li>
+    <li><strong>Self-correcting computation</strong> — a three-fold element votes out errors, the way spacecraft computers do.</li>
+    <li><strong>A composable element kit with its own language (LUMINA)</strong> — one device, many machines, reconfigured by light.</li>
+  </ul>
+
+  <h2 id="elements">The thirteen elements</h2>
+  <div class="fig">
+    <img src="assets/element_catalog.svg" alt="Catalog of the thirteen TimeLightHub photonic elements with their maturity marks">
+    <div class="legend">
+      <span class="l1">demonstrated</span>
+      <span class="l2">demonstrated physics, our arrangement</span>
+      <span class="l3">new design</span>
+    </div>
+    <div class="cap">Every element carries an honest maturity mark. The same kit composes into a CPU, an AI matrix engine, a memory bank or a search engine.</div>
+  </div>
+
+  <h2>Honest status</h2>
+  <p>This is a complete architecture whose every element rests on published science. It is not yet built. Two engineering questions are stated openly — <strong>analog precision at depth</strong> and the <strong>amplifier pump budget</strong> — each with a designed answer, a first-order bound from a physics-honest simulator, and a stage that measures it. The energy claim reduces to one measurable number: the energy to read one stored weight.</p>
+
+  <div class="experiment" id="experiment">
+    <h3>The one decisive first experiment</h3>
+    <p>Build a single diarylethene optical memory cell — <code>write 375 nm</code> · <code>read 405 nm</code> · <code>reset 532 nm</code> — and measure two numbers: its real readout speed and its switching energy per bit.</p>
+    <p>That single result is publishable on its own and settles the central open question of the whole architecture. The scope is modest — materials-scale, not program-scale; months, not years — an ideal graduate project, scoped together with the partner. A one-page Phase-1 protocol is available on request.</p>
+    <p><strong>Looking for:</strong> a photonics or photochromic-materials laboratory to build and measure the first cell, and a foundry / MPW partner for the first processing node. The deeper engineering (element-physics dossier, node specification, simulator) is shared under agreement.</p>
+  </div>
+
+  <h2 id="papers">Papers and documents</h2>
+  <p class="note">All documents below are the public research record, released under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>. The Zenodo record is the version of record.</p>
+  <div class="docs">
+    <div class="doc">
+      <a class="t" href="assets/TimeLightHub_Complete.pdf">Complete Research (PDF)</a>
+      <p class="d">White paper + seven technical papers, all figures. 52 pages. Identical to the Zenodo version of record.</p>
+    </div>
+    <div class="doc">
+      <a class="t" href="assets/TimeLightHub_Complete.html">Complete Research (HTML)</a>
+      <p class="d">Same content as a single self-contained web page with vector figures.</p>
+    </div>
+    <div class="doc">
+      <a class="t" href="assets/TimeLightHub_White_Paper.pdf">White Paper (PDF)</a>
+      <p class="d">The architecture in one paper: elements, fabric, machines, energy argument, open questions.</p>
+    </div>
+    <div class="doc">
+      <a class="t" href="assets/TimeLightHub_Executive_Summary.pdf">Executive Summary (PDF)</a>
+      <p class="d">One page: problem, idea, what is new, honest status, the first experiment, the ask.</p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>Record</th><th>Identifier</th><th>Status</th></tr>
+    <tr><td>Zenodo (version of record)</td><td><a href="https://doi.org/10.5281/zenodo.22649324">10.5281/zenodo.22649324</a> (concept DOI) · v1.0 <a href="https://doi.org/10.5281/zenodo.22649325">10.5281/zenodo.22649325</a></td><td>Published 7 Sep 2026</td></tr>
+    <tr><td>UK patent application</td><td>GB2615417.9 (UK Intellectual Property Office)</td><td>Filed 18 Jun 2026 · Patent Pending</td></tr>
+    <tr><td>Author</td><td>ORCID <a href="https://orcid.org/0009-0003-8565-2605">0009-0003-8565-2605</a></td><td>Samer Beyrouti</td></tr>
+  </table>
+
+  <h2 id="cite">How to cite</h2>
+  <div class="cite">Beyrouti, S. (2026). TimeLightHub: A Composable Photonic Computer That Thinks in Light. Zenodo. https://doi.org/10.5281/zenodo.22649324</div>
+  <p class="note" style="margin-top:10px">BibTeX:</p>
+  <div class="cite">@misc{beyrouti2026timelighthub,
+  author    = {Beyrouti, Samer},
+  title     = {TimeLightHub: A Composable Photonic Computer That Thinks in Light},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.22649324},
+  url       = {https://doi.org/10.5281/zenodo.22649324},
+  note      = {UK patent application GB2615417.9, filed 18 June 2026}
+}</div>
+
+  <h2 id="contact">Contact</h2>
+  <p><strong>Samer Beyrouti</strong> — Inventor &amp; Architect, TimeLightHub<br>
+  <a href="mailto:Connect@TimeLightHub.com">Connect@TimeLightHub.com</a> · +961 3 097 151 · ORCID <a href="https://orcid.org/0009-0003-8565-2605">0009-0003-8565-2605</a></p>
+  <p class="note">Laboratories, foundries and research partners: a short call is the easiest first step. The Phase-1 protocol and the node specification are available under agreement.</p>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Samer Beyrouti · TimeLightHub. Research documents licensed <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>. Patent Pending — GB2615417.9.</p>
+    <p>This is the research site. TimeLightHub also operates AI-agent business platforms — see <a href="https://timelighthub.com">timelighthub.com</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

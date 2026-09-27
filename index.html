@@ -513,11 +513,41 @@
         @media(max-width:768px) {
             input, textarea, select { font-size: 16px !important; }
         }
+        /* ===== RESEARCH BAR (slim strip above the fixed header) ===== */
+        :root { --rbar-h: 32px; }
+        .research-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 101; height: var(--rbar-h);
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 0 16px; font-size: 0.78rem; letter-spacing: 0.2px; text-decoration: none;
+            color: var(--text-muted); background: var(--header-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); white-space: nowrap; overflow: hidden;
+        }
+        .research-bar:hover .rb-text, .research-bar:hover .rb-cta { color: var(--cyan); }
+        .rb-tag { color: var(--gold); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.68rem; }
+        .rb-text { overflow: hidden; text-overflow: ellipsis; }
+        .rb-cta { color: var(--cyan); font-weight: 600; }
+        header { top: var(--rbar-h); }
+        .mobile-nav { top: calc(70px + var(--rbar-h)); }
+        .hero { padding-top: calc(120px + var(--rbar-h)); }
+        .header-nav a.nav-research { color: var(--gold); }
+        .header-nav a.nav-research:hover { color: var(--cyan); }
+        @media(max-width:768px) {
+            .rb-text { display: none; }
+            .hero { padding-top: calc(100px + var(--rbar-h)); }
+        }
     </style>
 </head>
 <body id="body">
 
 <div class="bg-grid"></div>
+
+<!-- ===== RESEARCH BAR ===== -->
+<a class="research-bar" href="https://research.timelighthub.com" target="_blank" rel="noopener">
+    <span class="rb-tag">Research</span>
+    <span class="rb-text">TimeLightHub &mdash; a composable photonic computer that thinks in light &middot; Patent Pending GB2615417.9</span>
+    <span class="rb-cta">research.timelighthub.com &rarr;</span>
+</a>
 
 <!-- ===== HEADER ===== -->
 <header>
@@ -530,6 +560,7 @@
         <a href="#platforms" id="nav-platforms">Platforms</a>
         <a href="#features" id="nav-features">Features</a>
         <a href="#roadmap" id="nav-roadmap">Roadmap</a>
+        <a href="https://research.timelighthub.com" id="nav-research" class="nav-research" target="_blank" rel="noopener">Research</a>
         <a href="#contact" id="nav-contact">Contact</a>
     </nav>
     <div class="header-right">
@@ -561,6 +592,7 @@
     <a href="#platforms" onclick="closeMobileNav()" id="mnav-platforms">Platforms</a>
     <a href="#features" onclick="closeMobileNav()" id="mnav-features">Features</a>
     <a href="#roadmap" onclick="closeMobileNav()" id="mnav-roadmap">Roadmap</a>
+    <a href="https://research.timelighthub.com" onclick="closeMobileNav()" id="mnav-research" target="_blank" rel="noopener">Research</a>
     <a href="#contact" onclick="closeMobileNav()" id="mnav-contact">Contact</a>
 </div>
 
