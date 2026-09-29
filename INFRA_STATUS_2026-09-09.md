@@ -33,3 +33,5 @@ Shared note written to all TimeLightHub repos (timelighthub-website, TimeLightPa
 
 ## Contacts / identifiers used on the research page
 Samer Beyrouti · Connect@TimeLightHub.com · ORCID 0009-0003-8565-2605 · Zenodo DOI 10.5281/zenodo.22649324 · arXiv: declined 14 Sep 2026 (do not resubmit) · UK patent application GB2615417.9 (filed 18 Jun 2026).
+
+- **29 Sep 2026 (commit 224fdf2):** main site marks Crypto Payment Gateway and Agent Forge Commerce as **On Hold — Prelaunch Soon** (badge + inert button, all 5 languages); dead pay/afc links removed from cards, JSON-LD, sitemap.xml and llms.txt. On revival: restore `badge-live` + `btn-visit` links, i18n `setHTML(...,t.pay.btn)` / `t.afc.btn`, sitemap entries and llms.txt lines (see git diff of 224fdf2).
