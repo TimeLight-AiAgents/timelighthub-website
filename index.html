@@ -47,8 +47,7 @@
       "description": "AI-powered platform hub for Travel, Crypto Payments, AI Agents, E-Commerce, Repair, Medical, Legal, Real Estate, and Consulting.",
       "sameAs": [
         "https://travel.timelighthub.com/",
-        "https://pay.timelighthub.com/",
-        "https://afc.timelighthub.com/"
+        "https://research.timelighthub.com/"
       ]
     }
     </script>
@@ -67,8 +66,8 @@
       "name": "TimeLightHub Platforms",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "AI Travel Platform",        "url": "https://travel.timelighthub.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Crypto Payment Gateway",    "url": "https://pay.timelighthub.com/" },
-        { "@type": "ListItem", "position": 3, "name": "Agent Forge Commerce (AI)", "url": "https://afc.timelighthub.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Crypto Payment Gateway (on hold, prelaunch)" },
+        { "@type": "ListItem", "position": 3, "name": "Agent Forge Commerce (AI) (on hold, prelaunch)" },
         { "@type": "ListItem", "position": 4, "name": "AI E-Store" },
         { "@type": "ListItem", "position": 5, "name": "AI Maintenance" },
         { "@type": "ListItem", "position": 6, "name": "AI Medical" },
@@ -677,7 +676,7 @@
             <div class="platform-body">
                 <div class="platform-header">
                     <h2 class="txt-green" id="t-p-pay-title">Crypto Payment Gateway</h2>
-                    <span class="status-badge badge-live" id="t-badge-live-pay">&#x25CF; Live</span>
+                    <span class="status-badge badge-coming" id="t-badge-live-pay">&#x25D4; On Hold &mdash; Prelaunch Soon</span>
                 </div>
                 <p class="platform-desc" id="t-p-pay-desc">Self-hosted crypto payment infrastructure for developers, freelancers, and global merchants. Accept Bitcoin and Lightning with $1/month, 0% platform transaction fees, and full self-custody. Built on BTCPay Server.</p>
                 <ul class="platform-features">
@@ -690,17 +689,17 @@
                 </ul>
             </div>
             <div class="platform-action">
-                <a href="https://pay.timelighthub.com" target="_blank" rel="noopener noreferrer" class="btn-visit" id="t-btn-visit-pay">Visit Platform &#x2192;</a>
+                <span class="btn-soon" id="t-btn-visit-pay">Prelaunch Soon</span>
             </div>
         </div>
 
-        <!-- AGENT FORGE COMMERCE - LIVE (AI Agents category) -->
+        <!-- AGENT FORGE COMMERCE - ON HOLD (prelaunch) -->
         <div class="platform-card live reveal">
             <div class="platform-icon txt-cyan"><i class="fa-solid fa-robot"></i></div>
             <div class="platform-body">
                 <div class="platform-header">
                     <h2 class="txt-cyan" id="t-p-afc-title">AI Agents &mdash; Agent Forge Commerce</h2>
-                    <span class="status-badge badge-live" id="t-badge-live-afc">&#x25CF; Live</span>
+                    <span class="status-badge badge-coming" id="t-badge-live-afc">&#x25D4; On Hold &mdash; Prelaunch Soon</span>
                 </div>
                 <p class="platform-desc" id="t-p-afc-desc">Pay-per-use automated developer services for AI agents and automation pipelines. Security snapshots, API documentation, performance audits, and SEO checks &mdash; delivered in seconds, settled via Bitcoin or Lightning.</p>
                 <ul class="platform-features">
@@ -713,7 +712,7 @@
                 </ul>
             </div>
             <div class="platform-action">
-                <a href="https://afc.timelighthub.com" target="_blank" rel="noopener noreferrer" class="btn-visit" id="t-btn-visit-afc">Visit Platform &#x2192;</a>
+                <span class="btn-soon" id="t-btn-visit-afc">Prelaunch Soon</span>
             </div>
         </div>
 
@@ -1002,7 +1001,7 @@ en: {
         { t:"Scale Without Limits", d:"Built on modern cloud architecture, each platform supports global scale \u2014 from independent freelancers to enterprise agencies with thousands of clients." }
     ],
     plat: { title:"Our <span class=\"txt-purple\">Platforms</span>", sub:"Explore the growing TimeLightHub ecosystem. Each platform is purpose-built with AI at its core." },
-    badges: { live:"\u25CF Live", coming:"\u25D4 Coming Soon", locked:"Locked" },
+    badges: { live:"\u25CF Live", coming:"\u25D4 Coming Soon", locked:"Locked", hold:"\u25D4 On Hold \u2014 Prelaunch Soon", holdbtn:"Prelaunch Soon" },
     travel: { title:"AI Travel Platform", desc:"Complete AI-powered travel management system. Empowering travel agents with smart itinerary planning, AI chatbot assistance, and seamless booking management \u2014 while delighting travelers with personalized experiences.", f:["AI journey planning & smart itineraries","Agent, Admin & Traveler portals","Global eSIM connectivity","AI chatbot travel assistant","Stripe & Crypto payments","Multi-currency & multi-language"], btn:"Visit Platform \u2192" },
     pay: { title:"Crypto Payment Gateway", desc:"Self-hosted crypto payment infrastructure for developers, freelancers, and global merchants. Accept Bitcoin and Lightning with $1/month, 0% platform transaction fees, and full self-custody. Built on BTCPay Server.", f:["$1/month, 0% platform fees","Self-custodial \u2014 you control your wallet","Bitcoin on-chain & Lightning Network","REST API, webhooks & embeddable widget","Hosted checkout & merchant dashboard","60-day free trial"], btn:"Visit Platform \u2192" },
     afc: { title:"AI Agents \u2014 Agent Forge Commerce", desc:"Pay-per-use automated developer services for AI agents and automation pipelines. Security snapshots, API documentation, performance audits, and SEO checks \u2014 delivered in seconds, settled via Bitcoin or Lightning.", f:["Security snapshot scans","API documentation briefs","Performance audits","SEO checks","Self-service partner API keys","Bitcoin / Lightning settlement"], btn:"Visit Platform \u2192" },
@@ -1045,7 +1044,7 @@ ar: {
         { t:"توسع بلا حدود", d:"مبني على بنية سحابية حديثة، كل منصة تدعم النطاق العالمي \u2014 من المستقلين إلى الوكالات الكبيرة." }
     ],
     plat: { title:"<span class=\"txt-purple\">منصاتنا</span>", sub:"استكشف نظام TimeLightHub المتنامي. كل منصة مبنية خصيصاً بالذكاء الاصطناعي في جوهرها." },
-    badges: { live:"\u25CF مباشر", coming:"\u25D4 قريباً", locked:"مغلق" },
+    badges: { live:"\u25CF مباشر", coming:"\u25D4 قريباً", locked:"مغلق", hold:"\u25D4 متوقف مؤقتاً \u2014 الإطلاق قريباً", holdbtn:"الإطلاق قريباً" },
     travel: { title:"منصة السفر الذكية", desc:"نظام إدارة سفر كامل بالذكاء الاصطناعي. تمكين وكلاء السفر بتخطيط الرحلات الذكي ومساعد الدردشة وإدارة الحجوزات.", f:["تخطيط رحلات ذكي بالذكاء الاصطناعي","بوابات الوكيل والمدير والمسافر","اتصال eSIM عالمي","مساعد سفر ذكي","مدفوعات Stripe والعملات الرقمية","متعدد العملات واللغات"], btn:"زيارة المنصة \u2192" },
     pay: { title:"بوابة الدفع بالعملات الرقمية", desc:"بنية تحتية ذاتية الاستضافة للمدفوعات الرقمية للمطورين والمستقلين والتجار حول العالم. اقبل البيتكوين وLightning مقابل 1$ شهرياً، 0% رسوم منصة، وحفظ ذاتي كامل. مبنية على BTCPay Server.", f:["1$ شهرياً، 0% رسوم منصة","حفظ ذاتي \u2014 محفظتك تحت سيطرتك","بيتكوين on-chain وشبكة Lightning","REST API وWebhooks وأداة قابلة للتضمين","صفحة دفع مستضافة ولوحة تحكم للتاجر","تجربة مجانية لمدة 60 يوماً"], btn:"زيارة المنصة \u2192" },
     afc: { title:"وكلاء الذكاء الاصطناعي \u2014 Agent Forge Commerce", desc:"خدمات مطوّرين آلية بنظام الدفع لكل استخدام لوكلاء الذكاء الاصطناعي وخطوط الأتمتة. لقطات أمنية، وثائق API، تدقيق الأداء، وفحص SEO \u2014 تُسلَّم خلال ثوانٍ، وتُسوّى عبر البيتكوين أو Lightning.", f:["فحوصات لقطة أمنية","ملخصات وثائق API","تدقيق الأداء","فحوصات SEO","مفاتيح API ذاتية الخدمة للشركاء","تسوية بالبيتكوين / Lightning"], btn:"زيارة المنصة \u2192" },
@@ -1088,7 +1087,7 @@ fr: {
         { t:"\u00C9volutivit\u00E9 Sans Limites", d:"Construit sur une architecture cloud moderne, chaque plateforme supporte l'\u00E9chelle mondiale." }
     ],
     plat: { title:"Nos <span class=\"txt-purple\">Plateformes</span>", sub:"Explorez l'\u00E9cosyst\u00E8me croissant de TimeLightHub." },
-    badges: { live:"\u25CF En Ligne", coming:"\u25D4 Bient\u00F4t", locked:"Verrouill\u00E9" },
+    badges: { live:"\u25CF En Ligne", coming:"\u25D4 Bient\u00F4t", locked:"Verrouill\u00E9", hold:"\u25D4 En pause \u2014 Lancement bient\u00F4t", holdbtn:"Lancement bient\u00F4t" },
     travel: { title:"Plateforme Voyage IA", desc:"Syst\u00E8me de gestion de voyage complet aliment\u00E9 par l'IA.", f:["Planification IA d'itin\u00E9raires","Portails Agent, Admin & Voyageur","Connectivit\u00E9 eSIM mondiale","Assistant voyage IA","Paiements Stripe & Crypto","Multi-devises & multi-langues"], btn:"Visiter la Plateforme \u2192" },
     pay: { title:"Passerelle de Paiement Crypto", desc:"Infrastructure de paiement crypto auto-h\u00E9berg\u00E9e pour d\u00E9veloppeurs, freelances et marchands. Acceptez Bitcoin et Lightning pour 1$/mois, 0% de frais de plateforme, en pleine auto-conservation. Bas\u00E9 sur BTCPay Server.", f:["1$/mois, 0% de frais de plateforme","Auto-conservation \u2014 vous contr\u00F4lez votre portefeuille","Bitcoin on-chain & Lightning Network","API REST, webhooks & widget int\u00E9grable","Checkout h\u00E9berg\u00E9 & dashboard marchand","Essai gratuit de 60 jours"], btn:"Visiter la Plateforme \u2192" },
     afc: { title:"Agents IA \u2014 Agent Forge Commerce", desc:"Services de d\u00E9veloppement automatis\u00E9s \u00E0 l'usage pour agents IA et pipelines d'automatisation. Audits de s\u00E9curit\u00E9, documentation API, audits de performance, contr\u00F4les SEO \u2014 livr\u00E9s en quelques secondes, r\u00E9gl\u00E9s en Bitcoin ou Lightning.", f:["Audits de s\u00E9curit\u00E9","R\u00E9sum\u00E9s de documentation API","Audits de performance","Contr\u00F4les SEO","Cl\u00E9s API partenaire en libre-service","R\u00E8glement Bitcoin / Lightning"], btn:"Visiter la Plateforme \u2192" },
@@ -1131,7 +1130,7 @@ es: {
         { t:"Escala Sin L\u00EDmites", d:"Construido en arquitectura cloud moderna, cada plataforma soporta escala global." }
     ],
     plat: { title:"Nuestras <span class=\"txt-purple\">Plataformas</span>", sub:"Explore el creciente ecosistema de TimeLightHub." },
-    badges: { live:"\u25CF En Vivo", coming:"\u25D4 Pr\u00F3ximamente", locked:"Bloqueado" },
+    badges: { live:"\u25CF En Vivo", coming:"\u25D4 Pr\u00F3ximamente", locked:"Bloqueado", hold:"\u25D4 En pausa \u2014 Lanzamiento pronto", holdbtn:"Lanzamiento pronto" },
     travel: { title:"Plataforma de Viajes IA", desc:"Sistema completo de gesti\u00F3n de viajes con IA.", f:["Planificaci\u00F3n IA de itinerarios","Portales Agente, Admin y Viajero","Conectividad eSIM global","Asistente de viaje IA","Pagos Stripe y Crypto","Multi-moneda y multi-idioma"], btn:"Visitar Plataforma \u2192" },
     pay: { title:"Pasarela de Pago Crypto", desc:"Infraestructura de pagos crypto autoalojada para desarrolladores, freelancers y comercios globales. Acepta Bitcoin y Lightning por 1$/mes, 0% de comisiones de plataforma y autocustodia total. Construido sobre BTCPay Server.", f:["1$/mes, 0% de comisiones de plataforma","Autocustodia \u2014 controlas tu cartera","Bitcoin on-chain y red Lightning","API REST, webhooks y widget integrable","Checkout hospedado y panel del comercio","Prueba gratuita de 60 d\u00EDas"], btn:"Visitar Plataforma \u2192" },
     afc: { title:"Agentes IA \u2014 Agent Forge Commerce", desc:"Servicios de desarrollo automatizados de pago por uso para agentes IA y pipelines de automatizaci\u00F3n. Auditor\u00EDas de seguridad, documentaci\u00F3n API, auditor\u00EDas de rendimiento y chequeos SEO \u2014 entregados en segundos, liquidados v\u00EDa Bitcoin o Lightning.", f:["Auditor\u00EDas de seguridad","Res\u00FAmenes de documentaci\u00F3n API","Auditor\u00EDas de rendimiento","Chequeos SEO","Claves API de socio autoservicio","Liquidaci\u00F3n Bitcoin / Lightning"], btn:"Visitar Plataforma \u2192" },
@@ -1174,7 +1173,7 @@ de: {
         { t:"Skalierung Ohne Grenzen", d:"Auf moderner Cloud-Architektur gebaut, unterst\u00FCtzt jede Plattform globale Skalierung." }
     ],
     plat: { title:"Unsere <span class=\"txt-purple\">Plattformen</span>", sub:"Erkunden Sie das wachsende TimeLightHub-\u00D6kosystem." },
-    badges: { live:"\u25CF Live", coming:"\u25D4 Demn\u00E4chst", locked:"Gesperrt" },
+    badges: { live:"\u25CF Live", coming:"\u25D4 Demn\u00E4chst", locked:"Gesperrt", hold:"\u25D4 Pausiert \u2014 Start in K\u00FCrze", holdbtn:"Start in K\u00FCrze" },
     travel: { title:"KI-Reiseplattform", desc:"Komplettes KI-Reisemanagement.", f:["KI-Reiseplanung & Itinerare","Agent-, Admin- & Reisende-Portale","Globale eSIM-Konnektivit\u00E4t","KI-Reiseassistent","Stripe- & Crypto-Zahlungen","Multi-W\u00E4hrung & Multi-Sprache"], btn:"Plattform Besuchen \u2192" },
     pay: { title:"Krypto-Zahlungs-Gateway", desc:"Selbst-gehostete Krypto-Zahlungsinfrastruktur f\u00FCr Entwickler, Freelancer und globale H\u00E4ndler. Bitcoin und Lightning f\u00FCr 1$/Monat, 0% Plattformgeb\u00FChren, volle Selbstverwahrung. Basiert auf BTCPay Server.", f:["1$/Monat, 0% Plattformgeb\u00FChren","Selbstverwahrung \u2014 Sie kontrollieren Ihre Wallet","Bitcoin On-Chain & Lightning Network","REST API, Webhooks & einbettbares Widget","Gehosteter Checkout & H\u00E4ndler-Dashboard","60-Tage-Testversion kostenlos"], btn:"Plattform Besuchen \u2192" },
     afc: { title:"KI-Agenten \u2014 Agent Forge Commerce", desc:"Pay-per-Use automatisierte Entwicklerdienste f\u00FCr KI-Agenten und Automatisierungs-Pipelines. Sicherheits-Snapshots, API-Dokumentation, Performance-Audits und SEO-Pr\u00FCfungen \u2014 in Sekunden geliefert, abgewickelt \u00FCber Bitcoin oder Lightning.", f:["Sicherheits-Snapshot-Scans","API-Dokumentations-Briefings","Performance-Audits","SEO-Pr\u00FCfungen","Self-Service Partner-API-Schl\u00FCssel","Bitcoin / Lightning-Abwicklung"], btn:"Plattform Besuchen \u2192" },
@@ -1297,15 +1296,15 @@ function setLang(l){
     setText('t-p-pay-title',t.pay.title);
     setText('t-p-pay-desc',t.pay.desc);
     for(var i=0;i<6;i++) setText('t-p-pay-f'+(i+1),t.pay.f[i]);
-    setHTML('t-btn-visit-pay',t.pay.btn);
-    setText('t-badge-live-pay',t.badges.live);
+    setText('t-btn-visit-pay',t.badges.holdbtn);
+    setText('t-badge-live-pay',t.badges.hold);
 
     /* afc (live) */
     setText('t-p-afc-title',t.afc.title);
     setText('t-p-afc-desc',t.afc.desc);
     for(var i=0;i<6;i++) setText('t-p-afc-f'+(i+1),t.afc.f[i]);
-    setHTML('t-btn-visit-afc',t.afc.btn);
-    setText('t-badge-live-afc',t.badges.live);
+    setText('t-btn-visit-afc',t.badges.holdbtn);
+    setText('t-badge-live-afc',t.badges.hold);
 
     /* estore */
     setText('t-p-estore-title',t.estore.title);

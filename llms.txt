@@ -7,8 +7,8 @@ TimeLightHub is a multi-platform empire model: each industry gets its own dedica
 ## Live platforms
 
 - **AI Travel Platform** — [travel.timelighthub.com](https://travel.timelighthub.com/) — Complete AI-powered travel management. Agent, admin, and traveler portals with smart itineraries, AI chatbot, eSIM, and Stripe/Crypto payments.
-- **Crypto Payment Gateway** — [pay.timelighthub.com](https://pay.timelighthub.com/) — Self-hosted Bitcoin and Lightning payment infrastructure. $1/month subscription, 0% platform transaction fees, fully self-custodial, built on BTCPay Server. REST API, webhooks, embeddable widget, hosted checkout. 60-day free trial.
-- **AI Agents — Agent Forge Commerce** — [afc.timelighthub.com](https://afc.timelighthub.com/) — Pay-per-use automated developer services for AI agents and automation pipelines. Security snapshots, API documentation briefs, performance audits, SEO checks. Settled via Bitcoin or Lightning. Self-service partner API keys.
+- **Crypto Payment Gateway** — ON HOLD, prelaunch soon (no public URL at present) — Self-hosted Bitcoin and Lightning payment infrastructure. $1/month subscription, 0% platform transaction fees, fully self-custodial, built on BTCPay Server. REST API, webhooks, embeddable widget, hosted checkout. 60-day free trial.
+- **AI Agents — Agent Forge Commerce** — ON HOLD, prelaunch soon (no public URL at present) — Pay-per-use automated developer services for AI agents and automation pipelines. Security snapshots, API documentation briefs, performance audits, SEO checks. Settled via Bitcoin or Lightning. Self-service partner API keys.
 
 ## Coming soon
 
