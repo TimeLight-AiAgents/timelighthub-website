@@ -8,11 +8,11 @@ Shared note written to all TimeLightHub repos (timelighthub-website, TimeLightPa
 |---|---|---|
 | timelighthub.com / www | **GitHub Pages**, repo `TimeLight-AiAgents/timelighthub-website`, branch `main`, path `/`, CNAME `timelighthub.com`, HTTPS enforced (cert valid to 29 Nov 2026) | Live, 200 |
 | travel.timelighthub.com (+ api, agents, admin, app) | Render, from `ai-travel-agent-platform-v1` (`render.yaml` Blueprint) | Live |
-| pay.timelighthub.com | DigitalOcean droplet 159.89.108.226 (TimeLightPay gateway-nginx + BTCPay) | **Droplet destroyed — down.** DNS A record to be deleted on GoDaddy; re-add on revival |
-| afc.timelighthub.com | Same droplet (Agent Forge Commerce, proxied by gateway-nginx) | **Down** (same) |
-| research.timelighthub.com | **New** — Render Static Site from `timelighthub-website`, Root Directory `research`, custom domain + GoDaddy CNAME `research` | Built on branch `research-site`; not yet merged / not yet live |
+| pay.timelighthub.com | DigitalOcean droplet 159.89.108.226 (TimeLightPay gateway-nginx + BTCPay) | **Droplet destroyed — down.** A record DELETED 29 Sep 2026; re-add on revival |
+| afc.timelighthub.com | Same droplet (Agent Forge Commerce, proxied by gateway-nginx) | **Down** (same). A + AAAA records DELETED 29 Sep 2026 |
+| research.timelighthub.com | **New** — Render Static Site from `timelighthub-website`, Root Directory `research`, custom domain + GoDaddy CNAME `research` | **LIVE 29 Sep 2026** — merged to main; Render static site `timelighthub-research`; GoDaddy CNAME `research` → timelighthub-research.onrender.com; cert issued (Google Trust Services, to 28 Dec 2026). Also served at timelighthub.com/research/ via Pages |
 
-- **DNS registrar/DNS host: GoDaddy** (nameservers ns35/ns36.domaincontrol.com).
+- **DNS registrar/DNS host: GoDaddy** (nameservers ns35/ns36.domaincontrol.com). GoDaddy has Domain Protection (OTP on DNS edits): SMS to +961 works again after Touch fixed delivery (29 Sep); the second method "77624030" is Samer's authenticator app — use it.
 - History: main site was on GitHub Pages → moved to the droplet (May 2026, rsync workflow) → droplet destroyed (late Aug/Sep 2026) → back on GitHub Pages. The droplet **will be revived later**; nothing droplet-related is to be deleted, only paused.
 - Render plan: static site is free; custom-domain cap on the workspace is reached (travel + api), so the research domain costs $0.25/month — accepted by Samer.
 
