@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TimeLightHub Research — A Composable Photonic Computer That Thinks in Light</title>
-<meta name="description" content="TimeLightHub: a composable photonic computing architecture built from thirteen integrated photonic elements, with non-volatile optical memory and an AI engine whose weights never move. Open research by Samer Beyrouti. Patent Pending GB2615417.9.">
+<meta name="description" content="TimeLightHub: a proposed photonic architecture for AI inference with non-volatile photochromic weights that stay in place. Open research by Samer Beyrouti, with published corrections. Patent Pending GB2615417.9.">
 <meta name="author" content="Samer Beyrouti">
 <meta name="citation_title" content="TimeLightHub: A Composable Photonic Computer That Thinks in Light">
 <meta name="citation_author" content="Beyrouti, Samer">
@@ -12,7 +12,7 @@
 <meta name="citation_doi" content="10.5281/zenodo.22649324">
 <meta name="citation_pdf_url" content="https://research.timelighthub.com/assets/TimeLightHub_Complete.pdf">
 <meta property="og:title" content="TimeLightHub Research">
-<meta property="og:description" content="A composable photonic computer that thinks in light. Open architecture, patent pending, one decisive first experiment.">
+<meta property="og:description" content="A proposed photonic architecture for AI inference with non-volatile photochromic weights. Open research with published corrections.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://research.timelighthub.com/">
 <link rel="icon" href="assets/logo-icon.png" type="image/png">
@@ -86,6 +86,7 @@
     <span>
       <a href="#papers">Papers</a> &nbsp;·&nbsp;
       <a href="#experiment">First experiment</a> &nbsp;·&nbsp;
+      <a href="#corrections">Corrections</a> &nbsp;·&nbsp;
       <a href="#cite">Cite</a> &nbsp;·&nbsp;
       <a href="#contact">Contact</a>
     </span>
@@ -108,62 +109,85 @@
     </div>
   </div>
 
-  <div class="abstract">
-    <p><strong>Abstract.</strong> We present TimeLightHub, a composable photonic computing architecture that computes with light and stores data in light without electrical power. The architecture is built from thirteen integrated photonic elements — including a two-layer non-volatile optical memory node, an in-place-weight systolic matrix-multiply cell whose weights never move, a pumped ring that combines gain, regeneration and memory, and a triangular majority-voting element for self-correction — tiled on a hexagonal “honeycomb” fabric whose shared edges form a hybrid lattice of passive threshold nodes and sparse active gain nodes. The same hardware is reconfigured by the wavelength, phase and timing of light into a CPU pipeline, an AI matrix engine, a non-volatile memory bank, or a search engine. Bounded operations are retrieved by navigating to a stored answer (an optical lookup, the “OmniCube”) rather than computed. We state the architecture’s two open engineering questions — analog precision at depth and the amplifier pump budget — with first-order bounds from a physics-honest simulator, and reduce the energy claim to a single measurable quantity, the energy to read one stored weight, which a defined first experiment measures. The maturity of every element is marked explicitly.</p>
+  <div class="experiment" style="border-color:#b03030;background:#fdf6f6">
+    <h3 style="color:#b03030">Corrections, October 2026</h3>
+    <p>An internal technical review of the published record (version 1.0, September 2026) found statements that go beyond the evidence. They are listed under <a href="#corrections">Corrections</a> below, and a corrected version 2 of the papers is in preparation. The text on this page is the corrected description.</p>
   </div>
 
-  <h2>Why this architecture</h2>
-  <p class="lead">Computing is hitting a wall made of heat and energy. A high-end AI chip spends most of its power not on computing but on moving data and fighting heat, and its memory leaks power just to remember. TimeLightHub computes with light and remembers with light that needs no power. It is built from thirteen photonic elements that compose — like the sections of an orchestra — into a CPU, an AI engine, or a search engine, all from the same hardware, reconfigured by colour.</p>
+  <div class="abstract">
+    <p><strong>Summary.</strong> TimeLightHub is a proposal for a photonic computing architecture for AI inference in which a model's weights are stored in a non-volatile photochromic material and stay in place while light passes through them. The memory element, a diarylethene whose refractive index differs between two stable forms and is read away from its absorption bands, is established science demonstrated by others (Ebisawa et al., 1994; Bilodeau et al., Optica, 2024). The contribution proposed here is an architecture around it: a hexagonal fabric of composable elements, a weights-in-place matrix-multiply cell, path-matched optical clocking and several new element geometries. Nothing has been built by us. The published record also describes all-optical logic, an optical lookup (the "OmniCube"), passive signal restoration and majority voting. These have no demonstrated physical mechanism yet and should be read as long-term ideas.</p>
+  </div>
+
+  <h2>What is proposed</h2>
   <ul>
-    <li><strong>A non-volatile memory made of light</strong> — keeps data with the power off, designed as a composable element of a computer. The storage physics (diarylethene photochromism) is demonstrated science; the latch element is ours.</li>
-    <li><strong>An AI engine where the weights never move</strong> — they live where the light reads them, removing the single largest energy cost in machine-learning inference.</li>
-    <li><strong>Self-correcting computation</strong> — a three-fold element votes out errors, the way spacecraft computers do.</li>
-    <li><strong>A composable element kit with its own language (LUMINA)</strong> — one device, many machines, reconfigured by light.</li>
+    <li><strong>Non-volatile photonic weights.</strong> A photochromic layer holds a value with the power off. The physics is not ours; our proposal is its use as a composable element of an inference engine. It suits values that are written rarely and read often.</li>
+    <li><strong>Weights that stay in place.</strong> Light is multiplied by the stored weights as it passes, and a detector reads the sum. This is an active research direction, so far mostly with phase-change materials. Whether a photochromic version gives an energy advantage is a hypothesis to be measured, not a result.</li>
+    <li><strong>New element geometries.</strong> Four designs are described in the patent application and are not yet published.</li>
+    <li><strong>Conceptual, not yet supported by a mechanism:</strong> all-optical logic gates, the optical lookup, passive signal restoration, optical majority voting, and the LUMINA language, which is at design stage.</li>
   </ul>
 
-  <h2 id="elements">The thirteen elements</h2>
+  <h2 id="elements">The thirteen elements of version 1.0</h2>
   <div class="fig">
-    <img src="assets/element_catalog.svg" alt="Catalog of the thirteen TimeLightHub photonic elements with their maturity marks">
+    <img src="assets/element_catalog.svg" alt="Catalog of the thirteen TimeLightHub photonic elements as published in version 1.0">
     <div class="legend">
       <span class="l1">demonstrated</span>
       <span class="l2">demonstrated physics, our arrangement</span>
       <span class="l3">new design</span>
     </div>
-    <div class="cap">Every element carries an honest maturity mark. The same kit composes into a CPU, an AI matrix engine, a memory bank or a search engine.</div>
+    <div class="cap">The maturity marks in this figure are those of version 1.0. The review found several of them too generous; for example the X-junction is marked "demonstrated" on the basis of simulation studies. They will be recalibrated in version 2.</div>
   </div>
 
-  <h2>Honest status</h2>
-  <p>This is a complete architecture whose every element rests on published science. It is not yet built. Two engineering questions are stated openly — <strong>analog precision at depth</strong> and the <strong>amplifier pump budget</strong> — each with a designed answer, a first-order bound from a physics-honest simulator, and a stage that measures it. The energy claim reduces to one measurable number: the energy to read one stored weight.</p>
+  <h2>Status</h2>
+  <p>Nothing has been built and no measurement of ours exists. The energy advantage is a hypothesis: it depends on the energy to read one stored weight, counted with lasers, detectors and electronics, and on how many weights share one detector. Complete photonic processors published so far operate near one picojoule per operation, and the best electronic in-memory chips below that. The statement in version 1.0 that published physics already places the read energy in the winning range is withdrawn. The project's simulator is a system-level bookkeeping model with assumed inputs, not a physical simulation of the memory cell.</p>
 
   <div class="experiment" id="experiment">
-    <h3>The one decisive first experiment</h3>
-    <p>Build a single diarylethene optical memory cell — <code>write 375 nm</code> · <code>read 405 nm</code> · <code>reset 532 nm</code> — and measure two numbers: its real readout speed and its switching energy per bit.</p>
-    <p>That single result is publishable on its own and settles the central open question of the whole architecture. The scope is modest — materials-scale, not program-scale; months, not years — an ideal graduate project, scoped together with the partner. A one-page Phase-1 protocol is available on request.</p>
-    <p><strong>Looking for:</strong> a photonics or photochromic-materials laboratory to build and measure the first cell, and a foundry / MPW partner for the first processing node. The deeper engineering (element-physics dossier, node specification, simulator) is shared under agreement.</p>
+    <h3>The first experiment (protocol version 1.1)</h3>
+    <p>One diarylethene cell in a polymer host: <code>write near 375 nm</code> · <code>reset 532 nm</code> · <code>read off resonance</code> through the refractive-index difference between the two forms. Three measurements: readout latency, energy per read stated at the detector, launched and wall-plug, and read-disturb per unit of probe dose.</p>
+    <p>Version 1.0 specified a 405 nm read and called it non-destructive. That was incorrect: an absorbed probe disturbs the stored state. Much of the cell physics has been shown by others. What an architecture still needs to know is the read energy with a real receiver, read-disturb under continuous use, and how many levels one cell can hold.</p>
+    <p><strong>Looking for:</strong> a photonics or photochromic-materials laboratory interested in these measurements. Engineering notes are shared under agreement.</p>
   </div>
+
+  <h2 id="corrections">Corrections to version 1.0</h2>
+  <table>
+    <tr><th>Statement in version 1.0</th><th>Correction</th></tr>
+    <tr><td>The memory is read at 405 nm, non-destructively.</td><td>An absorbed probe disturbs the state. The read is off resonance, by refractive-index change, with read-disturb measured.</td></tr>
+    <tr><td>Published photonic physics gives tens of times less energy per answer.</td><td>A hypothesis. The energy count in version 1.0 omits lasers, detectors and converters. No published value exists for the photochromic read.</td></tr>
+    <tr><td>An independent simulator confirms the advantage across the plausible range.</td><td>Withdrawn. The simulator is the project's own bookkeeping model with assumed inputs.</td></tr>
+    <tr><td>The interference XOR gate is demonstrated in the laboratory.</td><td>The cited figures come from simulation studies.</td></tr>
+    <tr><td>Passive nodes re-clean a signal with no power.</td><td>No passive element restores a signal level. A nonlinear mechanism would have to be named and shown.</td></tr>
+    <tr><td>Interference gates compose into a processor.</td><td>Chained logic needs level restoration at every stage. Speculative until a mechanism exists.</td></tr>
+    <tr><td>The OmniCube lookup replaces arithmetic at low energy.</td><td>The lookup is named but not physically specified, and no energy advantage has been shown.</td></tr>
+    <tr><td>A computer of a few dozen parts instead of billions.</td><td>That counts kinds of element, not elements. One memory cell is needed per weight.</td></tr>
+    <tr><td>No one pairs non-volatile optical memory with a compute engine.</td><td>Incorrect. See Ríos et al. (2015), Feldmann et al. (2021) and Bilodeau et al. (2024).</td></tr>
+    <tr><td>The memory cell replaces the flip-flop and register.</td><td>Writing is slow and energy-heavy and the material tolerates a limited number of writes. It suits stored weights, not working registers.</td></tr>
+  </table>
 
   <h2 id="papers">Papers and documents</h2>
   <p class="note">All documents below are the public research record, released under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>. The Zenodo record is the version of record.</p>
   <div class="docs">
     <div class="doc">
       <a class="t" href="assets/TimeLightHub_Complete.pdf">Complete Research (PDF)</a>
-      <p class="d">White paper + seven technical papers, all figures. 52 pages. Identical to the Zenodo version of record.</p>
+      <p class="d">Version 1.0: white paper + seven technical papers, all figures. 52 pages. Identical to the Zenodo record. Read with the corrections above.</p>
     </div>
     <div class="doc">
       <a class="t" href="assets/TimeLightHub_Complete.html">Complete Research (HTML)</a>
-      <p class="d">Same content as a single self-contained web page with vector figures.</p>
+      <p class="d">Version 1.0 as a single web page with vector figures. Read with the corrections above.</p>
     </div>
     <div class="doc">
       <a class="t" href="assets/TimeLightHub_White_Paper.pdf">White Paper (PDF)</a>
-      <p class="d">The architecture in one paper: elements, fabric, machines, energy argument, open questions.</p>
+      <p class="d">Version 1.0. The architecture in one paper. Read with the corrections above.</p>
     </div>
     <div class="doc">
-      <a class="t" href="assets/TimeLightHub_Phase1_Protocol.pdf">Phase-1 Protocol (PDF)</a>
-      <p class="d">One page for partner laboratories: the single memory-cell experiment, its two measurements, and the success gates stated in advance.</p>
+      <a class="t" href="assets/TimeLightHub_Phase1_Protocol_v1.1.pdf">Phase-1 Protocol, version 1.1 (PDF)</a>
+      <p class="d">One page for partner laboratories: the single memory-cell experiment with the corrected read step and three measurements.</p>
+    </div>
+    <div class="doc">
+      <a class="t" href="assets/TimeLightHub_Technical_Addendum_Readout.pdf">Technical addendum: readout (PDF)</a>
+      <p class="d">One page: why the 405 nm read was wrong, the three read regimes, read-disturb, and what read energy to expect.</p>
     </div>
     <div class="doc">
       <a class="t" href="assets/TimeLightHub_Executive_Summary.pdf">Executive Summary (PDF)</a>
-      <p class="d">One page: problem, idea, what is new, honest status, the first experiment, the ask.</p>
+      <p class="d">Version 1.0. One page. Read with the corrections above.</p>
     </div>
   </div>
 
